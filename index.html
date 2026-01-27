@@ -1,1 +1,1215 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pop Roll - The Luxury of Cannabis | Pickering, Ontario</title>
+    <script src="[https://cdn.tailwindcss.com"></script]https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Cormorant+Garamond:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+```
+<style>
+    :root {
+        --gold: #D4AF37;
+        --obsidian: #0B0B0B;
+        --dark-gold: #B8941E;
+        --light-gold: #F4E5A1;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Montserrat', sans-serif;
+        background: var(--obsidian);
+        color: #f5f5f5;
+        overflow-x: hidden;
+    }
+
+    .playfair {
+        font-family: 'Playfair Display', serif;
+    }
+
+    .cormorant {
+        font-family: 'Cormorant Garamond', serif;
+    }
+
+    .gold-text {
+        color: var(--gold);
+    }
+
+    .gold-gradient {
+        background: linear-gradient(135deg, var(--gold) 0%, var(--light-gold) 50%, var(--gold) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    /* LANDING PAGE */
+    .landing-page {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: linear-gradient(rgba(11, 11, 11, 0.7), rgba(11, 11, 11, 0.85)),
+                    url('https://images.unsplash.com/photo-1616680214084-22670de1bc82?w=1920&q=80') center/cover no-repeat fixed;
+        z-index: 10000;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        opacity: 1;
+        transition: opacity 1s ease;
+    }
+
+    .landing-page.fade-out {
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    .pr-logo {
+        width: 180px;
+        height: 180px;
+        position: relative;
+        margin-bottom: 60px;
+        animation: logoFadeIn 1.5s ease;
+    }
+
+    @keyframes logoFadeIn {
+        from {
+            opacity: 0;
+            transform: scale(0.8);
+        }
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+
+    .pr-monogram {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        border: 3px solid var(--gold);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: 'Playfair Display', serif;
+        font-size: 72px;
+        font-weight: 900;
+        color: var(--gold);
+        text-shadow: 0 0 40px rgba(212, 175, 55, 0.5);
+        animation: glow 3s ease-in-out infinite;
+    }
+
+    @keyframes glow {
+        0%, 100% { box-shadow: 0 0 30px rgba(212, 175, 55, 0.4); }
+        50% { box-shadow: 0 0 60px rgba(212, 175, 55, 0.7); }
+    }
+
+    .luxury-title {
+        font-family: 'Playfair Display', serif;
+        font-size: 72px;
+        font-weight: 900;
+        background: linear-gradient(135deg, var(--gold) 0%, var(--light-gold) 50%, var(--gold) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-align: center;
+        margin-bottom: 20px;
+        letter-spacing: 4px;
+        animation: titleFadeIn 2s ease 0.5s both;
+    }
+
+    @keyframes titleFadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .start-btn {
+        padding: 20px 60px;
+        background: linear-gradient(135deg, var(--gold), var(--light-gold), var(--gold));
+        color: var(--obsidian);
+        font-weight: 800;
+        font-size: 18px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        box-shadow: 0 15px 50px rgba(212, 175, 55, 0.4);
+        transition: all 0.4s ease;
+        animation: btnFadeIn 2s ease 1s both;
+    }
+
+    @keyframes btnFadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .start-btn:hover {
+        transform: translateY(-5px) scale(1.05);
+        box-shadow: 0 20px 60px rgba(212, 175, 55, 0.6);
+    }
+
+    /* AGE GATE */
+    .age-gate {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: linear-gradient(rgba(11, 11, 11, 0.95), rgba(11, 11, 11, 0.97)),
+                    url('https://images.unsplash.com/photo-1536963367063-4c13e8ff6e0d?w=1920&q=80') center/cover no-repeat;
+        z-index: 9999;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        backdrop-filter: blur(10px);
+    }
+
+    .age-gate.active {
+        display: flex;
+    }
+
+    /* BOUTIQUE SPACING */
+    .boutique-container {
+        max-width: 1600px;
+        margin: 0 auto;
+        padding: 0 100px;
+    }
+
+    .product-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+        gap: 80px;
+        margin: 80px 0;
+    }
+
+    .boutique-card {
+        background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);
+        border: 1px solid rgba(212, 175, 55, 0.15);
+        border-radius: 20px;
+        padding: 40px;
+        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .boutique-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, transparent, var(--gold), transparent);
+        transform: translateX(-100%);
+        transition: transform 0.6s ease;
+    }
+
+    .boutique-card:hover::before {
+        transform: translateX(100%);
+    }
+
+    .boutique-card:hover {
+        border-color: rgba(212, 175, 55, 0.5);
+        transform: translateY(-10px);
+        box-shadow: 0 30px 70px rgba(212, 175, 55, 0.2);
+    }
+
+    .boutique-card.highlighted {
+        border: 3px solid var(--gold);
+        animation: highlightPulse 2s ease;
+    }
+
+    @keyframes highlightPulse {
+        0%, 100% { box-shadow: 0 0 30px rgba(212, 175, 55, 0.5); }
+        50% { box-shadow: 0 0 60px rgba(212, 175, 55, 0.8); }
+    }
+
+    .product-image {
+        width: 100%;
+        height: 320px;
+        object-fit: cover;
+        border-radius: 16px;
+        margin-bottom: 30px;
+    }
+
+    /* BROSKY AI */
+    .brosky-avatar {
+        position: fixed;
+        bottom: 40px;
+        right: 40px;
+        width: 90px;
+        height: 90px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--gold), var(--light-gold));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        box-shadow: 0 15px 40px rgba(212, 175, 55, 0.5);
+        transition: all 0.4s ease;
+        z-index: 1000;
+        border: 4px solid var(--obsidian);
+    }
+
+    .brosky-avatar:hover {
+        transform: scale(1.15) rotate(5deg);
+        box-shadow: 0 20px 60px rgba(212, 175, 55, 0.7);
+    }
+
+    .brosky-chat {
+        position: fixed;
+        bottom: 150px;
+        right: 40px;
+        width: 480px;
+        max-height: 700px;
+        background: #1a1a1a;
+        border: 2px solid var(--gold);
+        border-radius: 24px;
+        overflow: hidden;
+        box-shadow: 0 30px 80px rgba(0, 0, 0, 0.9);
+        z-index: 999;
+        display: none;
+    }
+
+    .brosky-chat.active {
+        display: block;
+        animation: slideUpChat 0.5s ease;
+    }
+
+    @keyframes slideUpChat {
+        from {
+            transform: translateY(30px);
+            opacity: 0;
+        }
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+
+    /* MODALS */
+    .modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(11, 11, 11, 0.95);
+        z-index: 5000;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        backdrop-filter: blur(8px);
+    }
+
+    .modal.active {
+        display: flex;
+        animation: modalFadeIn 0.3s ease;
+    }
+
+    @keyframes modalFadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    .modal-content {
+        background: #1a1a1a;
+        border: 3px solid var(--gold);
+        border-radius: 24px;
+        padding: 60px;
+        max-width: 600px;
+        width: 90%;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+
+    /* WHATSAPP FLOAT */
+    .whatsapp-float {
+        position: fixed;
+        bottom: 160px;
+        right: 40px;
+        width: 70px;
+        height: 70px;
+        background: #25D366;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        box-shadow: 0 10px 30px rgba(37, 211, 102, 0.5);
+        transition: all 0.3s ease;
+        z-index: 1000;
+    }
+
+    .whatsapp-float:hover {
+        transform: scale(1.15);
+        box-shadow: 0 15px 40px rgba(37, 211, 102, 0.7);
+    }
+
+    /* INPUTS */
+    input, select, textarea {
+        background: rgba(13, 13, 13, 0.95);
+        border: 2px solid rgba(212, 175, 55, 0.3);
+        color: #f5f5f5;
+        padding: 18px 24px;
+        border-radius: 12px;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 15px;
+        transition: all 0.3s ease;
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    input:focus, select:focus, textarea:focus {
+        outline: none;
+        border-color: var(--gold);
+        box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.15);
+    }
+
+    .gold-btn {
+        background: linear-gradient(135deg, var(--gold), var(--light-gold), var(--gold));
+        color: var(--obsidian);
+        font-weight: 700;
+        padding: 18px 40px;
+        border-radius: 12px;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-size: 14px;
+        box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
+        width: 100%;
+    }
+
+    .gold-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 40px rgba(212, 175, 55, 0.5);
+    }
+
+    /* TRACKING MAP */
+    .tracking-map {
+        width: 100%;
+        height: 400px;
+        background: #0d0d0d;
+        border: 2px solid rgba(212, 175, 55, 0.3);
+        border-radius: 16px;
+        position: relative;
+        overflow: hidden;
+        margin: 30px 0;
+    }
+
+    .delivery-marker {
+        position: absolute;
+        width: 50px;
+        height: 50px;
+        background: var(--gold);
+        border-radius: 50%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        animation: moveMarker 10s ease-in-out infinite;
+        box-shadow: 0 0 30px rgba(212, 175, 55, 0.8);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+    }
+
+    @keyframes moveMarker {
+        0%, 100% { top: 50%; left: 50%; }
+        25% { top: 30%; left: 65%; }
+        50% { top: 70%; left: 75%; }
+        75% { top: 60%; left: 35%; }
+    }
+
+    .hidden { display: none; }
+</style>
+```
+
+</head>
+<body>
+
+```
+<!-- LANDING PAGE -->
+<div id="landingPage" class="landing-page">
+    <div class="pr-logo">
+        <div class="pr-monogram">PR</div>
+    </div>
+    <h1 class="luxury-title">THE LUXURY OF CANNABIS</h1>
+    <p style="color: var(--gold); font-size: 18px; margin-bottom: 60px; letter-spacing: 3px; text-transform: uppercase;">Pickering, Ontario</p>
+    <button class="start-btn" onclick="startExperience()">START EXPERIENCE</button>
+</div>
+
+<!-- AGE GATE -->
+<div id="ageGate" class="age-gate">
+    <div style="text-align: center; max-width: 700px; padding: 0 40px;">
+        <div style="font-size: 80px; margin-bottom: 30px;">🪪</div>
+        <h2 class="playfair" style="font-size: 56px; font-weight: 900; color: var(--gold); margin-bottom: 20px;" id="ageTitle">
+            YOU MUST HAVE YOUR 19+ ID READY
+        </h2>
+        <p style="font-size: 18px; color: #ccc; margin-bottom: 20px; line-height: 1.8;" id="ageSubtext">
+            Age verification is strictly enforced by Ontario law.<br>Please have your valid government-issued ID ready for verification.
+        </p>
+        <p style="font-size: 14px; color: #888; margin-bottom: 50px;">Licensed Cannabis Retailer • Pickering, Ontario</p>
+       
+        <div style="display: flex; gap: 20px; margin-bottom: 40px;">
+            <button onclick="verifyAge(true)" class="gold-btn" id="ageConfirm" style="flex: 1;">
+                ✓ I HAVE MY 19+ ID READY
+            </button>
+            <button onclick="verifyAge(false)" style="flex: 1; padding: 18px 40px; border: 2px solid #555; background: transparent; color: white; border-radius: 12px; cursor: pointer; font-weight: 600; transition: all 0.3s;" id="ageDecline">
+                ✗ I AM UNDER 19
+            </button>
+        </div>
+       
+        <div style="border-top: 1px solid #333; padding-top: 30px;">
+            <label style="font-size: 13px; color: #777; display: block; margin-bottom: 15px;">SELECT YOUR LANGUAGE</label>
+            <select id="ageGateLang" onchange="changeAgeGateLang(this.value)" style="width: 100%; max-width: 400px; margin: 0 auto;">
+                <option value="en">🇬🇧 English</option>
+                <option value="es">🇪🇸 Español</option>
+                <option value="fr">🇫🇷 Français</option>
+                <option value="de">🇩🇪 Deutsch</option>
+                <option value="it">🇮🇹 Italiano</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+<!-- MAIN SITE -->
+<div id="mainSite" class="hidden">
+   
+    <!-- HEADER -->
+    <header style="background: rgba(11, 11, 11, 0.95); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(212, 175, 55, 0.2); position: sticky; top: 0; z-index: 100;">
+        <div class="boutique-container" style="padding: 30px 100px;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div style="display: flex; align-items: center; gap: 40px;">
+                    <div class="playfair" style="font-size: 42px; font-weight: 900; color: var(--gold); cursor: pointer;" onclick="scrollToTop()">
+                        POP ROLL
+                    </div>
+                    <nav style="display: flex; gap: 40px; font-size: 13px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase;">
+                        <a href="#cannabis" style="color: var(--gold); text-decoration: none; transition: all 0.3s;" onmouseover="this.style.color='var(--light-gold)'" onmouseout="this.style.color='var(--gold)'">Cannabis</a>
+                        <a href="#monchi" style="color: #999; text-decoration: none; transition: all 0.3s;" onmouseover="this.style.color='white'" onmouseout="this.style.color='#999'">Oh My Monchi</a>
+                        <button onclick="openMemberLogin()" style="color: #999; background: none; border: none; cursor: pointer; transition: all 0.3s;" onmouseover="this.style.color='white'" onmouseout="this.style.color='#999'">Member Login</button>
+                    </nav>
+                </div>
+               
+                <div style="display: flex; align-items: center; gap: 30px;">
+                    <select id="langSelector" onchange="changeLanguage(this.value)" style="width: auto; padding: 10px 20px; font-size: 13px; font-weight: 600; margin-bottom: 0;">
+                        <option value="en">EN</option>
+                        <option value="es">ES</option>
+                        <option value="fr">FR</option>
+                        <option value="de">DE</option>
+                        <option value="it">IT</option>
+                    </select>
+                   
+                    <button onclick="openHorizonVentura()" style="padding: 10px 24px; border: 1px solid var(--gold); background: transparent; color: var(--gold); border-radius: 8px; cursor: pointer; font-size: 12px; font-weight: 600; letter-spacing: 1px; transition: all 0.3s;" onmouseover="this.style.background='var(--gold)'; this.style.color='black'" onmouseout="this.style.background='transparent'; this.style.color='var(--gold)'">
+                        FOR THE CURIOUS
+                    </button>
+                   
+                    <button onclick="toggleCart()" style="position: relative; background: none; border: none; cursor: pointer; font-size: 32px;">
+                        🛒
+                        <span id="cartBadge" class="hidden" style="position: absolute; top: -8px; right: -8px; background: var(--gold); color: black; border-radius: 50%; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800;">0</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section style="padding: 120px 0; background: linear-gradient(rgba(11, 11, 11, 0.6), rgba(11, 11, 11, 0.8)), url('https://images.unsplash.com/photo-1616680214084-22670de1bc82?w=1920&q=80') center/cover; text-align: center;">
+        <div class="boutique-container">
+            <h2 class="playfair" style="font-size: 68px; font-weight: 900; color: var(--gold); margin-bottom: 30px; letter-spacing: 3px;">
+                A REFINED CANNABIS EXPERIENCE
+            </h2>
+            <p class="cormorant" style="font-size: 26px; color: #ccc; max-width: 800px; margin: 0 auto; line-height: 1.8;">
+                Curated selections of premium flower, artisanal accessories, and exotic delicacies.<br>
+                Welcome to the pinnacle of cannabis boutique culture.
+            </p>
+        </div>
+    </section>
+
+    <!-- CANNABIS SECTION -->
+    <section id="cannabis" style="padding: 150px 0;">
+        <div class="boutique-container">
+            <div style="text-align: center; margin-bottom: 100px;">
+                <h3 class="playfair" style="font-size: 56px; font-weight: 900; color: var(--gold); margin-bottom: 20px;">CANNABIS BOUTIQUE</h3>
+                <div style="width: 120px; height: 3px; background: linear-gradient(90deg, transparent, var(--gold), transparent); margin: 0 auto;"></div>
+            </div>
+           
+            <div id="cannabisProducts" class="product-grid"></div>
+        </div>
+    </section>
+
+    <!-- OH MY MONCHI SECTION -->
+    <section id="monchi" style="padding: 150px 0; background: rgba(26, 26, 26, 0.3);">
+        <div class="boutique-container">
+            <div style="text-align: center; margin-bottom: 100px;">
+                <h3 class="playfair" style="font-size: 56px; font-weight: 900; color: var(--gold); margin-bottom: 20px;">OH MY MONCHI</h3>
+                <p class="cormorant" style="font-size: 24px; color: #999; margin-top: 20px;">Exotic Snacks & Premium Beverages • 100% THC-Free</p>
+                <div style="width: 120px; height: 3px; background: linear-gradient(90deg, transparent, var(--gold), transparent); margin: 20px auto 0;"></div>
+            </div>
+           
+            <div id="monchiProducts" class="product-grid"></div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer style="background: black; border-top: 1px solid rgba(212, 175, 55, 0.2); padding: 80px 0 40px;">
+        <div class="boutique-container">
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 60px; margin-bottom: 60px;">
+                <div>
+                    <div class="playfair" style="font-size: 32px; font-weight: 900; color: var(--gold); margin-bottom: 20px;">POP ROLL</div>
+                    <p style="color: #888; line-height: 1.8; font-size: 14px;">
+                        Ontario's premier cannabis boutique, offering curated selections of premium cannabis products and exotic delicacies.
+                    </p>
+                </div>
+               
+                <div>
+                    <h4 style="color: var(--gold); font-weight: 700; margin-bottom: 20px; font-size: 14px; letter-spacing: 2px;">CONTACT</h4>
+                    <p style="color: #888; margin-bottom: 10px; font-size: 14px;">📍 Pickering, Ontario</p>
+                    <p style="color: #888; margin-bottom: 10px; font-size: 14px;">📞 (905) 555-ROLL</p>
+                    <p style="color: #888; margin-bottom: 10px; font-size: 14px;">✉️ contact@poproll.ca</p>
+                </div>
+               
+                <div>
+                    <h4 style="color: var(--gold); font-weight: 700; margin-bottom: 20px; font-size: 14px; letter-spacing: 2px;">FOLLOW US</h4>
+                    <div style="display: flex; gap: 20px; font-size: 28px;">
+                        <a href="https://instagram.com" target="_blank" style="color: #888; transition: color 0.3s;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='#888'">📷</a>
+                        <a href="https://twitter.com" target="_blank" style="color: #888; transition: color 0.3s;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='#888'">🐦</a>
+                        <a href="https://facebook.com" target="_blank" style="color: #888; transition: color 0.3s;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='#888'">📘</a>
+                    </div>
+                </div>
+            </div>
+           
+            <div style="text-align: center; border-top: 1px solid #222; padding-top: 40px;">
+                <p style="color: #666; font-size: 13px;">© 2026 Pop Roll Boutique. Licensed Cannabis Retailer. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+</div>
+
+<!-- BROSKY AI AVATAR -->
+<div id="broskyAvatar" class="brosky-avatar hidden" onclick="toggleBrosky()">
+    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=BroskySommelier&backgroundColor=transparent" alt="Brosky AI" style="width: 80px; height: 80px; border-radius: 50%;">
+</div>
+
+<!-- BROSKY CHAT -->
+<div id="broskyChat" class="brosky-chat">
+    <div style="background: linear-gradient(135deg, var(--gold), var(--light-gold)); padding: 25px; display: flex; justify-content: space-between; align-items: center;">
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=BroskySommelier&backgroundColor=white" alt="Brosky" style="width: 50px; height: 50px; border-radius: 50%; background: white; padding: 3px;">
+            <div>
+                <h3 style="font-weight: 900; color: black; font-size: 18px;">BROSKY AI</h3>
+                <p style="font-size: 12px; color: rgba(0,0,0,0.7); font-weight: 600;">Cannabis Sommelier • 5 Languages</p>
+            </div>
+        </div>
+        <button onclick="toggleBrosky()" style="background: none; border: none; color: black; font-size: 32px; cursor: pointer; font-weight: 900;">×</button>
+    </div>
+
+    <div style="padding: 20px; background: rgba(0,0,0,0.3); border-bottom: 1px solid #333;">
+        <button onclick="openAskMenu()" class="gold-btn" style="margin-bottom: 0;">
+            💬 ASK ANYTHING
+        </button>
+    </div>
+   
+    <div id="broskyMessages" style="height: 400px; overflow-y: auto; padding: 25px; background: #0d0d0d;">
+        <div style="background: #222; padding: 20px; border-radius: 16px; margin-bottom: 15px;">
+            <p style="font-weight: 700; color: var(--gold); font-size: 12px; margin-bottom: 8px;">BROSKY AI</p>
+            <p style="color: #ddd; line-height: 1.7; font-size: 14px;">
+                Good day! I'm Brosky, your cannabis sommelier. I speak English, Spanish, French, German, and Italian fluently.
+                How may I assist you in finding the perfect selection today? 🌿
+            </p>
+        </div>
+    </div>
+   
+    <div style="padding: 20px; border-top: 1px solid #333; background: black;">
+        <div style="display: flex; gap: 10px;">
+            <input type="text" id="broskyInput" placeholder="Search 'Sativa 7g' or 'Pre-rolls $10'..." style="flex: 1; margin-bottom: 0; font-size: 13px;" onkeypress="if(event.key==='Enter') sendBroskyMessage()">
+            <button onclick="sendBroskyMessage()" class="gold-btn" style="width: auto; padding: 18px 30px; margin-bottom: 0;">SEND</button>
+        </div>
+    </div>
+</div>
+
+<!-- WHATSAPP FLOAT -->
+<a href="https://wa.me/19055551234" target="_blank" class="whatsapp-float" id="whatsappFloat">
+    <svg width="40" height="40" viewBox="0 0 32 32" fill="white">
+        <path d="M16 0C7.164 0 0 7.163 0 16c0 2.831.736 5.481 2.023 7.792L0 32l8.448-2.016C10.72 31.264 13.26 32 16 32c8.836 0 16-7.164 16-16S24.836 0 16 0zm0 29.333c-2.445 0-4.719-.66-6.68-1.813l-.479-.278-4.96 1.185 1.195-4.783-.306-.496C2.844 21.074 2.667 18.583 2.667 16 2.667 8.636 8.636 2.667 16 2.667S29.333 8.636 29.333 16 23.364 29.333 16 29.333zm7.333-10c-.4-.2-2.367-1.167-2.733-1.3-.367-.133-.633-.2-.9.2s-1.033 1.3-1.267 1.567c-.233.267-.467.3-.867.1-2.067-1.033-3.433-1.833-4.8-4.167-.367-.633.367-.6 1.1-1.967.133-.267.067-.5-.033-.7-.1-.2-.9-2.167-1.233-2.967-.333-.8-.667-.667-.9-.667-.233 0-.5-.033-.767-.033s-.733.1-1.133.5c-.4.4-1.5 1.467-1.5 3.567s1.533 4.133 1.733 4.4c.2.267 3.5 5.333 8.467 7.467 3.133 1.333 4.367 1.467 5.933 1.233 1-.133 2.367-.967 2.7-1.9.333-.933.333-1.733.233-1.9-.1-.167-.367-.267-.767-.467z"/>
+    </svg>
+</a>
+
+<!-- CART SIDEBAR -->
+<div id="cartSidebar" style="position: fixed; top: 0; right: -500px; width: 500px; height: 100vh; background: var(--obsidian); border-left: 2px solid var(--gold); z-index: 200; overflow-y: auto; transition: right 0.4s ease; box-shadow: -10px 0 40px rgba(0,0,0,0.8);">
+    <div style="padding: 40px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px;">
+            <h2 class="playfair" style="font-size: 32px; font-weight: 900; color: var(--gold);">Your Cart</h2>
+            <button onclick="toggleCart()" style="background: none; border: none; color: #999; font-size: 40px; cursor: pointer;">×</button>
+        </div>
+       
+        <div id="cartItems" style="margin-bottom: 40px;">
+            <div style="text-align: center; padding: 80px 20px;">
+                <div style="font-size: 60px; margin-bottom: 20px;">🛒</div>
+                <p style="color: #777; font-size: 16px;">Your cart is empty</p>
+            </div>
+        </div>
+       
+        <div id="cartTotal" class="hidden" style="border-top: 2px solid var(--gold); padding-top: 30px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+                <span style="font-size: 20px; font-weight: 700;">TOTAL</span>
+                <span id="totalAmount" class="playfair" style="font-size: 36px; font-weight: 900; color: var(--gold);">$0.00</span>
+            </div>
+            <button onclick="openCheckout()" class="gold-btn">PROCEED TO CHECKOUT</button>
+        </div>
+    </div>
+</div>
+
+<!-- CHECKOUT MODAL -->
+<div id="checkoutModal" class="modal">
+    <div class="modal-content">
+        <h2 class="playfair" style="font-size: 42px; font-weight: 900; color: var(--gold); margin-bottom: 10px;">Luxury Checkout</h2>
+        <p style="color: #999; margin-bottom: 40px;">Complete your order with our white-glove delivery service</p>
+       
+        <form onsubmit="submitOrder(event)">
+            <label style="display: block; font-size: 13px; font-weight: 700; color: var(--gold); margin-bottom: 10px; letter-spacing: 1px;">FULL NAME</label>
+            <input type="text" id="checkoutName" placeholder="Enter your full name" required>
+           
+            <label style="display: block; font-size: 13px; font-weight: 700; color: var(--gold); margin-bottom: 10px; letter-spacing: 1px;">PHONE NUMBER</label>
+            <input type="tel" id="checkoutPhone" placeholder="+1 (905) 555-0000" required>
+           
+            <label style="display: block; font-size: 13px; font-weight: 700; color: var(--gold); margin-bottom: 10px; letter-spacing: 1px;">DELIVERY ADDRESS</label>
+            <textarea id="checkoutAddress" placeholder="Street address, unit number, city, postal code" rows="3" required></textarea>
+           
+            <div style="display: flex; gap: 15px; margin-top: 30px;">
+                <button type="submit" class="gold-btn" style="flex: 1;">COMPLETE ORDER</button>
+                <button type="button" onclick="closeCheckout()" style="flex: 1; background: transparent; border: 2px solid #555; color: white; padding: 18px 40px; border-radius: 12px; cursor: pointer; font-weight: 700;">CANCEL</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- COURIER TRACKING MODAL -->
+<div id="courierModal" class="modal">
+    <div class="modal-content" style="max-width: 900px;">
+        <h2 class="playfair" style="font-size: 42px; font-weight: 900; color: var(--gold); margin-bottom: 30px;">Live Delivery Tracking</h2>
+       
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 30px;">
+            <div style="background: #0d0d0d; padding: 30px; border-radius: 16px; border: 1px solid rgba(212,175,55,0.2);">
+                <div style="font-size: 40px; margin-bottom: 15px;">🚗</div>
+                <h3 style="font-weight: 700; font-size: 18px; margin-bottom: 10px;">Your Driver</h3>
+                <p style="color: var(--gold); font-size: 22px; font-weight: 700; margin-bottom: 5px;">Marcus D.</p>
+                <p style="color: #888; font-size: 13px;">⭐ 4.9 Rating • 1,247 Deliveries</p>
+            </div>
+           
+            <div style="background: #0d0d0d; padding: 30px; border-radius: 16px; border: 1px solid rgba(212,175,55,0.2);">
+                <div style="font-size: 40px; margin-bottom: 15px;">⏱️</div>
+                <h3 style="font-weight: 700; font-size: 18px; margin-bottom: 10px;">Estimated Arrival</h3>
+                <p style="color: var(--gold); font-size: 22px; font-weight: 700; margin-bottom: 5px;">12-18 Minutes</p>
+                <p style="color: #888; font-size: 13px;">Driver is on the way</p>
+            </div>
+        </div>
+
+        <div class="tracking-map">
+            <div style="width: 100%; height: 100%; background: linear-gradient(135deg, #1a1a1a, #0d0d0d); display: flex; align-items: center; justify-content: center; position: relative;">
+                <div class="delivery-marker">🚗</div>
+                <div style="text-align: center; z-index: 10;">
+                    <div style="font-size: 48px; margin-bottom: 20px;">🗺️</div>
+                    <p style="font-size: 24px; font-weight: 700; color: var(--gold); margin-bottom: 10px;">Live GPS Tracking</p>
+                    <p style="color: #888;">Pickering, Ontario Coverage Area</p>
+                    <p style="font-size: 12px; color: #555; margin-top: 15px;">(Google Maps API Integration)</p>
+                </div>
+            </div>
+        </div>
+
+        <div style="background: #0d0d0d; padding: 25px; border-radius: 16px; margin-top: 30px; border: 1px solid rgba(212,175,55,0.2);">
+            <h3 style="font-weight: 700; margin-bottom: 20px; color: var(--gold);">💬 Chat with Driver</h3>
+            <div style="max-height: 200px; overflow-y: auto; margin-bottom: 20px; padding: 15px; background: black; border-radius: 12px;">
+                <div style="margin-bottom: 15px;">
+                    <p style="font-size: 12px; color: #888; margin-bottom: 5px;">Marcus D. (Driver)</p>
+                    <p style="background: #222; padding: 12px; border-radius: 10px; font-size: 14px;">Hi! I'm on my way with your order. ETA 15 mins. I'll text when I'm outside! 🚗</p>
+                </div>
+            </div>
+            <div style="display: flex; gap: 10px;">
+                <input type="text" placeholder="Message your driver..." style="flex: 1; margin-bottom: 0;" disabled>
+                <button class="gold-btn" style="width: auto; padding: 18px 30px; margin-bottom: 0;" disabled>SEND</button>
+            </div>
+        </div>
+
+        <button onclick="closeCourier()" class="gold-btn" style="margin-top: 30px;">CLOSE TRACKING</button>
+    </div>
+</div>
+
+<!-- ASK ANYTHING MENU MODAL -->
+<div id="askMenuModal" class="modal">
+    <div class="modal-content" style="max-width: 500px;">
+        <h2 class="playfair" style="font-size: 36px; font-weight: 900; color: var(--gold); margin-bottom: 30px;">Ask Brosky Anything</h2>
+       
+        <div style="display: grid; gap: 15px;">
+            <button onclick="broskyPreset('history')" style="padding: 20px; background: #0d0d0d; border: 2px solid rgba(212,175,55,0.3); border-radius: 12px; color: white; cursor: pointer; text-align: left; transition: all 0.3s; font-weight: 600;" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='rgba(212,175,55,0.3)'">
+                📜 History of Pop Roll
+            </button>
+            <button onclick="broskyPreset('benefits')" style="padding: 20px; background: #0d0d0d; border: 2px solid rgba(212,175,55,0.3); border-radius: 12px; color: white; cursor: pointer; text-align: left; transition: all 0.3s; font-weight: 600;" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='rgba(212,175,55,0.3)'">
+                💊 Benefits & Risks
+            </button>
+            <button onclick="broskyPreset('usage')" style="padding: 20px; background: #0d0d0d; border: 2px solid rgba(212,175,55,0.3); border-radius: 12px; color: white; cursor: pointer; text-align: left; transition: all 0.3s; font-weight: 600;" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='rgba(212,175,55,0.3)'">
+                📖 Usage Guide
+            </button>
+            <button onclick="broskyPreset('offers')" style="padding: 20px; background: #0d0d0d; border: 2px solid rgba(212,175,55,0.3); border-radius: 12px; color: white; cursor: pointer; text-align: left; transition: all 0.3s; font-weight: 600;" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='rgba(212,175,55,0.3)'">
+                🔥 Today's Offers
+            </button>
+        </div>
+
+        <button onclick="closeAskMenu()" style="margin-top: 30px; padding: 15px; background: transparent; border: 2px solid #555; color: white; border-radius: 12px; cursor: pointer; width: 100%; font-weight: 700;">CLOSE</button>
+    </div>
+</div>
+
+<!-- MEMBER LOGIN MODAL -->
+<div id="memberModal" class="modal">
+    <div class="modal-content" style="max-width: 500px;">
+        <h2 class="playfair" style="font-size: 42px; font-weight: 900; color: var(--gold); margin-bottom: 10px;">Member Login</h2>
+        <p style="color: #999; margin-bottom: 40px;">Access your Points & Rewards</p>
+       
+        <input type="email" placeholder="Email Address" style="margin-bottom: 20px;">
+        <input type="password" placeholder="Password" style="margin-bottom: 30px;">
+       
+        <button class="gold-btn" style="margin-bottom: 15px;">LOGIN</button>
+        <button onclick="closeMemberLogin()" style="width: 100%; padding: 15px; background: transparent; border: 2px solid #555; color: white; border-radius: 12px; cursor: pointer; font-weight: 700;">CANCEL</button>
+       
+        <p style="text-align: center; margin-top: 30px; color: #888; font-size: 13px;">
+            Not a member? <span style="color: var(--gold); cursor: pointer; text-decoration: underline;">Join Now</span>
+        </p>
+    </div>
+</div>
+
+<script>
+    // TRANSLATIONS
+    const translations = {
+        en: {
+            ageTitle: "YOU MUST HAVE YOUR 19+ ID READY",
+            ageSubtext: "Age verification is strictly enforced by Ontario law. Please have your valid government-issued ID ready for verification.",
+            ageConfirm: "✓ I HAVE MY 19+ ID READY",
+            ageDecline: "✗ I AM UNDER 19"
+        },
+        es: {
+            ageTitle: "DEBE TENER SU ID DE 19+ LISTO",
+            ageSubtext: "La verificación de edad es estrictamente aplicada por la ley de Ontario. Por favor tenga su ID gubernamental válido listo para verificación.",
+            ageConfirm: "✓ TENGO MI ID DE 19+ LISTO",
+            ageDecline: "✗ SOY MENOR DE 19"
+        },
+        fr: {
+            ageTitle: "VOUS DEVEZ AVOIR VOTRE ID 19+ PRÊT",
+            ageSubtext: "La vérification d'âge est strictement appliquée par la loi ontarienne. Veuillez avoir votre pièce d'identité gouvernementale valide prête pour vérification.",
+            ageConfirm: "✓ J'AI MON ID 19+ PRÊT",
+            ageDecline: "✗ J'AI MOINS DE 19 ANS"
+        },
+        de: {
+            ageTitle: "SIE MÜSSEN IHREN 19+ AUSWEIS BEREIT HABEN",
+            ageSubtext: "Die Altersverifizierung wird streng nach Ontario-Gesetz durchgesetzt. Bitte halten Sie Ihren gültigen Regierungsausweis zur Verifizierung bereit.",
+            ageConfirm: "✓ ICH HABE MEINEN 19+ AUSWEIS BEREIT",
+            ageDecline: "✗ ICH BIN UNTER 19"
+        },
+        it: {
+            ageTitle: "DEVI AVERE IL TUO ID 19+ PRONTO",
+            ageSubtext: "La verifica dell'età è rigorosamente applicata dalla legge dell'Ontario. Si prega di avere il documento d'identità governativo valido pronto per la verifica.",
+            ageConfirm: "✓ HO IL MIO ID 19+ PRONTO",
+            ageDecline: "✗ HO MENO DI 19 ANNI"
+        }
+    };
+
+    // PRODUCT DATABASE (20+ Items)
+    const products = {
+        cannabis: [
+            // FLOWERS (8 items)
+            { id: 'f1', name: 'Northern Lights', category: 'flower', strain: 'Indica', thc: '22%', prices: { '3.5g': 45, '7g': 85, '14g': 160, '28g': 300 }, image: 'https://images.unsplash.com/photo-1605889291252-b5b8c1da6a66?w=600&q=80', tags: ['indica', 'sativa', 'flower', '7g', '14g', '28g'] },
+            { id: 'f2', name: 'Blue Dream', category: 'flower', strain: 'Hybrid', thc: '20%', prices: { '3.5g': 40, '7g': 75, '14g': 145, '28g': 280 }, image: 'https://images.unsplash.com/photo-1587540600006-c19592290e70?w=600&q=80', tags: ['hybrid', 'flower', '7g'] },
+            { id: 'f3', name: 'Sour Diesel', category: 'flower', strain: 'Sativa', thc: '24%', prices: { '3.5g': 50, '7g': 95, '14g': 180, '28g': 340 }, image: 'https://images.unsplash.com/photo-1623278936457-e9f0b8fb1e8c?w=600&q=80', tags: ['sativa', 'flower', '7g'] },
+            { id: 'f4', name: 'Girl Scout Cookies', category: 'flower', strain: 'Hybrid', thc: '25%', prices: { '3.5g': 55, '7g': 105, '14g': 200, '28g': 380 }, image: 'https://images.unsplash.com/photo-1610639743864-5c0b9c0f0e13?w=600&q=80', tags: ['hybrid', 'flower'] },
+            { id: 'f5', name: 'Purple Haze', category: 'flower', strain: 'Sativa', thc: '23%', prices: { '3.5g': 48, '7g': 90, '14g': 170, '28g': 320 }, image: 'https://images.unsplash.com/photo-1616680214084-22670de1bc82?w=600&q=80', tags: ['sativa', 'flower'] },
+            { id: 'f6', name: 'OG Kush', category: 'flower', strain: 'Hybrid', thc: '26%', prices: { '3.5g': 60, '7g': 110, '14g': 210, '28g': 400 }, image: 'https://images.unsplash.com/photo-1536963367063-4c13e8ff6e0d?w=600&q=80', tags: ['hybrid', 'flower'] },
+            { id: 'f7', name: 'White Widow', category: 'flower', strain: 'Hybrid', thc: '21%', prices: { '3.5g': 42, '7g': 78, '14g': 150, '28g': 285 }, image: 'https://images.unsplash.com/photo-1605889291252-b5b8c1da6a66?w=600&q=80', tags: ['hybrid', 'flower'] },
+            { id: 'f8', name: 'Granddaddy Purple', category: 'flower', strain: 'Indica', thc: '27%', prices: { '3.5g': 65, '7g': 120, '14g': 230, '28g': 440 }, image: 'https://images.unsplash.com/photo-1587540600006-c19592290e70?w=600&q=80', tags: ['indica', 'flower'] },
+           
+            // PRE-ROLLS (4 items)
+            { id: 'p1', name: 'Platinum Pack', category: 'preroll', count: '5 Pre-Rolls', thc: '23%', price: 45, image: 'https://images.unsplash.com/photo-1583947582886-c037cf3638b9?w=600&q=80', tags: ['pre-roll', 'preroll', '$10', '$45'] },
+            { id: 'p2', name: 'Diamond Singles', category: 'preroll', count: '3 Pre-Rolls', thc: '26%', price: 35, image: 'https://images.unsplash.com/photo-1631194758628-71ec7c35137e?w=600&q=80', tags: ['pre-roll', 'preroll'] },
+            { id: 'p3', name: 'Gold Reserve', category: 'preroll', count: '10 Pre-Rolls', thc: '21%', price: 80, image: 'https://images.unsplash.com/photo-1622322662468-8f8e2e1d3e6c?w=600&q=80', tags: ['pre-roll', 'preroll'] },
+            { id: 'p4', name: 'Luxury Singles', category: 'preroll', count: '6 Pre-Rolls', thc: '24%', price: 55, image: 'https://images.unsplash.com/photo-1583947582886-c037cf3638b9?w=600&q=80', tags: ['pre-roll', 'preroll'] },
+           
+            // VAPES (3 items)
+            { id: 'v1', name: 'Elite Cartridge', category: 'vape', type: 'Hybrid', thc: '85%', price: 65, image: 'https://images.unsplash.com/photo-1610640003120-c6c4e4d35951?w=600&q=80', tags: ['vape', 'cartridge'] },
+            { id: 'v2', name: 'Luxury Disposable', category: 'vape', type: 'Indica', thc: '80%', price: 45, image: 'https://images.unsplash.com/photo-1597481499750-3e6b22637e12?w=600&q=80', tags: ['vape', 'disposable'] },
+            { id: 'v3', name: 'Premium Live Resin', category: 'vape', type: 'Sativa', thc: '90%', price: 85, image: 'https://images.unsplash.com/photo-1567443024551-f3e3cc2be870?w=600&q=80', tags: ['vape', 'live resin'] },
+           
+            // ACCESSORIES (5 items)
+            { id: 'a1', name: 'Gold Plated Grinder', category: 'accessory', type: 'Grinder', price: 75, image: 'https://images.unsplash.com/photo-1617195920950-1145bf9a9c72?w=600&q=80', tags: ['grinder', 'accessory'] },
+            { id: 'a2', name: 'Obsidian Glass Bong', category: 'accessory', type: 'Glass Bong', price: 250, image: 'https://images.unsplash.com/photo-1621277224630-81d9af65e40f?w=600&q=80', tags: ['bong', 'glass', 'accessory'] },
+            { id: 'a3', name: 'Luxury Rolling Papers', category: 'accessory', type: '24K Gold Papers', price: 25, image: 'https://images.unsplash.com/photo-1581579186913-45ac3e6efe93?w=600&q=80', tags: ['papers', 'rolling', 'accessory', '$10'] },
+            { id: 'a4', name: 'Crystal Pipe', category: 'accessory', type: 'Hand Blown Glass', price: 120, image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80', tags: ['pipe', 'glass', 'accessory'] },
+            { id: 'a5', name: 'Titanium Dab Tool', category: 'accessory', type: 'Dab Tool', price: 45, image: 'https://images.unsplash.com/photo-1617195920950-1145bf9a9c72?w=600&q=80', tags: ['dab', 'tool', 'accessory'] }
+        ],
+        monchi: [
+            // SNACKS (6 items)
+            { id: 's1', name: 'Japanese Matcha Kit Kat', origin: 'Japan', price: 12, image: 'https://images.unsplash.com/photo-1609428854717-6f87de0e6fa0?w=600&q=80', tags: ['snack', 'japan', '$10'] },
+            { id: 's2', name: 'Italian Truffle Chips', origin: 'Italy', price: 18, image: 'https://images.unsplash.com/photo-1566478989037-eec170784d0b?w=600&q=80', tags: ['snack', 'italy'] },
+            { id: 's3', name: 'Korean Honey Butter Chips', origin: 'South Korea', price: 10, image: 'https://images.unsplash.com/photo-1628408897610-f9ff06eacb6e?w=600&q=80', tags: ['snack', 'korea', '$10'] },
+            { id: 's4', name: 'Mexican Takis Fuego', origin: 'Mexico', price: 8, image: 'https://images.unsplash.com/photo-1613919113640-25732ec5e61f?w=600&q=80', tags: ['snack', 'mexico', '$10'] },
+            { id: 's5', name: 'French Macarons', origin: 'France', price: 25, image: 'https://images.unsplash.com/photo-1558312657-b2dead6bcc4e?w=600&q=80', tags: ['snack', 'france'] },
+            { id: 's6', name: 'Swiss Chocolate Truffles', origin: 'Switzerland', price: 22, image: 'https://images.unsplash.com/photo-1511381939415-e44015466834?w=600&q=80', tags: ['snack', 'switzerland'] },
+           
+            // BEVERAGES (4 items)
+            { id: 'b1', name: 'Japanese Ramune Soda', type: 'Marble Soda', price: 6, image: 'https://images.unsplash.com/photo-1625772299848-391b6a87d7b3?w=600&q=80', tags: ['beverage', 'japan', '$10'] },
+            { id: 'b2', name: 'Thai Coconut Water', type: 'Fresh Coconut', price: 8, image: 'https://images.unsplash.com/photo-1585838629862-9fa616a047c0?w=600&q=80', tags: ['beverage', 'thailand', '$10'] },
+            { id: 'b3', name: 'Italian Aranciata', type: 'Blood Orange', price: 7, image: 'https://images.unsplash.com/photo-1546173159-315724a31696?w=600&q=80', tags: ['beverage', 'italy', '$10'] },
+            { id: 'b4', name: 'Korean Banana Milk', type: 'Flavored Milk', price: 5, image: 'https://images.unsplash.com/photo-1563636619-e9143da7973b?w=600&q=80', tags: ['beverage', 'korea', '$10'] }
+        ]
+    };
+
+    // STATE
+    let currentLang = 'en';
+    let cart = [];
+
+    // LANDING PAGE
+    function startExperience() {
+        document.getElementById('landingPage').classList.add('fade-out');
+        setTimeout(() => {
+            document.getElementById('landingPage').style.display = 'none';
+            document.getElementById('ageGate').classList.add('active');
+        }, 1000);
+    }
+
+    // AGE GATE
+    function verifyAge(over19) {
+        if (over19) {
+            document.getElementById('ageGate').classList.remove('active');
+            document.getElementById('mainSite').classList.remove('hidden');
+            document.getElementById('broskyAvatar').classList.remove('hidden');
+            document.getElementById('whatsappFloat').style.display = 'flex';
+            renderProducts();
+        } else {
+            window.location.href = 'https://www.google.com';
+        }
+    }
+
+    function changeAgeGateLang(lang) {
+        const t = translations[lang];
+        document.getElementById('ageTitle').textContent = t.ageTitle;
+        document.getElementById('ageSubtext').textContent = t.ageSubtext;
+        document.getElementById('ageConfirm').textContent = t.ageConfirm;
+        document.getElementById('ageDecline').textContent = t.ageDecline;
+    }
+
+    // LANGUAGE
+    function changeLanguage(lang) {
+        currentLang = lang;
+    }
+
+    // RENDER PRODUCTS
+    function renderProducts() {
+        const cannabisContainer = document.getElementById('cannabisProducts');
+        const monchiContainer = document.getElementById('monchiProducts');
+       
+        // Cannabis Products
+        cannabisContainer.innerHTML = products.cannabis.map(p => createProductCard(p)).join('');
+       
+        // Monchi Products
+        monchiContainer.innerHTML = products.monchi.map(p => createProductCard(p)).join('');
+    }
+
+    function createProductCard(product) {
+        const isFlower = product.category === 'flower';
+        const basePrice = isFlower ? product.prices['3.5g'] : product.price;
+       
+        return `
+            <div class="boutique-card" id="card-${product.id}">
+                <img src="${product.image}" alt="${product.name}" class="product-image">
+                <h4 class="playfair" style="font-size: 28px; font-weight: 700; color: white; margin-bottom: 15px;">${product.name}</h4>
+               
+                ${product.strain ? `<p style="color: #999; margin-bottom: 8px; font-size: 14px;"><span style="color: var(--gold);">●</span> ${product.strain}</p>` : ''}
+                ${product.thc ? `<p style="color: #999; margin-bottom: 8px; font-size: 14px;"><span style="color: var(--gold);">●</span> THC: ${product.thc}</p>` : ''}
+                ${product.type ? `<p style="color: #999; margin-bottom: 8px; font-size: 14px;"><span style="color: var(--gold);">●</span> ${product.type}</p>` : ''}
+                ${product.count ? `<p style="color: #999; margin-bottom: 8px; font-size: 14px;"><span style="color: var(--gold);">●</span> ${product.count}</p>` : ''}
+                ${product.origin ? `<p style="color: #999; margin-bottom: 8px; font-size: 14px;"><span style="color: var(--gold);">●</span> Origin: ${product.origin}</p>` : ''}
+               
+                ${isFlower ? `
+                    <div style="margin: 25px 0;">
+                        <label style="font-size: 12px; font-weight: 700; color: var(--gold); display: block; margin-bottom: 10px; letter-spacing: 1px;">SELECT WEIGHT</label>
+                        <select id="weight-${product.id}" onchange="updatePrice('${product.id}')" style="width: 100%; margin-bottom: 0; font-weight: 600;">
+                            ${Object.keys(product.prices).map(w => `<option value="${w}">${w}</option>`).join('')}
+                        </select>
+                    </div>
+                ` : ''}
+               
+                <div style="margin-top: 30px; padding-top: 30px; border-top: 2px solid #222;">
+                    <div class="playfair" style="font-size: 42px; font-weight: 900; color: var(--gold); margin-bottom: 20px;" id="price-${product.id}">
+                        $${basePrice}
+                    </div>
+                    <button onclick="addToCart('${product.id}')" class="gold-btn" style="margin-bottom: 0;">
+                        ADD TO CART
+                    </button>
+                </div>
+            </div>
+        `;
+    }
+
+    function updatePrice(productId) {
+        const product = products.cannabis.find(p => p.id === productId);
+        const weight = document.getElementById(`weight-${productId}`).value;
+        document.getElementById(`price-${productId}`).textContent = `$${product.prices[weight]}`;
+    }
+
+    // CART
+    function addToCart(productId) {
+        let product = [...products.cannabis, ...products.monchi].find(p => p.id === productId);
+        let selectedWeight = null;
+        let price = 0;
+       
+        if (product.category === 'flower') {
+            selectedWeight = document.getElementById(`weight-${productId}`).value;
+            price = product.prices[selectedWeight];
+        } else {
+            price = product.price;
+        }
+       
+        const existing = cart.findIndex(item => item.id === productId && item.selectedWeight === selectedWeight);
+       
+        if (existing >= 0) {
+            cart[existing].quantity += 1;
+        } else {
+            cart.push({
+                id: productId,
+                name: product.name,
+                selectedWeight: selectedWeight,
+                price: price,
+                quantity: 1,
+                image: product.image
+            });
+        }
+       
+        updateCart();
+    }
+
+    function updateCart() {
+        const badge = document.getElementById('cartBadge');
+        const cartItems = document.getElementById('cartItems');
+        const cartTotal = document.getElementById('cartTotal');
+        const totalAmount = document.getElementById('totalAmount');
+       
+        const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+        const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+       
+        if (totalItems > 0) {
+            badge.textContent = totalItems;
+            badge.classList.remove('hidden');
+        } else {
+            badge.classList.add('hidden');
+        }
+       
+        if (cart.length === 0) {
+            cartItems.innerHTML = `
+                <div style="text-align: center; padding: 80px 20px;">
+                    <div style="font-size: 60px; margin-bottom: 20px;">🛒</div>
+                    <p style="color: #777; font-size: 16px;">Your cart is empty</p>
+                </div>
+            `;
+            cartTotal.classList.add('hidden');
+        } else {
+            cartItems.innerHTML = cart.map((item, idx) => `
+                <div style="display: flex; gap: 20px; padding: 20px; background: #0d0d0d; border-radius: 16px; margin-bottom: 20px; border: 1px solid rgba(212,175,55,0.2);">
+                    <img src="${item.image}" style="width: 90px; height: 90px; object-fit: cover; border-radius: 12px;">
+                    <div style="flex: 1;">
+                        <h4 style="font-weight: 700; margin-bottom: 5px; font-size: 16px;">${item.name}</h4>
+                        ${item.selectedWeight ? `<p style="font-size: 13px; color: #888; margin-bottom: 5px;">${item.selectedWeight}</p>` : ''}
+                        <p style="font-size: 13px; color: #888;">Qty: ${item.quantity}</p>
+                    </div>
+                    <div style="text-align: right;">
+                        <p style="font-weight: 900; color: var(--gold); font-size: 20px; margin-bottom: 10px;">$${(item.price * item.quantity).toFixed(2)}</p>
+                        <button onclick="removeFromCart(${idx})" style="color: #ff4444; background: none; border: none; cursor: pointer; font-size: 12px; font-weight: 600;">Remove</button>
+                    </div>
+                </div>
+            `).join('');
+           
+            totalAmount.textContent = `$${totalPrice.toFixed(2)}`;
+            cartTotal.classList.remove('hidden');
+        }
+    }
+
+    function removeFromCart(idx) {
+        if (cart[idx].quantity > 1) {
+            cart[idx].quantity -= 1;
+        } else {
+            cart.splice(idx, 1);
+        }
+        updateCart();
+    }
+
+    function toggleCart() {
+        const sidebar = document.getElementById('cartSidebar');
+        sidebar.style.right = sidebar.style.right === '0px' ? '-500px' : '0px';
+    }
+
+    // CHECKOUT
+    function openCheckout() {
+        if (cart.length === 0) return;
+        document.getElementById('checkoutModal').classList.add('active');
+    }
+
+    function closeCheckout() {
+        document.getElementById('checkoutModal').classList.remove('active');
+    }
+
+    function submitOrder(e) {
+        e.preventDefault();
+        closeCheckout();
+        toggleCart();
+        document.getElementById('courierModal').classList.add('active');
+    }
+
+    function closeCourier() {
+        document.getElementById('courierModal').classList.remove('active');
+        cart = [];
+        updateCart();
+    }
+
+    // BROSKY AI
+    function toggleBrosky() {
+        document.getElementById('broskyChat').classList.toggle('active');
+    }
+
+    function sendBroskyMessage() {
+        const input = document.getElementById('broskyInput');
+        const query = input.value.trim().toLowerCase();
+        if (!query) return;
+       
+        const messages = document.getElementById('broskyMessages');
+        messages.innerHTML += `
+            <div style="text-align: right; margin-bottom: 15px;">
+                <div style="display: inline-block; background: var(--gold); color: black; padding: 15px 20px; border-radius: 16px; max-width: 80%; font-weight: 600; font-size: 14px;">
+                    ${input.value}
+                </div>
+            </div>
+        `;
+       
+        input.value = '';
+       
+        // SMART SEARCH
+        const allProducts = [...products.cannabis, ...products.monchi];
+        const matches = allProducts.filter(p => {
+            const matchName = p.name.toLowerCase().includes(query);
+            const matchTags = p.tags && p.tags.some(tag => query.includes(tag));
+            return matchName || matchTags;
+        });
+       
+        if (matches.length > 0) {
+            // Highlight and scroll to first match
+            const firstMatch = matches[0];
+            const card = document.getElementById(`card-${firstMatch.id}`);
+            if (card) {
+                card.classList.add('highlighted');
+                card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                setTimeout(() => card.classList.remove('highlighted'), 3000);
+            }
+           
+            setTimeout(() => {
+                messages.innerHTML += `
+                    <div style="background: #222; padding: 20px; border-radius: 16px; margin-bottom: 15px;">
+                        <p style="font-weight: 700; color: var(--gold); font-size: 12px; margin-bottom: 8px;">BROSKY AI</p>
+                        <p style="color: #ddd; line-height: 1.7; font-size: 14px;">
+                            Excellent choice! I found ${matches.length} item${matches.length > 1 ? 's' : ''} matching your search. I've highlighted "${firstMatch.name}" for you.
+                            ${firstMatch.strain ? `It's a premium ${firstMatch.strain} strain with ${firstMatch.thc} THC.` : ''}
+                            ${firstMatch.origin ? `This is an authentic product from ${firstMatch.origin}.` : ''}
+                            Would you like recommendations on pairing or usage? 🌿
+                        </p>
+                    </div>
+                `;
+                messages.scrollTop = messages.scrollHeight;
+            }, 1000);
+        } else {
+            setTimeout(() => {
+                messages.innerHTML += `
+                    <div style="background: #222; padding: 20px; border-radius: 16px; margin-bottom: 15px;">
+                        <p style="font-weight: 700; color: var(--gold); font-size: 12px; margin-bottom: 8px;">BROSKY AI</p>
+                        <p style="color: #ddd; line-height: 1.7; font-size: 14px;">
+                            I couldn't find an exact match, but may I suggest our premium collection? Our Northern Lights and Blue Dream are customer favorites.
+                            What are you looking for specifically? Indica, Sativa, or Hybrid? 🌿
+                        </p>
+                    </div>
+                `;
+                messages.scrollTop = messages.scrollHeight;
+            }, 1000);
+        }
+    }
+
+    function openAskMenu() {
+        document.getElementById('askMenuModal').classList.add('active');
+    }
+
+    function closeAskMenu() {
+        document.getElementById('askMenuModal').classList.remove('active');
+    }
+
+    function broskyPreset(type) {
+        closeAskMenu();
+        const messages = document.getElementById('broskyMessages');
+       
+        const responses = {
+            history: "Pop Roll was founded in 2024 with a vision to elevate cannabis culture in Ontario. We source only the finest strains from trusted cultivators and pair them with curated exotic delicacies from around the world. Our boutique experience reflects the sophistication that cannabis deserves.",
+            benefits: "Cannabis offers various potential benefits including stress relief, pain management, and improved sleep. However, it's important to start with low doses, especially if you're new. Risks include impaired driving, dependency with heavy use, and potential anxiety. Always consume responsibly and never drive under the influence.",
+            usage: "For flower, we recommend starting with 0.25-0.5g. Inhale gently and wait 10-15 minutes to feel effects. For edibles, start with 2.5-5mg THC and wait 1-2 hours. Store products in a cool, dark place away from children and pets. Need specific pairing suggestions?",
+            offers: "Today's special: 15% off all Northern Lights strains and a complimentary grinder with purchases over $100. Our Platinum Pre-Roll Pack is also on sale. Use code LUXURY15 at checkout!"
+        };
+       
+        messages.innerHTML += `
+            <div style="background: #222; padding: 20px; border-radius: 16px; margin-bottom: 15px;">
+                <p style="font-weight: 700; color: var(--gold); font-size: 12px; margin-bottom: 8px;">BROSKY AI</p>
+                <p style="color: #ddd; line-height: 1.7; font-size: 14px;">${responses[type]}</p>
+            </div>
+        `;
+        messages.scrollTop = messages.scrollHeight;
+    }
+
+    // MEMBER LOGIN
+    function openMemberLogin() {
+        document.getElementById('memberModal').classList.add('active');
+    }
+
+    function closeMemberLogin() {
+        document.getElementById('memberModal').classList.remove('active');
+    }
+
+    // HORIZON VENTURA
+    function openHorizonVentura() {
+        window.open('https://horizonventura.com', '_blank');
+    }
+
+    // SCROLL TO TOP
+    function scrollToTop() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+</script>
+```
+
+</body>
+</html>
 
