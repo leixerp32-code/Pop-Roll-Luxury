@@ -1,1246 +1,2651 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pop Roll Boutique - The Luxury of Cannabis</title>
-    <script src="[https://cdn.tailwindcss.com"></script]https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Cormorant+Garamond:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-```
-<style>
-    :root {
-        --gold: #D4AF37;
-        --dark: #0a0a0a;
-    }
-
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
-
-    body {
-        font-family: 'Montserrat', sans-serif;
-        background: var(--dark);
-        color: #f5f5f5;
-        overflow-x: hidden;
-    }
-
-    .cinzel {
-        font-family: 'Cinzel', serif;
-    }
-
-    .cormorant {
-        font-family: 'Cormorant Garamond', serif;
-    }
-
-    /* LANDING PAGE - EXACT V0 DESIGN */
-    .landing-page {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        background: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.75)),
-                    url('https://images.unsplash.com/photo-1616680214084-22670de1bc82?w=1920&q=80') center/cover no-repeat fixed;
-        z-index: 10000;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        opacity: 1;
-        transition: opacity 1.2s ease;
-    }
-
-    .landing-page.fade-out {
-        opacity: 0;
-        pointer-events: none;
-    }
-
-    .pr-logo-header {
-        width: 80px;
-        height: 80px;
-        border: 3px solid var(--gold);
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-family: 'Cinzel', serif;
-        font-size: 36px;
-        font-weight: 900;
-        color: var(--gold);
-        letter-spacing: -2px;
-        position: relative;
-    }
-
-    .pr-logo-large {
-        width: 200px;
-        height: 200px;
-        border: 4px solid var(--gold);
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-family: 'Cinzel', serif;
-        font-size: 80px;
-        font-weight: 900;
-        color: var(--gold);
-        letter-spacing: -4px;
-        margin-bottom: 60px;
-        animation: logoGlow 3s ease-in-out infinite;
-        box-shadow: 0 0 40px rgba(212, 175, 55, 0.4);
-    }
-
-    @keyframes logoGlow {
-        0%, 100% { box-shadow: 0 0 40px rgba(212, 175, 55, 0.4); }
-        50% { box-shadow: 0 0 80px rgba(212, 175, 55, 0.7); }
-    }
-
-    .luxury-title {
-        font-family: 'Cinzel', serif;
-        font-size: 72px;
-        font-weight: 400;
-        color: var(--gold);
-        text-align: center;
-        letter-spacing: 12px;
-        margin-bottom: 30px;
-        text-transform: uppercase;
-        animation: fadeInTitle 1.5s ease 0.3s both;
-    }
-
-    .luxury-subtitle {
-        font-family: 'Cormorant Garamond', serif;
-        font-size: 24px;
-        font-weight: 300;
-        color: #ccc;
-        letter-spacing: 6px;
-        text-transform: uppercase;
-        margin-bottom: 80px;
-        animation: fadeInTitle 1.5s ease 0.6s both;
-    }
-
-    @keyframes fadeInTitle {
-        from { opacity: 0; transform: translateY(30px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
-
-    .diamond-divider {
-        width: 100px;
-        height: 2px;
-        background: linear-gradient(90deg, transparent, var(--gold), transparent);
-        position: relative;
-        margin: 40px auto;
-    }
-
-    .diamond-divider::after {
-        content: '◆';
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        color: var(--gold);
-        font-size: 20px;
-        background: var(--dark);
-        padding: 0 15px;
-    }
-
-    .explore-btn {
-        padding: 20px 70px;
-        background: transparent;
-        border: 2px solid var(--gold);
-        color: var(--gold);
-        font-family: 'Montserrat', sans-serif;
-        font-weight: 600;
-        font-size: 14px;
-        letter-spacing: 4px;
-        text-transform: uppercase;
-        cursor: pointer;
-        transition: all 0.5s ease;
-        animation: fadeInTitle 1.5s ease 0.9s both;
-    }
-
-    .explore-btn:hover {
-        background: var(--gold);
-        color: #000;
-        box-shadow: 0 0 30px rgba(212, 175, 55, 0.6);
-    }
-
-    .scroll-indicator {
-        position: absolute;
-        bottom: 50px;
-        left: 50%;
-        transform: translateX(-50%);
-        animation: bounce 2s infinite;
-    }
-
-    @keyframes bounce {
-        0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
-        40% { transform: translateX(-50%) translateY(-10px); }
-        60% { transform: translateX(-50%) translateY(-5px); }
-    }
-
-    /* AGE GATE */
-    .age-gate {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        background: linear-gradient(rgba(10, 10, 10, 0.95), rgba(10, 10, 10, 0.97)),
-                    url('https://images.unsplash.com/photo-1536963367063-4c13e8ff6e0d?w=1920&q=80') center/cover no-repeat;
-        z-index: 9999;
-        display: none;
-        align-items: center;
-        justify-content: center;
-        backdrop-filter: blur(10px);
-    }
-
-    .age-gate.active {
-        display: flex;
-    }
-
-    /* BROSKY LUXURY AVATAR */
-    .brosky-avatar {
-        position: fixed;
-        bottom: 40px;
-        right: 40px;
-        width: 90px;
-        height: 90px;
-        border-radius: 50%;
-        background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
-        border: 3px solid var(--gold);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        box-shadow: 0 15px 50px rgba(212, 175, 55, 0.5);
-        transition: all 0.4s ease;
-        z-index: 1000;
-        overflow: hidden;
-    }
-
-    .brosky-avatar:hover {
-        transform: scale(1.1);
-        box-shadow: 0 20px 70px rgba(212, 175, 55, 0.8);
-    }
-
-    .brosky-avatar img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-
-    .brosky-chat {
-        position: fixed;
-        bottom: 150px;
-        right: 40px;
-        width: 480px;
-        max-height: 700px;
-        background: #1a1a1a;
-        border: 2px solid var(--gold);
-        border-radius: 24px;
-        overflow: hidden;
-        box-shadow: 0 30px 90px rgba(0, 0, 0, 0.9);
-        z-index: 999;
-        display: none;
-    }
-
-    .brosky-chat.active {
-        display: block;
-        animation: slideUp 0.5s ease;
-    }
-
-    @keyframes slideUp {
-        from { transform: translateY(30px); opacity: 0; }
-        to { transform: translateY(0); opacity: 1; }
-    }
-
-    /* MODALS */
-    .modal {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        background: rgba(10, 10, 10, 0.96);
-        z-index: 5000;
-        display: none;
-        align-items: center;
-        justify-content: center;
-        backdrop-filter: blur(12px);
-    }
-
-    .modal.active {
-        display: flex;
-        animation: modalFade 0.4s ease;
-    }
-
-    @keyframes modalFade {
-        from { opacity: 0; }
-        to { opacity: 1; }
-    }
-
-    .modal-content {
-        background: linear-gradient(135deg, #1a1a1a, #0d0d0d);
-        border: 3px solid var(--gold);
-        border-radius: 24px;
-        padding: 60px;
-        max-width: 700px;
-        width: 90%;
-        max-height: 90vh;
-        overflow-y: auto;
-        box-shadow: 0 30px 100px rgba(0, 0, 0, 0.9);
-    }
-
-    /* PRODUCT CARDS */
-    .product-card {
-        background: linear-gradient(135deg, #1a1a1a, #0d0d0d);
-        border: 1px solid rgba(212, 175, 55, 0.2);
-        border-radius: 20px;
-        padding: 40px;
-        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-        position: relative;
-        overflow: hidden;
-    }
-
-    .product-card::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 3px;
-        background: linear-gradient(90deg, transparent, var(--gold), transparent);
-        transition: left 0.8s ease;
-    }
-
-    .product-card:hover::before {
-        left: 100%;
-    }
-
-    .product-card:hover {
-        border-color: var(--gold);
-        transform: translateY(-10px);
-        box-shadow: 0 30px 80px rgba(212, 175, 55, 0.3);
-    }
-
-    .product-card.highlighted {
-        border: 3px solid var(--gold);
-        animation: highlightPulse 2s ease;
-    }
-
-    @keyframes highlightPulse {
-        0%, 100% { box-shadow: 0 0 40px rgba(212, 175, 55, 0.6); }
-        50% { box-shadow: 0 0 80px rgba(212, 175, 55, 1); }
-    }
-
-    .product-img {
-        width: 100%;
-        height: 320px;
-        object-fit: cover;
-        border-radius: 16px;
-        margin-bottom: 30px;
-    }
-
-    /* INPUTS */
-    input, select, textarea {
-        background: rgba(13, 13, 13, 0.95);
-        border: 2px solid rgba(212, 175, 55, 0.3);
-        color: #f5f5f5;
-        padding: 18px 24px;
-        border-radius: 12px;
-        font-family: 'Montserrat', sans-serif;
-        width: 100%;
-        margin-bottom: 20px;
-        transition: all 0.3s ease;
-    }
-
-    input:focus, select:focus, textarea:focus {
-        outline: none;
-        border-color: var(--gold);
-        box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.15);
-    }
-
-    .gold-btn {
-        background: var(--gold);
-        color: #000;
-        font-weight: 700;
-        padding: 18px 40px;
-        border-radius: 12px;
-        border: none;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        font-size: 14px;
-        width: 100%;
-        box-shadow: 0 10px 30px rgba(212, 175, 55, 0.4);
-    }
-
-    .gold-btn:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 15px 40px rgba(212, 175, 55, 0.6);
-    }
-
-    /* WHATSAPP */
-    .whatsapp-float {
-        position: fixed;
-        bottom: 160px;
-        right: 40px;
-        width: 70px;
-        height: 70px;
-        background: linear-gradient(135deg, #25D366, #20BA5A);
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        box-shadow: 0 10px 40px rgba(37, 211, 102, 0.6);
-        transition: all 0.4s ease;
-        z-index: 1000;
-        border: 3px solid var(--dark);
-    }
-
-    .whatsapp-float:hover {
-        transform: scale(1.15);
-        box-shadow: 0 15px 50px rgba(37, 211, 102, 0.8);
-    }
-
-    /* ADMIN BUTTON */
-    .admin-btn {
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        width: 50px;
-        height: 50px;
-        background: rgba(26, 26, 26, 0.9);
-        border: 2px solid rgba(212, 175, 55, 0.3);
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        z-index: 100;
-        font-size: 24px;
-    }
-
-    .admin-btn:hover {
-        border-color: var(--gold);
-        background: rgba(212, 175, 55, 0.1);
-    }
-
-    .tracking-map {
-        width: 100%;
-        height: 400px;
-        background: #0d0d0d;
-        border: 2px solid rgba(212, 175, 55, 0.3);
-        border-radius: 16px;
-        position: relative;
-        overflow: hidden;
-        margin: 30px 0;
-    }
-
-    .delivery-marker {
-        position: absolute;
-        width: 50px;
-        height: 50px;
-        background: var(--gold);
-        border-radius: 50%;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        animation: moveMarker 12s ease-in-out infinite;
-        box-shadow: 0 0 30px rgba(212, 175, 55, 0.8);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 24px;
-    }
-
-    @keyframes moveMarker {
-        0%, 100% { top: 50%; left: 50%; }
-        25% { top: 30%; left: 65%; }
-        50% { top: 70%; left: 75%; }
-        75% { top: 60%; left: 35%; }
-    }
-
-    .hidden { display: none; }
-</style>
-```
-
+    <title>Cannabis Delivery Platform</title>
+    <style>
+        /* ==================== GLOBAL THEME SYSTEM (WHITE-LABEL READY) ==================== */
+        :root {
+            /* Primary Branding Colors - Change these for white-label */
+            --primary-color: #10b981;
+            --primary-dark: #059669;
+            --primary-light: #34d399;
+            --accent-color: #f59e0b;
+            --accent-dark: #d97706;
+           
+            /* Neutral Colors */
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-tertiary: #334155;
+            --text-primary: #f1f5f9;
+            --text-secondary: #cbd5e1;
+            --text-muted: #94a3b8;
+           
+            /* Status Colors */
+            --success: #10b981;
+            --warning: #f59e0b;
+            --error: #ef4444;
+            --info: #3b82f6;
+           
+            /* Typography */
+            --font-primary: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            --font-display: 'Georgia', serif;
+           
+            /* Spacing */
+            --spacing-xs: 0.25rem;
+            --spacing-sm: 0.5rem;
+            --spacing-md: 1rem;
+            --spacing-lg: 1.5rem;
+            --spacing-xl: 2rem;
+            --spacing-2xl: 3rem;
+           
+            /* Shadows */
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+           
+            /* Transitions */
+            --transition-fast: 150ms ease;
+            --transition-base: 300ms ease;
+            --transition-slow: 500ms ease;
+        }
+       
+        /* ==================== RESET & BASE ==================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+       
+        body {
+            font-family: var(--font-primary);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+       
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+       
+        button {
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-family: inherit;
+        }
+       
+        input, textarea, select {
+            font-family: inherit;
+            font-size: inherit;
+        }
+       
+        /* ==================== AGE GATE MODAL ==================== */
+        .age-gate-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.98);
+            backdrop-filter: blur(10px);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+        }
+       
+        .age-gate-modal {
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+            border-radius: 24px;
+            padding: var(--spacing-2xl);
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            box-shadow: var(--shadow-xl);
+            border: 2px solid var(--primary-color);
+            animation: slideUp 0.5s ease;
+        }
+       
+        .age-gate-logo {
+            font-size: 4rem;
+            margin-bottom: var(--spacing-lg);
+            animation: pulse 2s infinite;
+        }
+       
+        .age-gate-title {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            margin-bottom: var(--spacing-md);
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+       
+        .age-gate-text {
+            color: var(--text-secondary);
+            margin-bottom: var(--spacing-xl);
+            font-size: 1.1rem;
+        }
+       
+        .age-gate-buttons {
+            display: flex;
+            gap: var(--spacing-md);
+        }
+       
+        .age-gate-button {
+            flex: 1;
+            padding: var(--spacing-lg);
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: all var(--transition-base);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+       
+        .age-gate-accept {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+        }
+       
+        .age-gate-accept:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(16, 185, 129, 0.3);
+        }
+       
+        .age-gate-decline {
+            background: var(--bg-tertiary);
+            color: var(--text-secondary);
+            border: 2px solid var(--bg-tertiary);
+        }
+       
+        .age-gate-decline:hover {
+            border-color: var(--error);
+            color: var(--error);
+        }
+       
+        /* ==================== HEADER & NAVIGATION ==================== */
+        .header {
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--bg-tertiary);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow-md);
+        }
+       
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: var(--spacing-md) var(--spacing-lg);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: var(--spacing-md);
+        }
+       
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+       
+        .logo-icon {
+            font-size: 2rem;
+            animation: rotate 20s linear infinite;
+        }
+       
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+       
+        .lang-switch {
+            padding: var(--spacing-sm) var(--spacing-md);
+            background: var(--bg-tertiary);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-weight: 500;
+            transition: all var(--transition-fast);
+        }
+       
+        .lang-switch:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+       
+        .nav-button {
+            padding: var(--spacing-sm) var(--spacing-lg);
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all var(--transition-fast);
+        }
+       
+        .nav-button-primary {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+        }
+       
+        .nav-button-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+        }
+       
+        .nav-button-secondary {
+            background: var(--accent-color);
+            color: white;
+        }
+       
+        .nav-button-secondary:hover {
+            background: var(--accent-dark);
+        }
+       
+        .cart-button {
+            position: relative;
+            padding: var(--spacing-sm) var(--spacing-lg);
+            background: var(--bg-tertiary);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            transition: all var(--transition-fast);
+        }
+       
+        .cart-button:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+       
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--error);
+            color: white;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+       
+        /* ==================== HERO SECTION ==================== */
+        .hero {
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+            padding: var(--spacing-2xl) var(--spacing-lg);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+       
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(16, 185, 129, 0.1) 0%, transparent 50%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+       
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+       
+        .hero-title {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            font-weight: 900;
+            margin-bottom: var(--spacing-md);
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color), var(--primary-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 2px;
+            animation: gradient 3s ease infinite;
+            background-size: 200% 200%;
+        }
+       
+        .hero-subtitle {
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            color: var(--text-secondary);
+            font-weight: 300;
+            margin-bottom: var(--spacing-xl);
+            min-height: 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+       
+        .rotating-text {
+            display: inline-block;
+            animation: fadeIn 0.5s ease;
+        }
+       
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            padding: var(--spacing-lg) var(--spacing-2xl);
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+            border-radius: 50px;
+            font-size: 1.25rem;
+            font-weight: 600;
+            transition: all var(--transition-base);
+            box-shadow: var(--shadow-lg);
+        }
+       
+        .hero-cta:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(16, 185, 129, 0.4);
+        }
+       
+        /* ==================== HAPPY HOUR BANNER ==================== */
+        .happy-hour-banner {
+            background: linear-gradient(135deg, var(--accent-color), var(--accent-dark));
+            padding: var(--spacing-lg);
+            text-align: center;
+            animation: slideDown 0.5s ease, pulse 2s ease-in-out infinite;
+            position: relative;
+            overflow: hidden;
+        }
+       
+        .happy-hour-banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shine 2s infinite;
+        }
+       
+        .happy-hour-content {
+            position: relative;
+            z-index: 1;
+        }
+       
+        .happy-hour-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: var(--spacing-sm);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+       
+        .happy-hour-timer {
+            font-size: 2rem;
+            font-weight: 900;
+            color: white;
+            font-family: monospace;
+        }
+       
+        /* ==================== MAIN CONTAINER ==================== */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: var(--spacing-xl) var(--spacing-lg);
+        }
+       
+        /* ==================== CATEGORY TABS ==================== */
+        .category-tabs {
+            display: flex;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-xl);
+            overflow-x: auto;
+            padding-bottom: var(--spacing-sm);
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary-color) var(--bg-secondary);
+        }
+       
+        .category-tabs::-webkit-scrollbar {
+            height: 4px;
+        }
+       
+        .category-tabs::-webkit-scrollbar-track {
+            background: var(--bg-secondary);
+        }
+       
+        .category-tabs::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 2px;
+        }
+       
+        .category-tab {
+            padding: var(--spacing-md) var(--spacing-lg);
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            color: var(--text-secondary);
+            font-weight: 600;
+            white-space: nowrap;
+            transition: all var(--transition-fast);
+            border: 2px solid transparent;
+        }
+       
+        .category-tab:hover {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+        }
+       
+        .category-tab.active {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+            border-color: var(--primary-light);
+        }
+       
+        /* ==================== PRODUCT GRID ==================== */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: var(--spacing-lg);
+            margin-bottom: var(--spacing-xl);
+        }
+       
+        .product-card {
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all var(--transition-base);
+            border: 2px solid transparent;
+            cursor: pointer;
+        }
+       
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(16, 185, 129, 0.2);
+            border-color: var(--primary-color);
+        }
+       
+        .product-image-container {
+            position: relative;
+            height: 200px;
+            background: var(--bg-tertiary);
+            overflow: hidden;
+        }
+       
+        .product-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform var(--transition-slow);
+        }
+       
+        .product-card:hover .product-image {
+            transform: scale(1.1);
+        }
+       
+        .product-badge {
+            position: absolute;
+            top: var(--spacing-sm);
+            right: var(--spacing-sm);
+            padding: var(--spacing-xs) var(--spacing-md);
+            background: var(--accent-color);
+            color: white;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+       
+        .product-info {
+            padding: var(--spacing-lg);
+        }
+       
+        .product-category {
+            color: var(--primary-color);
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: var(--spacing-xs);
+        }
+       
+        .product-name {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: var(--spacing-sm);
+            color: var(--text-primary);
+        }
+       
+        .product-strain {
+            display: inline-block;
+            padding: var(--spacing-xs) var(--spacing-sm);
+            background: var(--bg-tertiary);
+            border-radius: 6px;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-bottom: var(--spacing-sm);
+        }
+       
+        .product-potency {
+            display: flex;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-sm);
+            font-size: 0.875rem;
+        }
+       
+        .potency-item {
+            display: flex;
+            flex-direction: column;
+        }
+       
+        .potency-label {
+            color: var(--text-muted);
+            font-size: 0.75rem;
+        }
+       
+        .potency-value {
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+       
+        .product-effects {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--spacing-xs);
+            margin-bottom: var(--spacing-md);
+        }
+       
+        .effect-tag {
+            padding: var(--spacing-xs) var(--spacing-sm);
+            background: var(--bg-primary);
+            border-radius: 6px;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+       
+        .product-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: var(--spacing-md);
+            border-top: 1px solid var(--bg-tertiary);
+        }
+       
+        .product-price-container {
+            display: flex;
+            flex-direction: column;
+        }
+       
+        .product-price {
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--primary-color);
+        }
+       
+        .product-points {
+            font-size: 0.75rem;
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+       
+        .add-to-cart-btn {
+            padding: var(--spacing-sm) var(--spacing-lg);
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all var(--transition-fast);
+        }
+       
+        .add-to-cart-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+        }
+       
+        .add-to-cart-btn:active {
+            transform: scale(0.95);
+        }
+       
+        /* ==================== MODAL SYSTEM ==================== */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: var(--spacing-lg);
+            animation: fadeIn 0.3s ease;
+        }
+       
+        .modal {
+            background: var(--bg-secondary);
+            border-radius: 24px;
+            width: 100%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: var(--shadow-xl);
+            animation: slideUp 0.3s ease;
+        }
+       
+        .modal-header {
+            padding: var(--spacing-xl);
+            border-bottom: 1px solid var(--bg-tertiary);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+       
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+       
+        .modal-close {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            transition: all var(--transition-fast);
+        }
+       
+        .modal-close:hover {
+            background: var(--error);
+            transform: rotate(90deg);
+        }
+       
+        .modal-body {
+            padding: var(--spacing-xl);
+        }
+       
+        /* ==================== FORM ELEMENTS ==================== */
+        .form-group {
+            margin-bottom: var(--spacing-lg);
+        }
+       
+        .form-label {
+            display: block;
+            margin-bottom: var(--spacing-sm);
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+       
+        .form-input {
+            width: 100%;
+            padding: var(--spacing-md);
+            background: var(--bg-tertiary);
+            border: 2px solid transparent;
+            border-radius: 8px;
+            color: var(--text-primary);
+            transition: all var(--transition-fast);
+        }
+       
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            background: var(--bg-primary);
+        }
+       
+        .form-textarea {
+            width: 100%;
+            padding: var(--spacing-md);
+            background: var(--bg-tertiary);
+            border: 2px solid transparent;
+            border-radius: 8px;
+            color: var(--text-primary);
+            min-height: 100px;
+            resize: vertical;
+            transition: all var(--transition-fast);
+        }
+       
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            background: var(--bg-primary);
+        }
+       
+        .form-select {
+            width: 100%;
+            padding: var(--spacing-md);
+            background: var(--bg-tertiary);
+            border: 2px solid transparent;
+            border-radius: 8px;
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+       
+        .form-select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            background: var(--bg-primary);
+        }
+       
+        /* ==================== CART PANEL ==================== */
+        .cart-panel {
+            position: fixed;
+            right: -100%;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+            max-width: 500px;
+            background: var(--bg-secondary);
+            box-shadow: var(--shadow-xl);
+            z-index: 1001;
+            display: flex;
+            flex-direction: column;
+            transition: right var(--transition-base);
+        }
+       
+        .cart-panel.open {
+            right: 0;
+        }
+       
+        .cart-header {
+            padding: var(--spacing-xl);
+            border-bottom: 1px solid var(--bg-tertiary);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+       
+        .cart-items {
+            flex: 1;
+            overflow-y: auto;
+            padding: var(--spacing-lg);
+        }
+       
+        .cart-item {
+            background: var(--bg-tertiary);
+            border-radius: 12px;
+            padding: var(--spacing-md);
+            margin-bottom: var(--spacing-md);
+            display: flex;
+            gap: var(--spacing-md);
+        }
+       
+        .cart-item-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+       
+        .cart-item-info {
+            flex: 1;
+        }
+       
+        .cart-item-name {
+            font-weight: 700;
+            margin-bottom: var(--spacing-xs);
+        }
+       
+        .cart-item-price {
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+       
+        .cart-item-controls {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            margin-top: var(--spacing-sm);
+        }
+       
+        .qty-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            transition: all var(--transition-fast);
+        }
+       
+        .qty-btn:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+       
+        .cart-item-qty {
+            font-weight: 700;
+            min-width: 30px;
+            text-align: center;
+        }
+       
+        .cart-footer {
+            padding: var(--spacing-xl);
+            border-top: 1px solid var(--bg-tertiary);
+            background: var(--bg-primary);
+        }
+       
+        .cart-summary {
+            margin-bottom: var(--spacing-lg);
+        }
+       
+        .cart-summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: var(--spacing-sm);
+            color: var(--text-secondary);
+        }
+       
+        .cart-summary-row.total {
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--text-primary);
+            padding-top: var(--spacing-md);
+            border-top: 2px solid var(--bg-tertiary);
+        }
+       
+        .checkout-btn {
+            width: 100%;
+            padding: var(--spacing-lg);
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+            border-radius: 12px;
+            font-size: 1.25rem;
+            font-weight: 700;
+            transition: all var(--transition-fast);
+        }
+       
+        .checkout-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4);
+        }
+       
+        /* ==================== DELIVERY TRACKING ==================== */
+        .tracking-container {
+            background: var(--bg-secondary);
+            border-radius: 24px;
+            padding: var(--spacing-xl);
+            margin-bottom: var(--spacing-xl);
+        }
+       
+        .tracking-map {
+            width: 100%;
+            height: 400px;
+            background: var(--bg-tertiary);
+            border-radius: 16px;
+            margin-bottom: var(--spacing-xl);
+            position: relative;
+            overflow: hidden;
+        }
+       
+        .map-marker {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            transition: all var(--transition-base);
+        }
+       
+        .store-marker {
+            background: var(--primary-color);
+            border: 3px solid white;
+            box-shadow: var(--shadow-lg);
+        }
+       
+        .customer-marker {
+            background: var(--accent-color);
+            border: 3px solid white;
+            box-shadow: var(--shadow-lg);
+        }
+       
+        .courier-marker {
+            background: linear-gradient(135deg, var(--success), var(--primary-dark));
+            border: 3px solid white;
+            box-shadow: var(--shadow-lg);
+            animation: bounce 1s ease-in-out infinite;
+        }
+       
+        .route-line {
+            position: absolute;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            transform-origin: left;
+            animation: drawLine 2s ease-in-out;
+        }
+       
+        .tracking-status {
+            text-align: center;
+            margin-bottom: var(--spacing-xl);
+        }
+       
+        .tracking-eta {
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--primary-color);
+            margin-bottom: var(--spacing-sm);
+        }
+       
+        .tracking-distance {
+            color: var(--text-secondary);
+        }
+       
+        .status-pipeline {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: var(--spacing-xl);
+            position: relative;
+        }
+       
+        .status-pipeline::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--bg-tertiary);
+            z-index: 0;
+        }
+       
+        .status-progress-bar {
+            position: absolute;
+            top: 20px;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            z-index: 1;
+            transition: width var(--transition-slow);
+        }
+       
+        .status-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--spacing-sm);
+            flex: 1;
+            position: relative;
+            z-index: 2;
+        }
+       
+        .status-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--bg-tertiary);
+            border: 3px solid var(--bg-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            transition: all var(--transition-base);
+        }
+       
+        .status-step.completed .status-icon {
+            background: var(--primary-color);
+            color: white;
+        }
+       
+        .status-step.active .status-icon {
+            background: var(--accent-color);
+            color: white;
+            animation: pulse 2s ease-in-out infinite;
+        }
+       
+        .status-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-align: center;
+        }
+       
+        .status-step.completed .status-label,
+        .status-step.active .status-label {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+       
+        /* ==================== CHAT SYSTEM ==================== */
+        .chat-container {
+            background: var(--bg-secondary);
+            border-radius: 24px;
+            padding: var(--spacing-xl);
+            margin-bottom: var(--spacing-xl);
+        }
+       
+        .chat-messages {
+            height: 400px;
+            overflow-y: auto;
+            margin-bottom: var(--spacing-lg);
+            padding: var(--spacing-md);
+            background: var(--bg-primary);
+            border-radius: 12px;
+        }
+       
+        .chat-message {
+            display: flex;
+            margin-bottom: var(--spacing-md);
+            animation: slideIn 0.3s ease;
+        }
+       
+        .chat-message.user {
+            justify-content: flex-end;
+        }
+       
+        .chat-bubble {
+            max-width: 70%;
+            padding: var(--spacing-md);
+            border-radius: 16px;
+            position: relative;
+        }
+       
+        .chat-message.driver .chat-bubble {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+        }
+       
+        .chat-message.user .chat-bubble {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+        }
+       
+        .chat-message.system .chat-bubble {
+            background: var(--accent-color);
+            color: white;
+            max-width: 100%;
+            text-align: center;
+        }
+       
+        .chat-sender {
+            font-weight: 700;
+            font-size: 0.875rem;
+            margin-bottom: var(--spacing-xs);
+        }
+       
+        .chat-time {
+            font-size: 0.75rem;
+            opacity: 0.7;
+            margin-top: var(--spacing-xs);
+        }
+       
+        .typing-indicator {
+            display: flex;
+            gap: 4px;
+            padding: var(--spacing-md);
+        }
+       
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--text-muted);
+            animation: typing 1.4s infinite;
+        }
+       
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+       
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+       
+        .chat-input-container {
+            display: flex;
+            gap: var(--spacing-md);
+        }
+       
+        .chat-input {
+            flex: 1;
+            padding: var(--spacing-md);
+            background: var(--bg-tertiary);
+            border: 2px solid transparent;
+            border-radius: 12px;
+            color: var(--text-primary);
+            transition: all var(--transition-fast);
+        }
+       
+        .chat-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+       
+        .chat-send-btn {
+            padding: var(--spacing-md) var(--spacing-xl);
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+            border-radius: 12px;
+            font-weight: 700;
+            transition: all var(--transition-fast);
+        }
+       
+        .chat-send-btn:hover {
+            transform: scale(1.05);
+        }
+       
+        /* ==================== WHATSAPP FLOAT BUTTON ==================== */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 999;
+        }
+       
+        .whatsapp-button {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #25D366, #128C7E);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.5);
+            transition: all var(--transition-base);
+            animation: pulse 2s ease-in-out infinite;
+        }
+       
+        .whatsapp-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 30px rgba(37, 211, 102, 0.7);
+        }
+       
+        .whatsapp-tooltip {
+            position: absolute;
+            bottom: 70px;
+            right: 0;
+            background: white;
+            color: #333;
+            padding: var(--spacing-md) var(--spacing-lg);
+            border-radius: 12px;
+            box-shadow: var(--shadow-lg);
+            white-space: nowrap;
+            font-weight: 600;
+            opacity: 0;
+            pointer-events: none;
+            transition: all var(--transition-fast);
+        }
+       
+        .whatsapp-float:hover .whatsapp-tooltip {
+            opacity: 1;
+            bottom: 80px;
+        }
+       
+        /* ==================== STICKY BOTTOM BAR (MOBILE) ==================== */
+        .sticky-bottom-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--bg-secondary);
+            border-top: 2px solid var(--primary-color);
+            padding: var(--spacing-md);
+            z-index: 100;
+            display: none;
+            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
+        }
+       
+        .sticky-bottom-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+       
+        .sticky-total {
+            font-size: 1.25rem;
+            font-weight: 900;
+            color: var(--primary-color);
+        }
+       
+        .sticky-checkout-btn {
+            padding: var(--spacing-md) var(--spacing-xl);
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+            border-radius: 8px;
+            font-weight: 700;
+            transition: all var(--transition-fast);
+        }
+       
+        /* ==================== ADMIN PANEL ==================== */
+        .admin-panel {
+            background: var(--bg-secondary);
+            border-radius: 24px;
+            padding: var(--spacing-xl);
+            margin-bottom: var(--spacing-xl);
+        }
+       
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-xl);
+            padding-bottom: var(--spacing-lg);
+            border-bottom: 2px solid var(--bg-tertiary);
+        }
+       
+        .admin-tabs {
+            display: flex;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-xl);
+            overflow-x: auto;
+        }
+       
+        .admin-tab {
+            padding: var(--spacing-md) var(--spacing-lg);
+            background: var(--bg-tertiary);
+            border-radius: 8px;
+            color: var(--text-secondary);
+            font-weight: 600;
+            white-space: nowrap;
+            transition: all var(--transition-fast);
+        }
+       
+        .admin-tab.active {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+        }
+       
+        .admin-content {
+            animation: fadeIn 0.3s ease;
+        }
+       
+        .product-list-admin {
+            display: grid;
+            gap: var(--spacing-md);
+        }
+       
+        .product-item-admin {
+            background: var(--bg-tertiary);
+            padding: var(--spacing-lg);
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+       
+        .admin-actions {
+            display: flex;
+            gap: var(--spacing-sm);
+        }
+       
+        .admin-btn {
+            padding: var(--spacing-sm) var(--spacing-md);
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all var(--transition-fast);
+        }
+       
+        .admin-btn-edit {
+            background: var(--info);
+            color: white;
+        }
+       
+        .admin-btn-delete {
+            background: var(--error);
+            color: white;
+        }
+       
+        .admin-btn:hover {
+            transform: scale(1.05);
+        }
+       
+        /* ==================== ANIMATIONS ==================== */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+       
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+       
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+       
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+       
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.9; }
+        }
+       
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+       
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+       
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+       
+        @keyframes shine {
+            from { left: -100%; }
+            to { left: 200%; }
+        }
+       
+        @keyframes typing {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-10px); }
+        }
+       
+        @keyframes drawLine {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+       
+        /* ==================== RESPONSIVE DESIGN ==================== */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-wrap: wrap;
+            }
+           
+            .nav-actions {
+                order: 3;
+                width: 100%;
+                margin-top: var(--spacing-md);
+            }
+           
+            .hero-title {
+                font-size: 2.5rem;
+            }
+           
+            .product-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+           
+            .sticky-bottom-bar {
+                display: block;
+            }
+           
+            .cart-panel {
+                max-width: 100%;
+            }
+           
+            .status-pipeline {
+                flex-wrap: wrap;
+            }
+           
+            .admin-tabs {
+                flex-wrap: wrap;
+            }
+        }
+       
+        /* ==================== UTILITY CLASSES ==================== */
+        .hidden {
+            display: none !important;
+        }
+       
+        .text-center {
+            text-align: center;
+        }
+       
+        .mt-1 { margin-top: var(--spacing-md); }
+        .mt-2 { margin-top: var(--spacing-lg); }
+        .mb-1 { margin-bottom: var(--spacing-md); }
+        .mb-2 { margin-bottom: var(--spacing-lg); }
+       
+        .btn-primary {
+            padding: var(--spacing-md) var(--spacing-xl);
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all var(--transition-fast);
+        }
+       
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+        }
+       
+        .btn-secondary {
+            padding: var(--spacing-md) var(--spacing-xl);
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all var(--transition-fast);
+        }
+       
+        .btn-secondary:hover {
+            background: var(--bg-primary);
+        }
+    </style>
 </head>
 <body>
-
-```
-<!-- LANDING PAGE - EXACT V0 DESIGN -->
-<div id="landingPage" class="landing-page">
-    <div class="pr-logo-large">PR</div>
-    <h1 class="luxury-title">THE LUXURY OF CANNABIS</h1>
-    <div class="diamond-divider"></div>
-    <p class="luxury-subtitle">The Golden Standard in Ontario</p>
-    <button class="explore-btn" onclick="startExperience()">EXPLORE COLLECTION</button>
-    <div class="scroll-indicator" style="color: var(--gold); font-size: 24px;">↓</div>
-</div>
-
-<!-- AGE GATE -->
-<div id="ageGate" class="age-gate">
-    <div style="text-align: center; max-width: 700px; padding: 60px; background: rgba(26, 26, 26, 0.95); border-radius: 24px; border: 3px solid var(--gold);">
-        <div style="font-size: 80px; margin-bottom: 30px;">🪪</div>
-        <h2 class="cinzel" style="font-size: 48px; font-weight: 700; color: var(--gold); margin-bottom: 20px;" id="ageTitle">
-            YOU MUST HAVE YOUR 19+ ID READY
-        </h2>
-        <p style="font-size: 16px; color: #ccc; margin-bottom: 20px; line-height: 1.8;" id="ageSubtext">
-            Age verification is strictly enforced by Ontario law.<br>
-            Please have your valid government-issued ID ready for verification.
-        </p>
-        <p style="font-size: 13px; color: #888; margin-bottom: 50px;">Licensed Cannabis Retailer • Pickering, Ontario</p>
-       
-        <div style="display: flex; gap: 20px; margin-bottom: 40px;">
-            <button onclick="verifyAge(true)" class="gold-btn" id="ageConfirm">
-                ✓ I HAVE MY 19+ ID READY
-            </button>
-            <button onclick="verifyAge(false)" style="flex: 1; padding: 18px 40px; border: 2px solid #555; background: transparent; color: white; border-radius: 12px; cursor: pointer; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; font-size: 14px;">
-                ✗ I AM UNDER 19
-            </button>
+   
+    <!-- AGE GATE -->
+    <div id="ageGate" class="age-gate-overlay">
+        <div class="age-gate-modal">
+            <div class="age-gate-logo">🍃</div>
+            <h1 class="age-gate-title" data-en="Age Verification Required" data-es="Verificación de Edad Requerida">Age Verification Required</h1>
+            <p class="age-gate-text" data-en="You must be 19+ years old to enter this site. By clicking Accept, you confirm that you meet the legal age requirement." data-es="Debes tener 19+ años para entrar a este sitio. Al hacer clic en Aceptar, confirmas que cumples con el requisito de edad legal.">
+                You must be 19+ years old to enter this site. By clicking Accept, you confirm that you meet the legal age requirement.
+            </p>
+            <div class="age-gate-buttons">
+                <button class="age-gate-button age-gate-accept" onclick="acceptAge()" data-en="Accept" data-es="Aceptar">Accept</button>
+                <button class="age-gate-button age-gate-decline" onclick="declineAge()" data-en="Decline" data-es="Rechazar">Decline</button>
+            </div>
         </div>
-       
-        <select id="ageGateLang" onchange="changeAgeGateLang(this.value)" style="max-width: 400px; margin: 0 auto;">
-            <option value="en">🇬🇧 English</option>
-            <option value="es">🇪🇸 Español</option>
-            <option value="fr">🇫🇷 Français</option>
-            <option value="de">🇩🇪 Deutsch</option>
-            <option value="it">🇮🇹 Italiano</option>
-        </select>
     </div>
-</div>
-
-<!-- MAIN SITE -->
-<div id="mainSite" class="hidden">
    
     <!-- HEADER -->
-    <header style="background: rgba(10, 10, 10, 0.98); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(212, 175, 55, 0.2); position: sticky; top: 0; z-index: 100; padding: 25px 0;">
-        <div style="max-width: 1600px; margin: 0 auto; padding: 0 80px; display: flex; justify-content: space-between; align-items: center;">
-            <div style="display: flex; align-items: center; gap: 50px;">
-                <div style="display: flex; align-items: center; gap: 20px;">
-                    <div class="pr-logo-header">PR</div>
-                    <div>
-                        <div class="cinzel" style="font-size: 28px; font-weight: 700; color: var(--gold); letter-spacing: 3px;">POP ROLL BOUTIQUE</div>
-                        <div style="font-size: 11px; color: #888; letter-spacing: 2px; margin-top: 3px;">EST. 2024 • PICKERING, ON</div>
-                    </div>
-                </div>
-                <nav style="display: flex; gap: 35px; font-size: 12px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase;">
-                    <a href="#cannabis" style="color: var(--gold); text-decoration: none;">Cannabis</a>
-                    <a href="#monchi" style="color: #999; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='white'" onmouseout="this.style.color='#999'">Oh My Monchi</a>
-                </nav>
-            </div>
+    <header class="header">
+        <div class="header-content">
+            <a href="#" class="logo">
+                <span class="logo-icon">🍃</span>
+                <span data-en="Cannabis Direct" data-es="Cannabis Directo">Cannabis Direct</span>
+            </a>
            
-            <div style="display: flex; align-items: center; gap: 25px;">
-                <button onclick="openHorizonVentura()" style="padding: 10px 24px; border: 1px solid var(--gold); background: transparent; color: var(--gold); border-radius: 8px; cursor: pointer; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; transition: all 0.3s;">
-                    FOR THE CURIOUS
+            <div class="nav-actions">
+                <button class="lang-switch" onclick="toggleLanguage()" id="langBtn">ES</button>
+                <button class="nav-button nav-button-secondary" onclick="showModal('paraC urioso')" data-en="Para Curioso" data-es="Para Curioso">Para Curioso</button>
+                <button class="nav-button nav-button-primary" onclick="showModal('login')" data-en="Account" data-es="Cuenta">Account</button>
+                <button class="cart-button" onclick="toggleCart()">
+                    <span data-en="Cart" data-es="Carrito">Cart</span>
+                    <span class="cart-count" id="cartCount">0</span>
                 </button>
-               
-                <select id="langSelector" onchange="changeLanguage(this.value)" style="width: auto; padding: 10px 20px; font-size: 12px; font-weight: 600; margin-bottom: 0;">
-                    <option value="en">EN</option>
-                    <option value="es">ES</option>
-                    <option value="fr">FR</option>
-                    <option value="de">DE</option>
-                    <option value="it">IT</option>
-                </select>
-               
-                <button onclick="toggleCart()" style="position: relative; background: none; border: none; cursor: pointer; font-size: 28px;">
-                    🛒
-                    <span id="cartBadge" class="hidden" style="position: absolute; top: -8px; right: -8px; background: var(--gold); color: black; border-radius: 50%; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800;">0</span>
-                </button>
+                <button class="nav-button nav-button-primary" onclick="showAdminLogin()" data-en="Admin" data-es="Admin">Admin</button>
             </div>
         </div>
     </header>
-
-    <!-- HERO -->
-    <section style="padding: 150px 0; background: linear-gradient(rgba(10, 10, 10, 0.7), rgba(10, 10, 10, 0.85)), url('https://images.unsplash.com/photo-1616680214084-22670de1bc82?w=1920&q=80') center/cover; text-align: center;">
-        <div style="max-width: 1200px; margin: 0 auto; padding: 0 80px;">
-            <h2 class="cinzel" style="font-size: 64px; font-weight: 700; color: var(--gold); margin-bottom: 30px; letter-spacing: 6px;">
-                A REFINED CANNABIS EXPERIENCE
-            </h2>
-            <div class="diamond-divider"></div>
-            <p class="cormorant" style="font-size: 24px; color: #ccc; line-height: 1.8; max-width: 800px; margin: 0 auto;">
-                Curated selections of premium cannabis, artisanal accessories, and exotic delicacies from around the world.
-            </p>
-        </div>
-    </section>
-
-    <!-- CANNABIS SECTION -->
-    <section id="cannabis" style="padding: 150px 0;">
-        <div style="max-width: 1600px; margin: 0 auto; padding: 0 80px;">
-            <div style="text-align: center; margin-bottom: 100px;">
-                <h3 class="cinzel" style="font-size: 52px; font-weight: 700; color: var(--gold); margin-bottom: 20px; letter-spacing: 4px;">CANNABIS BOUTIQUE</h3>
-                <div class="diamond-divider"></div>
-            </div>
-           
-            <div id="cannabisProducts" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); gap: 60px;"></div>
-        </div>
-    </section>
-
-    <!-- OH MY MONCHI -->
-    <section id="monchi" style="padding: 150px 0; background: rgba(26, 26, 26, 0.3);">
-        <div style="max-width: 1600px; margin: 0 auto; padding: 0 80px;">
-            <div style="text-align: center; margin-bottom: 100px;">
-                <h3 class="cinzel" style="font-size: 52px; font-weight: 700; color: var(--gold); margin-bottom: 20px; letter-spacing: 4px;">OH MY MONCHI</h3>
-                <p class="cormorant" style="font-size: 22px; color: #999; margin-top: 20px;">Exotic Snacks & Premium Beverages • 100% THC-Free</p>
-                <div class="diamond-divider"></div>
-            </div>
-           
-            <div id="monchiProducts" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); gap: 60px;"></div>
-        </div>
-    </section>
-
-    <!-- FOOTER -->
-    <footer style="background: #000; border-top: 1px solid rgba(212, 175, 55, 0.2); padding: 80px 0 40px;">
-        <div style="max-width: 1600px; margin: 0 auto; padding: 0 80px;">
-            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 60px; margin-bottom: 60px;">
-                <div>
-                    <div class="pr-logo-header" style="margin-bottom: 20px;">PR</div>
-                    <div class="cinzel" style="font-size: 24px; font-weight: 700; color: var(--gold); margin-bottom: 15px;">POP ROLL BOUTIQUE</div>
-                    <p style="color: #888; line-height: 1.8; font-size: 13px;">
-                        Ontario's premier luxury cannabis boutique, offering curated selections of premium products and exotic delicacies.
-                    </p>
-                </div>
-               
-                <div>
-                    <h4 style="color: var(--gold); font-weight: 700; margin-bottom: 20px; font-size: 13px; letter-spacing: 2px;">CONTACT</h4>
-                    <p style="color: #888; margin-bottom: 10px; font-size: 13px;">📍 Pickering, Ontario</p>
-                    <p style="color: #888; margin-bottom: 10px; font-size: 13px;">📞 (905) 555-ROLL</p>
-                    <p style="color: #888; margin-bottom: 10px; font-size: 13px;">✉️ contact@poproll.ca</p>
-                </div>
-               
-                <div>
-                    <h4 style="color: var(--gold); font-weight: 700; margin-bottom: 20px; font-size: 13px; letter-spacing: 2px;">FOLLOW US</h4>
-                    <div style="display: flex; gap: 20px;">
-                        <a href="https://instagram.com/poprollboutique" target="_blank" style="width: 50px; height: 50px; border: 2px solid rgba(212, 175, 55, 0.3); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--gold); font-size: 24px; text-decoration: none; transition: all 0.3s;" onmouseover="this.style.borderColor='var(--gold)'; this.style.background='rgba(212,175,55,0.1)'" onmouseout="this.style.borderColor='rgba(212,175,55,0.3)'; this.style.background='transparent'">
-                            📷
-                        </a>
-                        <a href="https://twitter.com/poprollboutique" target="_blank" style="width: 50px; height: 50px; border: 2px solid rgba(212, 175, 55, 0.3); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--gold); font-size: 24px; text-decoration: none; transition: all 0.3s;" onmouseover="this.style.borderColor='var(--gold)'; this.style.background='rgba(212,175,55,0.1)'" onmouseout="this.style.borderColor='rgba(212,175,55,0.3)'; this.style.background='transparent'">
-                            🐦
-                        </a>
-                        <a href="https://facebook.com/poprollboutique" target="_blank" style="width: 50px; height: 50px; border: 2px solid rgba(212, 175, 55, 0.3); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--gold); font-size: 24px; text-decoration: none; transition: all 0.3s;" onmouseover="this.style.borderColor='var(--gold)'; this.style.background='rgba(212,175,55,0.1)'" onmouseout="this.style.borderColor='rgba(212,175,55,0.3)'; this.style.background='transparent'">
-                            📘
-                        </a>
-                    </div>
-                </div>
-            </div>
-           
-            <div style="text-align: center; border-top: 1px solid #222; padding-top: 40px;">
-                <p style="color: #666; font-size: 12px;">© 2026 Pop Roll Boutique. Licensed Cannabis Retailer. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
-
-</div>
-
-<!-- BROSKY AI AVATAR -->
-<div id="broskyAvatar" class="brosky-avatar hidden" onclick="toggleBrosky()">
-    <img src="https://api.dicebear.com/7.x/bottts-neutral/svg?seed=BroskySommelier&backgroundColor=1a1a1a&primaryColorLevel=700" alt="Brosky AI">
-</div>
-
-<!-- BROSKY CHAT -->
-<div id="broskyChat" class="brosky-chat">
-    <div style="background: linear-gradient(135deg, var(--gold), #B8941E); padding: 25px;">
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-            <div style="display: flex; align-items: center; gap: 15px;">
-                <img src="https://api.dicebear.com/7.x/bottts-neutral/svg?seed=BroskySommelier&backgroundColor=white" style="width: 50px; height: 50px; border-radius: 50%; background: white; padding: 5px;">
-                <div>
-                    <h3 style="font-weight: 900; color: #000; font-size: 18px;">BROSKY AI</h3>
-                    <p style="font-size: 11px; color: rgba(0,0,0,0.7); font-weight: 600;">Cannabis Sommelier • 5 Languages</p>
-                </div>
-            </div>
-            <button onclick="toggleBrosky()" style="background: none; border: none; color: #000; font-size: 32px; cursor: pointer; font-weight: 900;">×</button>
-        </div>
-    </div>
-
-    <div style="padding: 20px; background: rgba(0,0,0,0.3); border-bottom: 1px solid #333;">
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px;">
-            <button onclick="broskyPreset('offers')" style="padding: 12px; background: #0d0d0d; border: 2px solid rgba(212,175,55,0.3); border-radius: 10px; color: white; cursor: pointer; font-size: 12px; font-weight: 600; transition: all 0.3s;" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='rgba(212,175,55,0.3)'">
-                🔥 Today's Offers
-            </button>
-            <button onclick="broskyPreset('history')" style="padding: 12px; background: #0d0d0d; border: 2px solid rgba(212,175,55,0.3); border-radius: 10px; color: white; cursor: pointer; font-size: 12px; font-weight: 600; transition: all 0.3s;" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='rgba(212,175,55,0.3)'">
-                📜 History
-            </button>
-            <button onclick="broskyPreset('usage')" style="padding: 12px; background: #0d0d0d; border: 2px solid rgba(212,175,55,0.3); border-radius: 10px; color: white; cursor: pointer; font-size: 12px; font-weight: 600; transition: all 0.3s;" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='rgba(212,175,55,0.3)'">
-                📖 Usage/Risks
-            </button>
-            <button onclick="broskyPreset('track')" style="padding: 12px; background: #0d0d0d; border: 2px solid rgba(212,175,55,0.3); border-radius: 10px; color: white; cursor: pointer; font-size: 12px; font-weight: 600; transition: all 0.3s;" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='rgba(212,175,55,0.3)'">
-                📍 Track Order
-            </button>
+   
+    <!-- HAPPY HOUR BANNER -->
+    <div id="happyHourBanner" class="happy-hour-banner hidden">
+        <div class="happy-hour-content">
+            <div class="happy-hour-title" data-en="🎉 HAPPY HOUR ACTIVE! 🎉" data-es="🎉 ¡HORA FELIZ ACTIVA! 🎉">🎉 HAPPY HOUR ACTIVE! 🎉</div>
+            <div class="happy-hour-timer" id="happyHourTimer">00:60</div>
         </div>
     </div>
    
-    <div id="broskyMessages" style="height: 400px; overflow-y: auto; padding: 25px; background: #0d0d0d;">
-        <div style="background: #222; padding: 20px; border-radius: 16px; border-left: 4px solid var(--gold);">
-            <p style="font-weight: 700; color: var(--gold); font-size: 11px; margin-bottom: 8px;">BROSKY AI</p>
-            <p style="color: #ddd; line-height: 1.7; font-size: 14px;">
-                Good day! I'm Brosky, your cannabis sommelier. I speak English, Spanish, French, German, and Italian fluently.
-                How may I assist you in finding the perfect selection today? 🌿
-            </p>
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title" data-en="LET'S GET HIGH" data-es="ELEVÉMONOS">LET'S GET HIGH</h1>
+            <div class="hero-subtitle">
+                <span class="rotating-text" id="rotatingText">Sativa</span>
+            </div>
+            <button class="hero-cta" onclick="scrollToProducts()" data-en="🛒 Browse Menu" data-es="🛒 Ver Menú">🛒 Browse Menu</button>
+        </div>
+    </section>
+   
+    <!-- MAIN CONTENT -->
+    <div class="container" id="mainContent">
+       
+        <!-- CATEGORY TABS -->
+        <div class="category-tabs" id="categoryTabs">
+            <button class="category-tab active" data-category="all" onclick="filterCategory('all')" data-en="All Products" data-es="Todos">All Products</button>
+            <button class="category-tab" data-category="flower" onclick="filterCategory('flower')" data-en="Flower" data-es="Flor">Flower</button>
+            <button class="category-tab" data-category="prerolls" onclick="filterCategory('prerolls')" data-en="Pre-rolls" data-es="Pre-armados">Pre-rolls</button>
+            <button class="category-tab" data-category="vapes" onclick="filterCategory('vapes')" data-en="Vapes" data-es="Vaporizadores">Vapes</button>
+            <button class="category-tab" data-category="edibles" onclick="filterCategory('edibles')" data-en="Edibles" data-es="Comestibles">Edibles</button>
+            <button class="category-tab" data-category="drinks" onclick="filterCategory('drinks')" data-en="Drinks" data-es="Bebidas">Drinks</button>
+            <button class="category-tab" data-category="concentrates" onclick="filterCategory('concentrates')" data-en="Concentrates" data-es="Concentrados">Concentrates</button>
+            <button class="category-tab" data-category="cbd" onclick="filterCategory('cbd')" data-en="CBD" data-es="CBD">CBD</button>
+            <button class="category-tab" data-category="munchies" onclick="filterCategory('munchies')" data-en="🍭 All My Munchies" data-es="🍭 Todas Mis Golosinas">🍭 All My Munchies</button>
+        </div>
+       
+        <!-- PRODUCT GRID -->
+        <div class="product-grid" id="productGrid"></div>
+       
+    </div>
+   
+    <!-- CART PANEL -->
+    <div class="cart-panel" id="cartPanel">
+        <div class="cart-header">
+            <h2 data-en="Your Cart" data-es="Tu Carrito">Your Cart</h2>
+            <button class="modal-close" onclick="toggleCart()">×</button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <p class="text-center text-muted" data-en="Your cart is empty" data-es="Tu carrito está vacío">Your cart is empty</p>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-summary">
+                <div class="cart-summary-row">
+                    <span data-en="Subtotal:" data-es="Subtotal:">Subtotal:</span>
+                    <span id="cartSubtotal">$0.00</span>
+                </div>
+                <div class="cart-summary-row">
+                    <span data-en="Loyalty Points:" data-es="Puntos de Lealtad:">Loyalty Points:</span>
+                    <span id="cartPoints">0 pts</span>
+                </div>
+                <div class="cart-summary-row total">
+                    <span data-en="Total:" data-es="Total:">Total:</span>
+                    <span id="cartTotal">$0.00</span>
+                </div>
+            </div>
+            <button class="checkout-btn" onclick="showCheckout()" data-en="Proceed to Checkout" data-es="Proceder al Pago">Proceed to Checkout</button>
         </div>
     </div>
    
-    <div style="padding: 20px; border-top: 1px solid #333; background: #000;">
-        <div style="display: flex; gap: 10px;">
-            <input type="text" id="broskyInput" placeholder="Search 'Sativa 7g' or ask anything..." style="flex: 1; margin-bottom: 0; font-size: 13px;" onkeypress="if(event.key==='Enter') sendBroskyMessage()">
-            <button onclick="sendBroskyMessage()" class="gold-btn" style="width: auto; padding: 18px 30px; margin-bottom: 0;">SEND</button>
+    <!-- STICKY BOTTOM BAR (MOBILE) -->
+    <div class="sticky-bottom-bar">
+        <div class="sticky-bottom-content">
+            <div>
+                <div class="sticky-total" id="stickyTotal">$0.00</div>
+                <div style="font-size: 0.875rem; color: var(--text-muted);" id="stickyItems">0 items</div>
+            </div>
+            <button class="sticky-checkout-btn" onclick="toggleCart()" data-en="View Cart" data-es="Ver Carrito">View Cart</button>
         </div>
     </div>
-</div>
-
-<!-- WHATSAPP -->
-<a href="https://wa.me/19055551234?text=Hello%20Pop%20Roll!%20I%27m%20interested%20in%20your%20luxury%20cannabis%20products." target="_blank" class="whatsapp-float hidden" id="whatsappFloat">
-    <svg width="40" height="40" viewBox="0 0 32 32" fill="white">
-        <path d="M16 0C7.164 0 0 7.163 0 16c0 2.831.736 5.481 2.023 7.792L0 32l8.448-2.016C10.72 31.264 13.26 32 16 32c8.836 0 16-7.164 16-16S24.836 0 16 0zm0 29.333c-2.445 0-4.719-.66-6.68-1.813l-.479-.278-4.96 1.185 1.195-4.783-.306-.496C2.844 21.074 2.667 18.583 2.667 16 2.667 8.636 8.636 2.667 16 2.667S29.333 8.636 29.333 16 23.364 29.333 16 29.333zm7.333-10c-.4-.2-2.367-1.167-2.733-1.3-.367-.133-.633-.2-.9.2s-1.033 1.3-1.267 1.567c-.233.267-.467.3-.867.1-2.067-1.033-3.433-1.833-4.8-4.167-.367-.633.367-.6 1.1-1.967.133-.267.067-.5-.033-.7-.1-.2-.9-2.167-1.233-2.967-.333-.8-.667-.667-.9-.667-.233 0-.5-.033-.767-.033s-.733.1-1.133.5c-.4.4-1.5 1.467-1.5 3.567s1.533 4.133 1.733 4.4c.2.267 3.5 5.333 8.467 7.467 3.133 1.333 4.367 1.467 5.933 1.233 1-.133 2.367-.967 2.7-1.9.333-.933.333-1.733.233-1.9-.1-.167-.367-.267-.767-.467z"/>
-    </svg>
-</a>
-
-<!-- ADMIN BUTTON -->
-<button class="admin-btn hidden" id="adminBtn" onclick="openAdmin()">⚙️</button>
-
-<!-- CART SIDEBAR -->
-<div id="cartSidebar" style="position: fixed; top: 0; right: -500px; width: 500px; height: 100vh; background: var(--dark); border-left: 2px solid var(--gold); z-index: 200; overflow-y: auto; transition: right 0.4s ease; box-shadow: -10px 0 50px rgba(0,0,0,0.9);">
-    <div style="padding: 40px;">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px;">
-            <h2 class="cinzel" style="font-size: 32px; font-weight: 700; color: var(--gold);">Your Cart</h2>
-            <button onclick="toggleCart()" style="background: none; border: none; color: #999; font-size: 40px; cursor: pointer;">×</button>
-        </div>
-       
-        <div id="cartItems">
-            <div style="text-align: center; padding: 100px 20px;">
-                <div style="font-size: 60px; margin-bottom: 20px;">🛒</div>
-                <p style="color: #777; font-size: 16px;">Your cart is empty</p>
+   
+    <!-- WHATSAPP FLOAT BUTTON -->
+    <div class="whatsapp-float">
+        <div class="whatsapp-tooltip" data-en="Reach me if you want a website like this" data-es="Contáctame si quieres un sitio web como este">Reach me if you want a website like this</div>
+        <a href="https://wa.me/1234567890?text=Hi!%20I%20want%20a%20website%20like%20this" class="whatsapp-button" target="_blank">
+            <svg viewBox="0 0 24 24" width="32" height="32" fill="currentColor">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+            </svg>
+        </a>
+    </div>
+   
+    <!-- MODAL SYSTEM -->
+    <div id="modalOverlay" class="modal-overlay hidden" onclick="closeModal(event)">
+        <div class="modal" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modalTitle">Modal</h2>
+                <button class="modal-close" onclick="closeModal()">×</button>
             </div>
-        </div>
-       
-        <div id="cartTotal" class="hidden" style="border-top: 2px solid var(--gold); padding-top: 30px; margin-top: 30px;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
-                <span style="font-size: 20px; font-weight: 700;">TOTAL</span>
-                <span id="totalAmount" class="cinzel" style="font-size: 36px; font-weight: 900; color: var(--gold);">$0.00</span>
-            </div>
-            <button onclick="openCheckout()" class="gold-btn">PROCEED TO CHECKOUT</button>
+            <div class="modal-body" id="modalBody"></div>
         </div>
     </div>
-</div>
-
-<!-- CHECKOUT MODAL -->
-<div id="checkoutModal" class="modal">
-    <div class="modal-content">
-        <h2 class="cinzel" style="font-size: 42px; font-weight: 900; color: var(--gold); margin-bottom: 10px;">Luxury Checkout</h2>
-        <p style="color: #999; margin-bottom: 40px; font-size: 14px;">Complete your order with our white-glove delivery service</p>
+   
+    <script>
+        // ==================== GLOBAL STATE ====================
+        const STATE = {
+            language: 'en',
+            cart: [],
+            products: [],
+            user: null,
+            currentCategory: 'all',
+            happyHourActive: false,
+            happyHourTimer: null,
+            deliveryTracking: null,
+            adminLoggedIn: false
+        };
        
-        <form onsubmit="submitOrder(event)">
-            <label style="display: block; font-size: 12px; font-weight: 700; color: var(--gold); margin-bottom: 10px; letter-spacing: 1px;">FULL NAME</label>
-            <input type="text" id="checkoutName" placeholder="Enter your full name" required>
-           
-            <label style="display: block; font-size: 12px; font-weight: 700; color: var(--gold); margin-bottom: 10px; letter-spacing: 1px;">PHONE NUMBER</label>
-            <input type="tel" id="checkoutPhone" placeholder="+1 (905) 555-0000" required>
-           
-            <label style="display: block; font-size: 12px; font-weight: 700; color: var(--gold); margin-bottom: 10px; letter-spacing: 1px;">DELIVERY ADDRESS</label>
-            <textarea id="checkoutAddress" placeholder="Street address, unit number, city, postal code" rows="3" required></textarea>
-           
-            <div style="display: flex; gap: 15px; margin-top: 30px;">
-                <button type="submit" class="gold-btn">COMPLETE ORDER</button>
-                <button type="button" onclick="closeCheckout()" style="flex: 1; background: transparent; border: 2px solid #555; color: white; padding: 18px; border-radius: 12px; cursor: pointer; font-weight: 700; text-transform: uppercase; letter-spacing: 2px;">CANCEL</button>
-            </div>
-        </form>
-    </div>
-</div>
-
-<!-- TRACKING MODAL -->
-<div id="trackingModal" class="modal">
-    <div class="modal-content" style="max-width: 900px;">
-        <h2 class="cinzel" style="font-size: 42px; font-weight: 900; color: var(--gold); margin-bottom: 30px;">Live Delivery Tracking</h2>
+        // ==================== TRANSLATIONS ====================
+        const TRANSLATIONS = {
+            rotatingWords: {
+                en: ['Sativa', 'Hybrid', 'Indica', 'Flowers', 'Infusions', 'THC Snacks', 'Gummies', 'Beverages', 'Teas', 'Pre-rolls', 'Vapes', 'Concentrates', 'Accessories'],
+                es: ['Sativa', 'Híbrido', 'Indica', 'Flores', 'Infusiones', 'Snacks THC', 'Gomitas', 'Bebidas', 'Tés', 'Pre-armados', 'Vaporizadores', 'Concentrados', 'Accesorios']
+            }
+        };
        
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 30px;">
-            <div style="background: #0d0d0d; padding: 30px; border-radius: 16px; border: 1px solid rgba(212,175,55,0.2);">
-                <div style="font-size: 40px; margin-bottom: 15px;">🚗</div>
-                <h3 style="font-weight: 700; font-size: 18px; margin-bottom: 10px;">Your Driver</h3>
-                <p style="color: var(--gold); font-size: 22px; font-weight: 700; margin-bottom: 5px;">Marcus D.</p>
-                <p style="color: #888; font-size: 13px;">⭐ 4.9 Rating • 1,247 Deliveries</p>
-            </div>
-           
-            <div style="background: #0d0d0d; padding: 30px; border-radius: 16px; border: 1px solid rgba(212,175,55,0.2);">
-                <div style="font-size: 40px; margin-bottom: 15px;">⏱️</div>
-                <h3 style="font-weight: 700; font-size: 18px; margin-bottom: 10px;">Estimated Arrival</h3>
-                <p style="color: var(--gold); font-size: 22px; font-weight: 700; margin-bottom: 5px;">12-18 Minutes</p>
-                <p style="color: #888; font-size: 13px;">Driver is on the way</p>
-            </div>
-        </div>
-
-        <div class="tracking-map">
-            <div style="width: 100%; height: 100%; background: linear-gradient(135deg, #1a1a1a, #0d0d0d); display: flex; align-items: center; justify-content: center; position: relative;">
-                <div class="delivery-marker">🚗</div>
-                <div style="text-align: center; z-index: 10;">
-                    <p style="font-size: 24px; font-weight: 700; color: var(--gold); margin-bottom: 10px;">Live GPS Tracking</p>
-                    <p style="color: #888; font-size: 14px;">Pickering, Ontario Coverage Area</p>
-                    <p style="font-size: 11px; color: #555; margin-top: 10px;">(Google Maps Integration)</p>
-                </div>
-            </div>
-        </div>
-
-        <div style="background: #0d0d0d; padding: 25px; border-radius: 16px; margin-top: 30px; border: 1px solid rgba(212,175,55,0.2);">
-            <h3 style="font-weight: 700; margin-bottom: 20px; color: var(--gold); font-size: 16px;">💬 Chat with Driver</h3>
-            <div style="max-height: 200px; overflow-y: auto; margin-bottom: 20px; padding: 15px; background: #000; border-radius: 12px;">
-                <div style="margin-bottom: 15px;">
-                    <p style="font-size: 11px; color: #888; margin-bottom: 5px;">Marcus D. (Driver)</p>
-                    <p style="background: #222; padding: 12px; border-radius: 10px; font-size: 13px; line-height: 1.6;">Hi! I'm on my way with your order. ETA 15 mins. I'll text when I'm outside! 🚗</p>
-                </div>
-            </div>
-            <div style="display: flex; gap: 10px;">
-                <input type="text" placeholder="Message your driver..." style="flex: 1; margin-bottom: 0; font-size: 13px;">
-                <button class="gold-btn" style="width: auto; padding: 18px 30px; margin-bottom: 0;">SEND</button>
-            </div>
-        </div>
-
-        <button onclick="closeTracking()" class="gold-btn" style="margin-top: 30px;">CLOSE TRACKING</button>
-    </div>
-</div>
-
-<!-- ADMIN MODAL -->
-<div id="adminModal" class="modal">
-    <div class="modal-content" style="max-width: 600px;">
-        <h2 class="cinzel" style="font-size: 36px; font-weight: 900; color: var(--gold); margin-bottom: 30px;">Admin Panel</h2>
+        // ==================== SAMPLE PRODUCTS DATA ====================
+        const SAMPLE_PRODUCTS = [
+            {
+                id: 1,
+                name: 'Northern Lights',
+                category: 'flower',
+                strain: 'Indica',
+                thc: 22,
+                cbd: 1,
+                price: 45.00,
+                points: 45,
+                stock: 20,
+                effects: ['Relaxed', 'Sleepy', 'Happy'],
+                terpenes: ['Myrcene', 'Caryophyllene'],
+                image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="300"%3E%3Crect fill="%2310b981" width="400" height="300"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" font-family="Arial" font-size="24" fill="white"%3ENorthern Lights%3C/text%3E%3C/svg%3E',
+                description: 'Classic Indica strain known for its relaxing effects'
+            },
+            {
+                id: 2,
+                name: 'Sour Diesel',
+                category: 'flower',
+                strain: 'Sativa',
+                thc: 24,
+                cbd: 0.5,
+                price: 50.00,
+                points: 50,
+                stock: 15,
+                effects: ['Energetic', 'Uplifted', 'Creative'],
+                terpenes: ['Limonene', 'Caryophyllene'],
+                image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="300"%3E%3Crect fill="%23f59e0b" width="400" height="300"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" font-family="Arial" font-size="24" fill="white"%3ESour Diesel%3C/text%3E%3C/svg%3E',
+                description: 'Energizing Sativa perfect for daytime use'
+            },
+            {
+                id: 3,
+                name: 'Blue Dream',
+                category: 'flower',
+                strain: 'Hybrid',
+                thc: 18,
+                cbd: 2,
+                price: 40.00,
+                points: 40,
+                stock: 25,
+                effects: ['Relaxed', 'Happy', 'Creative'],
+                terpenes: ['Myrcene', 'Pinene'],
+                image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="300"%3E%3Crect fill="%233b82f6" width="400" height="300"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" font-family="Arial" font-size="24" fill="white"%3EBlue Dream%3C/text%3E%3C/svg%3E',
+                description: 'Balanced hybrid loved by beginners and veterans'
+            },
+            {
+                id: 4,
+                name: 'Lemon Haze Pre-Roll',
+                category: 'prerolls',
+                strain: 'Sativa',
+                thc: 20,
+                cbd: 1,
+                price: 12.00,
+                points: 12,
+                stock: 50,
+                effects: ['Energetic', 'Uplifted', 'Focused'],
+                terpenes: ['Limonene'],
+                image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="300"%3E%3Crect fill="%23fbbf24" width="400" height="300"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" font-family="Arial" font-size="20" fill="white"%3ELemon Haze%3C/text%3E%3C/svg%3E',
+                description: 'Convenient pre-rolled joint ready to enjoy'
+            },
+            {
+                id: 5,
+                name: 'Platinum Vape Pen',
+                category: 'vapes',
+                strain: 'Hybrid',
+                thc: 85,
+                cbd: 0,
+                price: 65.00,
+                points: 65,
+                stock: 30,
+                effects: ['Balanced', 'Smooth', 'Potent'],
+                terpenes: ['Various'],
+                image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="300"%3E%3Crect fill="%236366f1" width="400" height="300"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" font-family="Arial" font-size="24" fill="white"%3EPlatinum Vape%3C/text%3E%3C/svg%3E',
+                description: 'Premium distillate vape cartridge'
+            },
+            {
+                id: 6,
+                name: 'THC Gummies',
+                category: 'edibles',
+                strain: 'Hybrid',
+                thc: 10,
+                cbd: 0,
+                price: 25.00,
+                points: 25,
+                stock: 40,
+                effects: ['Relaxed', 'Happy', 'Euphoric'],
+                terpenes: ['Fruit Flavored'],
+                image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="300"%3E%3Crect fill="%23ec4899" width="400" height="300"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" font-family="Arial" font-size="24" fill="white"%3ETHC Gummies%3C/text%3E%3C/svg%3E',
+                description: '10mg per gummy, 10 pack'
+            },
+            {
+                id: 7,
+                name: 'Cannabis Iced Tea',
+                category: 'drinks',
+                strain: 'Sativa',
+                thc: 10,
+                cbd: 5,
+                price: 8.00,
+                points: 8,
+                stock: 60,
+                effects: ['Refreshing', 'Uplifting', 'Focused'],
+                terpenes: ['Natural'],
+                image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="300"%3E%3Crect fill="%2314b8a6" width="400" height="300"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" font-family="Arial" font-size="24" fill="white"%3EIced Tea%3C/text%3E%3C/svg%3E',
+                description: 'Refreshing cannabis-infused beverage'
+            },
+            {
+                id: 8,
+                name: 'Diamond Shatter',
+                category: 'concentrates',
+                strain: 'Hybrid',
+                thc: 90,
+                cbd: 0,
+                price: 80.00,
+                points: 80,
+                stock: 10,
+                effects: ['Intense', 'Powerful', 'Long-lasting'],
+                terpenes: ['Preserved'],
+                image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="300"%3E%3Crect fill="%23fbbf24" width="400" height="300"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" font-family="Arial" font-size="24" fill="white"%3EDiamond Shatter%3C/text%3E%3C/svg%3E',
+                description: 'Premium concentrate for experienced users'
+            },
+            {
+                id: 9,
+                name: 'CBD Relief Oil',
+                category: 'cbd',
+                strain: 'CBD',
+                thc: 0,
+                cbd: 1000,
+                price: 60.00,
+                points: 60,
+                stock: 35,
+                effects: ['Calming', 'Pain Relief', 'Anti-inflammatory'],
+                terpenes: ['Natural'],
+                image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="300"%3E%3Crect fill="%2310b981" width="400" height="300"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" font-family="Arial" font-size="24" fill="white"%3ECBD Oil%3C/text%3E%3C/svg%3E',
+                description: '1000mg CBD tincture, THC-free'
+            },
+            {
+                id: 10,
+                name: 'Japanese Matcha KitKat',
+                category: 'munchies',
+                strain: 'N/A',
+                thc: 0,
+                cbd: 0,
+                price: 5.99,
+                points: 6,
+                stock: 100,
+                effects: ['Delicious', 'Exotic', 'Sweet'],
+                terpenes: ['Matcha'],
+                image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="300"%3E%3Crect fill="%2334d399" width="400" height="300"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" font-family="Arial" font-size="20" fill="white"%3EMatcha KitKat%3C/text%3E%3C/svg%3E',
+                description: 'Imported from Japan - Matcha green tea flavor',
+                country: 'Japan',
+                commission: 15
+            },
+            {
+                id: 11,
+                name: 'Korean Honey Butter Chips',
+                category: 'munchies',
+                strain: 'N/A',
+                thc: 0,
+                cbd: 0,
+                price: 7.99,
+                points: 8,
+                stock: 80,
+                effects: ['Crunchy', 'Sweet', 'Savory'],
+                terpenes: ['Honey'],
+                image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="300"%3E%3Crect fill="%23fbbf24" width="400" height="300"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" font-family="Arial" font-size="18" fill="white"%3EHoney Butter Chips%3C/text%3E%3C/svg%3E',
+                description: 'Korean viral snack - Sweet and buttery',
+                country: 'South Korea',
+                commission: 18
+            },
+            {
+                id: 12,
+                name: 'Mexican Takis Fuego',
+                category: 'munchies',
+                strain: 'N/A',
+                thc: 0,
+                cbd: 0,
+                price: 4.99,
+                points: 5,
+                stock: 120,
+                effects: ['Spicy', 'Crunchy', 'Intense'],
+                terpenes: ['Chili'],
+                image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="300"%3E%3Crect fill="%23ef4444" width="400" height="300"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" font-family="Arial" font-size="24" fill="white"%3ETakis Fuego%3C/text%3E%3C/svg%3E',
+                description: 'Extremely hot rolled tortilla chips',
+                country: 'Mexico',
+                commission: 12
+            }
+        ];
        
-        <div style="background: #0d0d0d; padding: 30px; border-radius: 16px; margin-bottom: 20px; border: 1px solid rgba(212,175,55,0.2);">
-            <h3 style="font-weight: 700; margin-bottom: 20px; color: var(--gold); font-size: 16px;">HAPPY HOUR CONTROL</h3>
-            <p style="color: #888; font-size: 13px; margin-bottom: 20px; line-height: 1.6;">Activate 20% site-wide discount and transform the UI with golden overlay</p>
-            <button onclick="toggleHappyHour()" id="happyHourToggle" class="gold-btn" style="margin-bottom: 0;">
-                ACTIVATE HAPPY HOUR
-            </button>
-        </div>
-
-        <div style="background: #0d0d0d; padding: 30px; border-radius: 16px; margin-bottom: 20px; border: 1px solid rgba(212,175,55,0.2);">
-            <h3 style="font-weight: 700; margin-bottom: 15px; color: var(--gold); font-size: 16px;">RECENT ORDERS</h3>
-            <div style="space-y: 10px;">
-                <div style="padding: 15px; background: #000; border-radius: 10px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;">
-                    <div>
-                        <p style="font-weight: 600; font-size: 14px;">Order #1247</p>
-                        <p style="font-size: 12px; color: #888;">Northern Lights 7g + Grinder</p>
-                    </div>
-                    <span style="color: #4ade80; font-weight: 700; font-size: 16px;">$110.00</span>
-                </div>
-                <div style="padding: 15px; background: #000; border-radius: 10px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;">
-                    <div>
-                        <p style="font-weight: 600; font-size: 14px;">Order #1246</p>
-                        <p style="font-size: 12px; color: #888;">Pre-roll Pack + Snacks</p>
-                    </div>
-                    <span style="color: #4ade80; font-weight: 700; font-size: 16px;">$67.00</span>
-                </div>
-            </div>
-        </div>
-
-        <button onclick="closeAdmin()" style="width: 100%; padding: 15px; background: transparent; border: 2px solid #555; color: white; border-radius: 12px; cursor: pointer; font-weight: 700; text-transform: uppercase; letter-spacing: 2px;">CLOSE</button>
-    </div>
-</div>
-
-<script>
-    // TRANSLATIONS
-    const translations = {
-        en: {
-            ageTitle: "YOU MUST HAVE YOUR 19+ ID READY",
-            ageSubtext: "Age verification is strictly enforced by Ontario law. Please have your valid government-issued ID ready for verification.",
-            ageConfirm: "✓ I HAVE MY 19+ ID READY",
-            ageDecline: "✗ I AM UNDER 19"
-        },
-        es: {
-            ageTitle: "DEBE TENER SU ID DE 19+ LISTO",
-            ageSubtext: "La verificación de edad es estrictamente aplicada por la ley de Ontario. Por favor tenga su ID gubernamental válido listo para verificación.",
-            ageConfirm: "✓ TENGO MI ID DE 19+ LISTO",
-            ageDecline: "✗ SOY MENOR DE 19"
-        },
-        fr: {
-            ageTitle: "VOUS DEVEZ AVOIR VOTRE ID 19+ PRÊT",
-            ageSubtext: "La vérification d'âge est strictement appliquée par la loi ontarienne. Veuillez avoir votre pièce d'identité gouvernementale valide prête pour vérification.",
-            ageConfirm: "✓ J'AI MON ID 19+ PRÊT",
-            ageDecline: "✗ J'AI MOINS DE 19 ANS"
-        },
-        de: {
-            ageTitle: "SIE MÜSSEN IHREN 19+ AUSWEIS BEREIT HABEN",
-            ageSubtext: "Die Altersverifizierung wird streng nach Ontario-Gesetz durchgesetzt. Bitte halten Sie Ihren gültigen Regierungsausweis zur Verifizierung bereit.",
-            ageConfirm: "✓ ICH HABE MEINEN 19+ AUSWEIS BEREIT",
-            ageDecline: "✗ ICH BIN UNTER 19"
-        },
-        it: {
-            ageTitle: "DEVI AVERE IL TUO ID 19+ PRONTO",
-            ageSubtext: "La verifica dell'età è rigorosamente applicata dalla legge dell'Ontario. Si prega di avere il documento d'identità governativo valido pronto per la verifica.",
-            ageConfirm: "✓ HO IL MIO ID 19+ PRONTO",
-            ageDecline: "✗ HO MENO DI 19 ANNI"
-        }
-    };
-
-    // PRODUCTS DATABASE (20+ items with professional images)
-    const products = {
-        cannabis: [
-            { id: 'f1', name: 'Northern Lights', category: 'flower', strain: 'Indica', thc: '22%', prices: { '3.5g': 45, '7g': 85, '14g': 160, '28g': 300 }, image: 'https://images.unsplash.com/photo-1605889291252-b5b8c1da6a66?w=600&q=80', tags: ['indica', 'flower', '7g'] },
-            { id: 'f2', name: 'Blue Dream', category: 'flower', strain: 'Hybrid', thc: '20%', prices: { '3.5g': 40, '7g': 75, '14g': 145, '28g': 280 }, image: 'https://images.unsplash.com/photo-1587540600006-c19592290e70?w=600&q=80', tags: ['hybrid', 'flower', '7g'] },
-            { id: 'f3', name: 'Sour Diesel', category: 'flower', strain: 'Sativa', thc: '24%', prices: { '3.5g': 50, '7g': 95, '14g': 180, '28g': 340 }, image: 'https://images.unsplash.com/photo-1623278936457-e9f0b8fb1e8c?w=600&q=80', tags: ['sativa', 'flower', '7g'] },
-            { id: 'f4', name: 'Girl Scout Cookies', category: 'flower', strain: 'Hybrid', thc: '25%', prices: { '3.5g': 55, '7g': 105, '14g': 200, '28g': 380 }, image: 'https://images.unsplash.com/photo-1610639743864-5c0b9c0f0e13?w=600&q=80', tags: ['hybrid', 'flower'] },
-            { id: 'f5', name: 'Purple Haze', category: 'flower', strain: 'Sativa', thc: '23%', prices: { '3.5g': 48, '7g': 90, '14g': 170, '28g': 320 }, image: 'https://images.unsplash.com/photo-1616680214084-22670de1bc82?w=600&q=80', tags: ['sativa', 'flower'] },
-            { id: 'f6', name: 'OG Kush', category: 'flower', strain: 'Hybrid', thc: '26%', prices: { '3.5g': 60, '7g': 110, '14g': 210, '28g': 400 }, image: 'https://images.unsplash.com/photo-1536963367063-4c13e8ff6e0d?w=600&q=80', tags: ['hybrid', 'flower'] },
-            { id: 'f7', name: 'White Widow', category: 'flower', strain: 'Hybrid', thc: '21%', prices: { '3.5g': 42, '7g': 78, '14g': 150, '28g': 285 }, image: 'https://images.unsplash.com/photo-1605889291252-b5b8c1da6a66?w=600&q=80', tags: ['hybrid', 'flower'] },
-            { id: 'f8', name: 'Granddaddy Purple', category: 'flower', strain: 'Indica', thc: '27%', prices: { '3.5g': 65, '7g': 120, '14g': 230, '28g': 440 }, image: 'https://images.unsplash.com/photo-1587540600006-c19592290e70?w=600&q=80', tags: ['indica', 'flower'] },
+        // ==================== INITIALIZATION ====================
+        function init() {
+            // Check age verification
+            const ageVerified = localStorage.getItem('ageVerified');
+            if (ageVerified === 'true') {
+                document.getElementById('ageGate').classList.add('hidden');
+            }
            
-            { id: 'p1', name: 'Platinum Pack', category: 'preroll', count: '5 Pre-Rolls', thc: '23%', price: 45, image: 'https://images.unsplash.com/photo-1583947582886-c037cf3638b9?w=600&q=80', tags: ['preroll', '$10', '$45'] },
-            { id: 'p2', name: 'Diamond Singles', category: 'preroll', count: '3 Pre-Rolls', thc: '26%', price: 35, image: 'https://images.unsplash.com/photo-1631194758628-71ec7c35137e?w=600&q=80', tags: ['preroll'] },
-            { id: 'p3', name: 'Gold Reserve', category: 'preroll', count: '10 Pre-Rolls', thc: '21%', price: 80, image: 'https://images.unsplash.com/photo-1622322662468-8f8e2e1d3e6c?w=600&q=80', tags: ['preroll'] },
-            { id: 'p4', name: 'Luxury Singles', category: 'preroll', count: '6 Pre-Rolls', thc: '24%', price: 55, image: 'https://images.unsplash.com/photo-1583947582886-c037cf3638b9?w=600&q=80', tags: ['preroll'] },
+            // Load data from localStorage
+            loadFromStorage();
            
-            { id: 'v1', name: 'Elite Cartridge', category: 'vape', type: 'Hybrid', thc: '85%', price: 65, image: 'https://images.unsplash.com/photo-1610640003120-c6c4e4d35951?w=600&q=80', tags: ['vape'] },
-            { id: 'v2', name: 'Luxury Disposable', category: 'vape', type: 'Indica', thc: '80%', price: 45, image: 'https://images.unsplash.com/photo-1597481499750-3e6b22637e12?w=600&q=80', tags: ['vape'] },
-            { id: 'v3', name: 'Premium Live Resin', category: 'vape', type: 'Sativa', thc: '90%', price: 85, image: 'https://images.unsplash.com/photo-1567443024551-f3e3cc2be870?w=600&q=80', tags: ['vape'] },
+            // Initialize products if empty
+            if (STATE.products.length === 0) {
+                STATE.products = SAMPLE_PRODUCTS;
+                saveToStorage();
+            }
            
-            { id: 'a1', name: 'Gold Plated Grinder', category: 'accessory', type: 'Grinder', price: 75, image: 'https://images.unsplash.com/photo-1617195920950-1145bf9a9c72?w=600&q=80', tags: ['grinder'] },
-            { id: 'a2', name: 'Obsidian Glass Bong', category: 'accessory', type: 'Glass Bong', price: 250, image: 'https://images.unsplash.com/photo-1621277224630-81d9af65e40f?w=600&q=80', tags: ['bong'] },
-            { id: 'a3', name: 'Luxury Rolling Papers', category: 'accessory', type: '24K Gold Papers', price: 25, image: 'https://images.unsplash.com/photo-1581579186913-45ac3e6efe93?w=600&q=80', tags: ['papers', '$10'] },
-            { id: 'a4', name: 'Crystal Pipe', category: 'accessory', type: 'Hand Blown Glass', price: 120, image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80', tags: ['pipe'] },
-            { id: 'a5', name: 'Titanium Dab Tool', category: 'accessory', type: 'Dab Tool', price: 45, image: 'https://images.unsplash.com/photo-1617195920950-1145bf9a9c72?w=600&q=80', tags: ['dab'] }
-        ],
-        monchi: [
-            { id: 's1', name: 'Japanese Matcha Kit Kat', origin: 'Japan', price: 12, image: 'https://images.unsplash.com/photo-1609428854717-6f87de0e6fa0?w=600&q=80', tags: ['snack', '$10'] },
-            { id: 's2', name: 'Italian Truffle Chips', origin: 'Italy', price: 18, image: 'https://images.unsplash.com/photo-1566478989037-eec170784d0b?w=600&q=80', tags: ['snack'] },
-            { id: 's3', name: 'Korean Honey Butter Chips', origin: 'South Korea', price: 10, image: 'https://images.unsplash.com/photo-1628408897610-f9ff06eacb6e?w=600&q=80', tags: ['snack', '$10'] },
-            { id: 's4', name: 'Mexican Takis Fuego', origin: 'Mexico', price: 8, image: 'https://images.unsplash.com/photo-1613919113640-25732ec5e61f?w=600&q=80', tags: ['snack', '$10'] },
-            { id: 's5', name: 'French Macarons', origin: 'France', price: 25, image: 'https://images.unsplash.com/photo-1558312657-b2dead6bcc4e?w=600&q=80', tags: ['snack'] },
-            { id: 's6', name: 'Swiss Chocolate Truffles', origin: 'Switzerland', price: 22, image: 'https://images.unsplash.com/photo-1511381939415-e44015466834?w=600&q=80', tags: ['snack'] },
-           
-            { id: 'b1', name: 'Japanese Ramune Soda', type: 'Marble Soda', price: 6, image: 'https://images.unsplash.com/photo-1625772299848-391b6a87d7b3?w=600&q=80', tags: ['beverage', '$10'] },
-            { id: 'b2', name: 'Thai Coconut Water', type: 'Fresh Coconut', price: 8, image: 'https://images.unsplash.com/photo-1585838629862-9fa616a047c0?w=600&q=80', tags: ['beverage', '$10'] },
-            { id: 'b3', name: 'Italian Aranciata', type: 'Blood Orange', price: 7, image: 'https://images.unsplash.com/photo-1546173159-315724a31696?w=600&q=80', tags: ['beverage', '$10'] },
-            { id: 'b4', name: 'Korean Banana Milk', type: 'Flavored Milk', price: 5, image: 'https://images.unsplash.com/photo-1563636619-e9143da7973b?w=600&q=80', tags: ['beverage', '$10'] }
-        ]
-    };
-
-    let currentLang = 'en';
-    let cart = [];
-    let happyHourActive = false;
-
-    // LANDING
-    function startExperience() {
-        document.getElementById('landingPage').classList.add('fade-out');
-        setTimeout(() => {
-            document.getElementById('landingPage').style.display = 'none';
-            document.getElementById('ageGate').classList.add('active');
-        }, 1200);
-    }
-
-    // AGE GATE
-    function verifyAge(over19) {
-        if (over19) {
-            document.getElementById('ageGate').classList.remove('active');
-            document.getElementById('mainSite').classList.remove('hidden');
-            document.getElementById('broskyAvatar').classList.remove('hidden');
-            document.getElementById('whatsappFloat').classList.remove('hidden');
-            document.getElementById('adminBtn').classList.remove('hidden');
+            // Render initial view
             renderProducts();
-        } else {
+            updateCartDisplay();
+           
+            // Start rotating hero text
+            startRotatingText();
+           
+            // Update translations
+            updateTranslations();
+           
+            // Check for admin session
+            const adminSession = sessionStorage.getItem('adminLoggedIn');
+            if (adminSession === 'true') {
+                STATE.adminLoggedIn = true;
+            }
+        }
+       
+        // ==================== AGE VERIFICATION ====================
+        function acceptAge() {
+            localStorage.setItem('ageVerified', 'true');
+            document.getElementById('ageGate').classList.add('hidden');
+        }
+       
+        function declineAge() {
+            alert('You must be 19+ to access this site.');
             window.location.href = 'https://www.google.com';
         }
-    }
-
-    function changeAgeGateLang(lang) {
-        const t = translations[lang];
-        document.getElementById('ageTitle').textContent = t.ageTitle;
-        document.getElementById('ageSubtext').textContent = t.ageSubtext;
-        document.getElementById('ageConfirm').textContent = t.ageConfirm;
-    }
-
-    function changeLanguage(lang) {
-        currentLang = lang;
-    }
-
-    // RENDER PRODUCTS
-    function renderProducts() {
-        const cannabisHTML = products.cannabis.map(p => createProductCard(p)).join('');
-        const monchiHTML = products.monchi.map(p => createProductCard(p)).join('');
        
-        document.getElementById('cannabisProducts').innerHTML = cannabisHTML;
-        document.getElementById('monchiProducts').innerHTML = monchiHTML;
-    }
-
-    function createProductCard(p) {
-        const isFlower = p.category === 'flower';
-        const basePrice = isFlower ? p.prices['3.5g'] : p.price;
-        const finalPrice = happyHourActive ? (basePrice * 0.8).toFixed(2) : basePrice;
+        // ==================== LANGUAGE SYSTEM ====================
+        function toggleLanguage() {
+            STATE.language = STATE.language === 'en' ? 'es' : 'en';
+            document.getElementById('langBtn').textContent = STATE.language === 'en' ? 'ES' : 'EN';
+            updateTranslations();
+            renderProducts();
+        }
        
-        return `
-            <div class="product-card" id="card-${p.id}">
-                <img src="${p.image}" alt="${p.name}" class="product-img">
-                <h4 class="cinzel" style="font-size: 24px; font-weight: 700; color: white; margin-bottom: 15px; letter-spacing: 1px;">${p.name}</h4>
-               
-                ${p.strain ? `<p style="color: #999; margin-bottom: 8px; font-size: 13px;"><span style="color: var(--gold);">●</span> ${p.strain}</p>` : ''}
-                ${p.thc ? `<p style="color: #999; margin-bottom: 8px; font-size: 13px;"><span style="color: var(--gold);">●</span> THC: ${p.thc}</p>` : ''}
-                ${p.type ? `<p style="color: #999; margin-bottom: 8px; font-size: 13px;"><span style="color: var(--gold);">●</span> ${p.type}</p>` : ''}
-                ${p.count ? `<p style="color: #999; margin-bottom: 8px; font-size: 13px;"><span style="color: var(--gold);">●</span> ${p.count}</p>` : ''}
-                ${p.origin ? `<p style="color: #999; margin-bottom: 8px; font-size: 13px;"><span style="color: var(--gold);">●</span> ${p.origin}</p>` : ''}
-               
-                ${isFlower ? `
-                    <div style="margin: 25px 0;">
-                        <label style="font-size: 11px; font-weight: 700; color: var(--gold); display: block; margin-bottom: 10px; letter-spacing: 1px;">SELECT WEIGHT</label>
-                        <select id="weight-${p.id}" onchange="updatePrice('${p.id}')" style="width: 100%; margin-bottom: 0; font-weight: 600; font-size: 13px;">
-                            ${Object.keys(p.prices).map(w => `<option value="${w}">${w} - $${p.prices[w]}</option>`).join('')}
-                        </select>
+        function updateTranslations() {
+            const elements = document.querySelectorAll('[data-en]');
+            elements.forEach(el => {
+                const text = el.getAttribute(`data-${STATE.language}`);
+                if (text) {
+                    if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+                        el.placeholder = text;
+                    } else {
+                        el.textContent = text;
+                    }
+                }
+            });
+        }
+       
+        // ==================== ROTATING HERO TEXT ====================
+        let rotatingIndex = 0;
+        function startRotatingText() {
+            const words = TRANSLATIONS.rotatingWords[STATE.language];
+            setInterval(() => {
+                rotatingIndex = (rotatingIndex + 1) % words.length;
+                const textEl = document.getElementById('rotatingText');
+                textEl.style.opacity = '0';
+                setTimeout(() => {
+                    textEl.textContent = words[rotatingIndex];
+                    textEl.style.opacity = '1';
+                }, 250);
+            }, 3000);
+        }
+       
+        // ==================== PRODUCT RENDERING ====================
+        function renderProducts() {
+            const grid = document.getElementById('productGrid');
+            const filteredProducts = STATE.currentCategory === 'all'
+                ? STATE.products
+                : STATE.products.filter(p => p.category === STATE.currentCategory);
+           
+            if (filteredProducts.length === 0) {
+                grid.innerHTML = `<p class="text-center" style="grid-column: 1/-1; color: var(--text-muted);">
+                    ${STATE.language === 'en' ? 'No products found in this category.' : 'No se encontraron productos en esta categoría.'}
+                </p>`;
+                return;
+            }
+           
+            grid.innerHTML = filteredProducts.map(product => `
+                <div class="product-card" onclick="showProductDetail(${product.id})">
+                    <div class="product-image-container">
+                        <img src="${product.image}" alt="${product.name}" class="product-image" loading="lazy">
+                        ${product.category === 'munchies' ? `<div class="product-badge">🌍 ${product.country}</div>` : ''}
+                        ${STATE.happyHourActive && product.category !== 'munchies' ? `<div class="product-badge">HAPPY HOUR!</div>` : ''}
                     </div>
-                ` : ''}
-               
-                <div style="margin-top: 30px; padding-top: 30px; border-top: 2px solid #222;">
-                    ${happyHourActive ? `
-                        <p style="text-decoration: line-through; color: #666; font-size: 14px; margin-bottom: 5px;">$${basePrice}</p>
-                        <div class="cinzel" style="font-size: 38px; font-weight: 900; color: var(--gold); margin-bottom: 5px;" id="price-${p.id}">$${finalPrice}</div>
-                        <p style="font-size: 11px; color: var(--gold); font-weight: 700; margin-bottom: 20px;">🔥 HAPPY HOUR: 20% OFF</p>
-                    ` : `
-                        <div class="cinzel" style="font-size: 38px; font-weight: 900; color: var(--gold); margin-bottom: 20px;" id="price-${p.id}">$${basePrice}</div>
-                    `}
-                    <button onclick="addToCart('${p.id}')" class="gold-btn" style="margin-bottom: 0;">ADD TO CART</button>
-                </div>
-            </div>
-        `;
-    }
-
-    function updatePrice(id) {
-        const product = products.cannabis.find(p => p.id === id);
-        const weight = document.getElementById(`weight-${id}`).value;
-        const basePrice = product.prices[weight];
-        const finalPrice = happyHourActive ? (basePrice * 0.8).toFixed(2) : basePrice;
-        document.getElementById(`price-${id}`).textContent = `$${finalPrice}`;
-    }
-
-    // CART
-    function addToCart(id) {
-        let product = [...products.cannabis, ...products.monchi].find(p => p.id === id);
-        let selectedWeight = null;
-        let price = 0;
-       
-        if (product.category === 'flower') {
-            selectedWeight = document.getElementById(`weight-${id}`).value;
-            price = product.prices[selectedWeight];
-        } else {
-            price = product.price;
-        }
-       
-        if (happyHourActive) price = price * 0.8;
-       
-        const existing = cart.findIndex(item => item.id === id && item.selectedWeight === selectedWeight);
-       
-        if (existing >= 0) {
-            cart[existing].quantity += 1;
-        } else {
-            cart.push({ id, name: product.name, selectedWeight, price, quantity: 1, image: product.image });
-        }
-       
-        updateCart();
-    }
-
-    function updateCart() {
-        const badge = document.getElementById('cartBadge');
-        const items = document.getElementById('cartItems');
-        const total = document.getElementById('cartTotal');
-        const amount = document.getElementById('totalAmount');
-       
-        const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-        const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-       
-        if (totalItems > 0) {
-            badge.textContent = totalItems;
-            badge.classList.remove('hidden');
-        } else {
-            badge.classList.add('hidden');
-        }
-       
-        if (cart.length === 0) {
-            items.innerHTML = `
-                <div style="text-align: center; padding: 100px 20px;">
-                    <div style="font-size: 60px; margin-bottom: 20px;">🛒</div>
-                    <p style="color: #777; font-size: 16px;">Your cart is empty</p>
-                </div>
-            `;
-            total.classList.add('hidden');
-        } else {
-            items.innerHTML = cart.map((item, idx) => `
-                <div style="display: flex; gap: 20px; padding: 20px; background: #0d0d0d; border-radius: 16px; margin-bottom: 20px; border: 1px solid rgba(212,175,55,0.2);">
-                    <img src="${item.image}" style="width: 90px; height: 90px; object-fit: cover; border-radius: 12px;">
-                    <div style="flex: 1;">
-                        <h4 style="font-weight: 700; margin-bottom: 5px; font-size: 15px;">${item.name}</h4>
-                        ${item.selectedWeight ? `<p style="font-size: 12px; color: #888; margin-bottom: 5px;">${item.selectedWeight}</p>` : ''}
-                        <p style="font-size: 12px; color: #888;">Qty: ${item.quantity}</p>
-                    </div>
-                    <div style="text-align: right;">
-                        <p style="font-weight: 900; color: var(--gold); font-size: 18px; margin-bottom: 10px;">$${(item.price * item.quantity).toFixed(2)}</p>
-                        <button onclick="removeFromCart(${idx})" style="color: #ff4444; background: none; border: none; cursor: pointer; font-size: 11px; font-weight: 600;">Remove</button>
+                    <div class="product-info">
+                        <div class="product-category">${product.category.toUpperCase()}</div>
+                        <h3 class="product-name">${product.name}</h3>
+                        ${product.strain !== 'N/A' ? `<span class="product-strain">${product.strain}</span>` : ''}
+                        ${product.category !== 'munchies' ? `
+                            <div class="product-potency">
+                                ${product.thc > 0 ? `<div class="potency-item">
+                                    <span class="potency-label">THC</span>
+                                    <span class="potency-value">${product.thc}%</span>
+                                </div>` : ''}
+                                ${product.cbd > 0 ? `<div class="potency-item">
+                                    <span class="potency-label">CBD</span>
+                                    <span class="potency-value">${product.cbd}${product.cbd >= 100 ? 'mg' : '%'}</span>
+                                </div>` : ''}
+                            </div>
+                        ` : ''}
+                        <div class="product-effects">
+                            ${product.effects.map(effect => `<span class="effect-tag">${effect}</span>`).join('')}
+                        </div>
+                        <div class="product-footer">
+                            <div class="product-price-container">
+                                <div class="product-price">$${calculatePrice(product.price).toFixed(2)}</div>
+                                <div class="product-points">+${product.points} ${STATE.language === 'en' ? 'pts' : 'pts'}</div>
+                            </div>
+                            <button class="add-to-cart-btn" onclick="addToCart(event, ${product.id})">
+                                ${STATE.language === 'en' ? 'Add' : 'Agregar'}
+                            </button>
+                        </div>
                     </div>
                 </div>
             `).join('');
-           
-            amount.textContent = `$${totalPrice.toFixed(2)}`;
-            total.classList.remove('hidden');
         }
-    }
-
-    function removeFromCart(idx) {
-        if (cart[idx].quantity > 1) {
-            cart[idx].quantity -= 1;
-        } else {
-            cart.splice(idx, 1);
-        }
-        updateCart();
-    }
-
-    function toggleCart() {
-        const sidebar = document.getElementById('cartSidebar');
-        sidebar.style.right = sidebar.style.right === '0px' ? '-500px' : '0px';
-    }
-
-    // CHECKOUT
-    function openCheckout() {
-        if (cart.length === 0) return;
-        document.getElementById('checkoutModal').classList.add('active');
-    }
-
-    function closeCheckout() {
-        document.getElementById('checkoutModal').classList.remove('active');
-    }
-
-    function submitOrder(e) {
-        e.preventDefault();
-        closeCheckout();
-        toggleCart();
-        document.getElementById('trackingModal').classList.add('active');
-    }
-
-    function closeTracking() {
-        document.getElementById('trackingModal').classList.remove('active');
-        cart = [];
-        updateCart();
-    }
-
-    // BROSKY
-    function toggleBrosky() {
-        document.getElementById('broskyChat').classList.toggle('active');
-    }
-
-    function sendBroskyMessage() {
-        const input = document.getElementById('broskyInput');
-        const query = input.value.trim().toLowerCase();
-        if (!query) return;
        
-        const messages = document.getElementById('broskyMessages');
-        messages.innerHTML += `
-            <div style="text-align: right; margin-bottom: 15px;">
-                <div style="display: inline-block; background: var(--gold); color: #000; padding: 15px 20px; border-radius: 16px; max-width: 80%; font-weight: 600; font-size: 13px;">
-                    ${input.value}
+        function calculatePrice(basePrice) {
+            return STATE.happyHourActive ? basePrice * 0.8 : basePrice;
+        }
+       
+        // ==================== CATEGORY FILTERING ====================
+        function filterCategory(category) {
+            STATE.currentCategory = category;
+           
+            // Update active tab
+            document.querySelectorAll('.category-tab').forEach(tab => {
+                tab.classList.remove('active');
+                if (tab.getAttribute('data-category') === category) {
+                    tab.classList.add('active');
+                }
+            });
+           
+            renderProducts();
+        }
+       
+        // ==================== CART SYSTEM ====================
+        function addToCart(event, productId) {
+            event.stopPropagation();
+            const product = STATE.products.find(p => p.id === productId);
+            if (!product) return;
+           
+            const existingItem = STATE.cart.find(item => item.id === productId);
+            if (existingItem) {
+                existingItem.quantity++;
+            } else {
+                STATE.cart.push({
+                    ...product,
+                    quantity: 1,
+                    priceAtPurchase: calculatePrice(product.price)
+                });
+            }
+           
+            saveToStorage();
+            updateCartDisplay();
+           
+            // Show feedback
+            showToast(STATE.language === 'en' ? 'Added to cart!' : '¡Agregado al carrito!');
+        }
+       
+        function removeFromCart(productId) {
+            STATE.cart = STATE.cart.filter(item => item.id !== productId);
+            saveToStorage();
+            updateCartDisplay();
+        }
+       
+        function updateQuantity(productId, change) {
+            const item = STATE.cart.find(item => item.id === productId);
+            if (!item) return;
+           
+            item.quantity += change;
+            if (item.quantity <= 0) {
+                removeFromCart(productId);
+            } else {
+                saveToStorage();
+                updateCartDisplay();
+            }
+        }
+       
+        function updateCartDisplay() {
+            const cartCount = STATE.cart.reduce((sum, item) => sum + item.quantity, 0);
+            const subtotal = STATE.cart.reduce((sum, item) => sum + (item.priceAtPurchase * item.quantity), 0);
+            const totalPoints = STATE.cart.reduce((sum, item) => sum + (item.points * item.quantity), 0);
+           
+            document.getElementById('cartCount').textContent = cartCount;
+            document.getElementById('cartSubtotal').textContent = `$${subtotal.toFixed(2)}`;
+            document.getElementById('cartTotal').textContent = `$${subtotal.toFixed(2)}`;
+            document.getElementById('cartPoints').textContent = `${totalPoints} ${STATE.language === 'en' ? 'pts' : 'pts'}`;
+           
+            // Update sticky bar
+            document.getElementById('stickyTotal').textContent = `$${subtotal.toFixed(2)}`;
+            document.getElementById('stickyItems').textContent = `${cartCount} ${STATE.language === 'en' ? 'items' : 'artículos'}`;
+           
+            // Render cart items
+            const cartItemsEl = document.getElementById('cartItems');
+            if (STATE.cart.length === 0) {
+                cartItemsEl.innerHTML = `<p class="text-center" style="color: var(--text-muted);">
+                    ${STATE.language === 'en' ? 'Your cart is empty' : 'Tu carrito está vacío'}
+                </p>`;
+            } else {
+                cartItemsEl.innerHTML = STATE.cart.map(item => `
+                    <div class="cart-item">
+                        <img src="${item.image}" alt="${item.name}" class="cart-item-image">
+                        <div class="cart-item-info">
+                            <div class="cart-item-name">${item.name}</div>
+                            <div class="cart-item-price">$${(item.priceAtPurchase * item.quantity).toFixed(2)}</div>
+                            <div class="cart-item-controls">
+                                <button class="qty-btn" onclick="updateQuantity(${item.id}, -1)">-</button>
+                                <span class="cart-item-qty">${item.quantity}</span>
+                                <button class="qty-btn" onclick="updateQuantity(${item.id}, 1)">+</button>
+                                <button class="qty-btn" onclick="removeFromCart(${item.id})" style="margin-left: auto; background: var(--error);">🗑️</button>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        }
+       
+        function toggleCart() {
+            document.getElementById('cartPanel').classList.toggle('open');
+        }
+       
+        // ==================== CHECKOUT SYSTEM ====================
+        function showCheckout() {
+            if (STATE.cart.length === 0) {
+                showToast(STATE.language === 'en' ? 'Your cart is empty!' : '¡Tu carrito está vacío!');
+                return;
+            }
+           
+            const subtotal = STATE.cart.reduce((sum, item) => sum + (item.priceAtPurchase * item.quantity), 0);
+            const totalPoints = STATE.cart.reduce((sum, item) => sum + (item.points * item.quantity), 0);
+           
+            showModal('checkout', {
+                title: STATE.language === 'en' ? 'Checkout' : 'Finalizar Compra',
+                body: `
+                    <form onsubmit="processCheckout(event)">
+                        <div class="form-group">
+                            <label class="form-label">${STATE.language === 'en' ? 'Full Name' : 'Nombre Completo'}</label>
+                            <input type="text" class="form-input" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">${STATE.language === 'en' ? 'Phone Number' : 'Número de Teléfono'}</label>
+                            <input type="tel" class="form-input" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">${STATE.language === 'en' ? 'Email' : 'Correo Electrónico'}</label>
+                            <input type="email" class="form-input" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">${STATE.language === 'en' ? 'Delivery Address' : 'Dirección de Entrega'}</label>
+                            <input type="text" class="form-input" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">${STATE.language === 'en' ? 'Postal/ZIP Code' : 'Código Postal'}</label>
+                            <input type="text" class="form-input" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">${STATE.language === 'en' ? 'Delivery Instructions' : 'Instrucciones de Entrega'}</label>
+                            <textarea class="form-textarea" placeholder="${STATE.language === 'en' ? 'Optional notes for delivery' : 'Notas opcionales para la entrega'}"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">${STATE.language === 'en' ? 'Delivery Method' : 'Método de Entrega'}</label>
+                            <select class="form-select" required>
+                                <option value="delivery">${STATE.language === 'en' ? 'Delivery' : 'Entrega'}</option>
+                                <option value="pickup">${STATE.language === 'en' ? 'Pickup' : 'Recoger'}</option>
+                            </select>
+                        </div>
+                        <div class="cart-summary" style="margin-top: var(--spacing-xl);">
+                            <div class="cart-summary-row">
+                                <span>${STATE.language === 'en' ? 'Subtotal:' : 'Subtotal:'}</span>
+                                <span>$${subtotal.toFixed(2)}</span>
+                            </div>
+                            <div class="cart-summary-row">
+                                <span>${STATE.language === 'en' ? 'You will earn:' : 'Ganarás:'}</span>
+                                <span style="color: var(--accent-color); font-weight: 700;">${totalPoints} ${STATE.language === 'en' ? 'points' : 'puntos'}</span>
+                            </div>
+                            <div class="cart-summary-row total">
+                                <span>${STATE.language === 'en' ? 'Total:' : 'Total:'}</span>
+                                <span>$${subtotal.toFixed(2)}</span>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn-primary" style="width: 100%; margin-top: var(--spacing-lg);">
+                            ${STATE.language === 'en' ? 'Place Order' : 'Realizar Pedido'}
+                        </button>
+                    </form>
+                `
+            });
+        }
+       
+        function processCheckout(event) {
+            event.preventDefault();
+           
+            // Create order
+            const order = {
+                id: Date.now(),
+                items: STATE.cart,
+                total: STATE.cart.reduce((sum, item) => sum + (item.priceAtPurchase * item.quantity), 0),
+                points: STATE.cart.reduce((sum, item) => sum + (item.points * item.quantity), 0),
+                status: 'received',
+                timestamp: new Date()
+            };
+           
+            // Save order
+            const orders = JSON.parse(localStorage.getItem('orders') || '[]');
+            orders.push(order);
+            localStorage.setItem('orders', JSON.stringify(orders));
+           
+            // Clear cart
+            STATE.cart = [];
+            saveToStorage();
+            updateCartDisplay();
+            toggleCart();
+            closeModal();
+           
+            // Show tracking
+            startDeliveryTracking(order);
+        }
+       
+        // ==================== DELIVERY TRACKING ====================
+        function startDeliveryTracking(order) {
+            STATE.deliveryTracking = {
+                order: order,
+                status: 'received',
+                statusIndex: 0,
+                eta: 30,
+                distance: 5.2,
+                courierPosition: { x: 20, y: 50 }
+            };
+           
+            showModal('tracking', {
+                title: STATE.language === 'en' ? '🚗 Order Tracking' : '🚗 Seguimiento de Pedido',
+                body: renderTrackingInterface()
+            });
+           
+            // Start simulation
+            simulateDelivery();
+        }
+       
+        function renderTrackingInterface() {
+            const statuses = [
+                { key: 'received', icon: '✓', label: STATE.language === 'en' ? 'Received' : 'Recibido' },
+                { key: 'preparing', icon: '👨‍🍳', label: STATE.language === 'en' ? 'Preparing' : 'Preparando' },
+                { key: 'packaging', icon: '📦', label: STATE.language === 'en' ? 'Packaging' : 'Empacando' },
+                { key: 'delivery', icon: '🚗', label: STATE.language === 'en' ? 'Out for Delivery' : 'En Camino' },
+                { key: 'arriving', icon: '🏠', label: STATE.language === 'en' ? 'Arriving' : 'Llegando' },
+                { key: 'delivered', icon: '✅', label: STATE.language === 'en' ? 'Delivered' : 'Entregado' }
+            ];
+           
+            const currentIndex = STATE.deliveryTracking.statusIndex;
+           
+            return `
+                <div class="tracking-container">
+                    <div class="tracking-map">
+                        <div class="map-marker store-marker" style="left: 20%; top: 50%;">🏪</div>
+                        <div class="map-marker customer-marker" style="left: 80%; top: 50%;">🏠</div>
+                        <div class="map-marker courier-marker" id="courierMarker" style="left: ${STATE.deliveryTracking.courierPosition.x}%; top: ${STATE.deliveryTracking.courierPosition.y}%;">🍃</div>
+                        <div class="route-line" style="left: 20%; top: 50%; width: 60%;"></div>
+                    </div>
+                   
+                    <div class="tracking-status">
+                        <div class="tracking-eta">${STATE.deliveryTracking.eta} ${STATE.language === 'en' ? 'min' : 'min'}</div>
+                        <div class="tracking-distance">${STATE.deliveryTracking.distance} km ${STATE.language === 'en' ? 'away' : 'de distancia'}</div>
+                    </div>
+                   
+                    <div class="status-pipeline">
+                        <div class="status-progress-bar" style="width: ${(currentIndex / (statuses.length - 1)) * 100}%;"></div>
+                        ${statuses.map((status, index) => `
+                            <div class="status-step ${index < currentIndex ? 'completed' : ''} ${index === currentIndex ? 'active' : ''}">
+                                <div class="status-icon">${status.icon}</div>
+                                <div class="status-label">${status.label}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                   
+                    <div class="chat-container">
+
+<div class="chat-messages" id="trackingChat">
+                            <div class="chat-message system">
+                                <div class="chat-bubble">
+                                    ${STATE.language === 'en' ? 'Your order has been confirmed!' : '¡Tu pedido ha sido confirmado!'}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chat-input-container">
+                            <input type="text" class="chat-input" placeholder="${STATE.language === 'en' ? 'Message your driver...' : 'Mensaje para tu conductor...'}" id="chatInput">
+                            <button class="chat-send-btn" onclick="sendChatMessage()">
+                                ${STATE.language === 'en' ? 'Send' : 'Enviar'}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+    function simulateDelivery() {
+        const deliveryInterval = setInterval(() => {
+            if (!STATE.deliveryTracking) {
+                clearInterval(deliveryInterval);
+                return;
+            }
+           
+            // Update status every 10 seconds
+            if (STATE.deliveryTracking.statusIndex < 5) {
+                STATE.deliveryTracking.statusIndex++;
+                STATE.deliveryTracking.eta = Math.max(0, STATE.deliveryTracking.eta - 5);
+                STATE.deliveryTracking.distance = Math.max(0, STATE.deliveryTracking.distance - 0.9);
+               
+                // Move courier
+                STATE.deliveryTracking.courierPosition.x = 20 + (STATE.deliveryTracking.statusIndex / 5) * 60;
+               
+                // Update UI if modal is still open
+                if (!document.getElementById('modalOverlay').classList.contains('hidden')) {
+                    document.getElementById('modalBody').innerHTML = renderTrackingInterface();
+                   
+                    // Add automated driver message
+                    addDriverMessage(getStatusMessage(STATE.deliveryTracking.statusIndex));
+                }
+            } else {
+                clearInterval(deliveryInterval);
+                showDeliveryComplete();
+            }
+        }, 10000); // 10 seconds per status
+    }
+   
+    function getStatusMessage(statusIndex) {
+        const messages = {
+            en: [
+                "Hi! I've got your order and I'm getting it ready for you! 🍃",
+                "Packing everything up carefully now! 📦",
+                "On my way! Should be there in about 30 minutes! 🚗",
+                "Getting close! Be there in 15 minutes! 🏃",
+                "I'm outside! 🎉"
+            ],
+            es: [
+                "¡Hola! ¡Tengo tu pedido y lo estoy preparando para ti! 🍃",
+                "¡Empacando todo con cuidado ahora! 📦",
+                "¡En camino! ¡Debería estar allí en unos 30 minutos! 🚗",
+                "¡Acercándome! ¡Estaré allí en 15 minutos! 🏃",
+                "¡Estoy afuera! 🎉"
+            ]
+        };
+       
+        return messages[STATE.language][statusIndex - 1];
+    }
+   
+    function sendChatMessage() {
+        const input = document.getElementById('chatInput');
+        const message = input.value.trim();
+        if (!message) return;
+       
+        const chatContainer = document.getElementById('trackingChat');
+        chatContainer.innerHTML += `
+            <div class="chat-message user">
+                <div class="chat-bubble">
+                    <div class="chat-text">${message}</div>
+                    <div class="chat-time">${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</div>
                 </div>
             </div>
         `;
        
         input.value = '';
+        chatContainer.scrollTop = chatContainer.scrollHeight;
        
-        const allProducts = [...products.cannabis, ...products.monchi];
-        const matches = allProducts.filter(p => {
-            const matchName = p.name.toLowerCase().includes(query);
-            const matchTags = p.tags && p.tags.some(tag => query.includes(tag));
-            return matchName || matchTags;
-        });
-       
-        if (matches.length > 0) {
-            const first = matches[0];
-            const card = document.getElementById(`card-${first.id}`);
-            if (card) {
-                card.classList.add('highlighted');
-                card.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                setTimeout(() => card.classList.remove('highlighted'), 3000);
-            }
-           
-            setTimeout(() => {
-                messages.innerHTML += `
-                    <div style="background: #222; padding: 20px; border-radius: 16px; border-left: 4px solid var(--gold); margin-bottom: 15px;">
-                        <p style="font-weight: 700; color: var(--gold); font-size: 11px; margin-bottom: 8px;">BROSKY AI</p>
-                        <p style="color: #ddd; line-height: 1.7; font-size: 13px;">
-                            Excellent! I found ${matches.length} item${matches.length > 1 ? 's' : ''} matching "${query}". I've highlighted "${first.name}" for you.
-                            ${first.strain ? `It's a premium ${first.strain} with ${first.thc} THC.` : ''}
-                            ${first.origin ? `Authentic from ${first.origin}.` : ''}
-                            May I suggest pairing recommendations? 🌿
-                        </p>
-                    </div>
-                `;
-                messages.scrollTop = messages.scrollHeight;
-            }, 1000);
-        } else {
-            setTimeout(() => {
-                messages.innerHTML += `
-                    <div style="background: #222; padding: 20px; border-radius: 16px; border-left: 4px solid var(--gold); margin-bottom: 15px;">
-                        <p style="font-weight: 700; color: var(--gold); font-size: 11px; margin-bottom: 8px;">BROSKY AI</p>
-                        <p style="color: #ddd; line-height: 1.7; font-size: 13px;">
-                            I couldn't find an exact match. May I suggest our Northern Lights or Blue Dream? Both are exceptional. What type are you looking for? 🌿
-                        </p>
-                    </div>
-                `;
-                messages.scrollTop = messages.scrollHeight;
-            }, 1000);
-        }
+        // Simulate driver response
+        setTimeout(() => {
+            addDriverMessage(STATE.language === 'en' ? "Got it! Thanks for letting me know 👍" : "¡Entendido! Gracias por avisarme 👍");
+        }, 2000);
     }
-
-    function broskyPreset(type) {
-        const responses = {
-            offers: "🔥 Today's Special: 15% off all Northern Lights strains! Plus, free grinder with orders over $100. Our Platinum Pre-Roll Pack is also on sale. Use code LUXURY15 at checkout!",
-            history: "📜 Pop Roll was founded in 2024 with a vision to elevate cannabis culture in Ontario. We source only the finest strains from trusted cultivators and pair them with curated exotic delicacies from around the world.",
-            usage: "📖 For flower, start with 0.25-0.5g. Wait 10-15 minutes for effects. For edibles, start with 2.5-5mg THC and wait 1-2 hours. Store in a cool, dark place. ⚠️ Risks include impaired driving, potential dependency, and anxiety. Always consume responsibly.",
-            track: "📍 Opening tracking dashboard..."
-        };
+   
+    function addDriverMessage(message) {
+        const chatContainer = document.getElementById('trackingChat');
+        if (!chatContainer) return;
        
-        const messages = document.getElementById('broskyMessages');
-        messages.innerHTML += `
-            <div style="background: #222; padding: 20px; border-radius: 16px; border-left: 4px solid var(--gold); margin-bottom: 15px;">
-                <p style="font-weight: 700; color: var(--gold); font-size: 11px; margin-bottom: 8px;">BROSKY AI</p>
-                <p style="color: #ddd; line-height: 1.7; font-size: 13px;">${responses[type]}</p>
+        chatContainer.innerHTML += `
+            <div class="chat-message driver">
+                <div class="chat-bubble">
+                    <div class="chat-sender">${STATE.language === 'en' ? 'Driver' : 'Conductor'} 🍃</div>
+                    <div class="chat-text">${message}</div>
+                    <div class="chat-time">${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</div>
+                </div>
             </div>
         `;
-        messages.scrollTop = messages.scrollHeight;
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+    }
+   
+    function showDeliveryComplete() {
+        showToast(STATE.language === 'en' ? '🎉 Order Delivered! Enjoy!' : '🎉 ¡Pedido Entregado! ¡Disfruta!', 5000);
+        STATE.deliveryTracking = null;
+    }
+   
+    // ==================== HAPPY HOUR SYSTEM ====================
+    function activateHappyHour() {
+        if (STATE.happyHourActive) return;
        
-        if (type === 'track') {
-            setTimeout(() => {
-                document.getElementById('trackingModal').classList.add('active');
-            }, 1000);
-        }
-    }
-
-    // ADMIN
-    function openAdmin() {
-        document.getElementById('adminModal').classList.add('active');
-    }
-
-    function closeAdmin() {
-        document.getElementById('adminModal').classList.remove('active');
-    }
-
-    function toggleHappyHour() {
-        happyHourActive = !happyHourActive;
-        const btn = document.getElementById('happyHourToggle');
+        STATE.happyHourActive = true;
+        document.getElementById('happyHourBanner').classList.remove('hidden');
        
-        if (happyHourActive) {
-            btn.textContent = 'DEACTIVATE HAPPY HOUR';
-            document.body.style.background = 'linear-gradient(rgba(212, 175, 55, 0.05), rgba(10, 10, 10, 1))';
-        } else {
-            btn.textContent = 'ACTIVATE HAPPY HOUR';
-            document.body.style.background = 'var(--dark)';
-        }
+        let seconds = 60;
+        STATE.happyHourTimer = setInterval(() => {
+            seconds--;
+            document.getElementById('happyHourTimer').textContent = `00:${seconds.toString().padStart(2, '0')}`;
+           
+            if (seconds <= 0) {
+                deactivateHappyHour();
+            }
+        }, 1000);
        
         renderProducts();
-        updateCart();
+        showToast(STATE.language === 'en' ? '🎉 Happy Hour Activated! 20% Off!' : '🎉 ¡Hora Feliz Activada! ¡20% de Descuento!');
     }
-
-    function openHorizonVentura() {
-        window.open('https://horizonventura.com', '_blank');
+   
+    function deactivateHappyHour() {
+        STATE.happyHourActive = false;
+        document.getElementById('happyHourBanner').classList.add('hidden');
+        if (STATE.happyHourTimer) {
+            clearInterval(STATE.happyHourTimer);
+            STATE.happyHourTimer = null;
+        }
+        renderProducts();
     }
+   
+    // ==================== ADMIN SYSTEM ====================
+    function showAdminLogin() {
+        showModal('admin-login', {
+            title: STATE.language === 'en' ? 'Admin Login' : 'Inicio de Sesión Admin',
+            body: `
+                <form onsubmit="adminLogin(event)">
+                    <div class="form-group">
+                        <label class="form-label">${STATE.language === 'en' ? 'Password' : 'Contraseña'}</label>
+                        <input type="password" class="form-input" id="adminPassword" required>
+                    </div>
+                    <button type="submit" class="btn-primary" style="width: 100%;">
+                        ${STATE.language === 'en' ? 'Login' : 'Iniciar Sesión'}
+                    </button>
+                </form>
+            `
+        });
+    }
+   
+    function adminLogin(event) {
+        event.preventDefault();
+        const password = document.getElementById('adminPassword').value;
+       
+        // Simple password check (in production, use proper authentication)
+        if (password === 'admin123') {
+            STATE.adminLoggedIn = true;
+            sessionStorage.setItem('adminLoggedIn', 'true');
+            closeModal();
+            showAdminPanel();
+        } else {
+            showToast(STATE.language === 'en' ? 'Incorrect password' : 'Contraseña incorrecta');
+        }
+    }
+   
+    function showAdminPanel() {
+        if (!STATE.adminLoggedIn) {
+            showAdminLogin();
+            return;
+        }
+       
+        showModal('admin', {
+            title: STATE.language === 'en' ? 'Admin Dashboard' : 'Panel de Administración',
+            body: `
+                <div class="admin-panel">
+                    <div class="admin-tabs">
+                        <button class="admin-tab active" onclick="showAdminTab('inventory')">${STATE.language === 'en' ? 'Inventory' : 'Inventario'}</button>
+                        <button class="admin-tab" onclick="showAdminTab('orders')">${STATE.language === 'en' ? 'Orders' : 'Pedidos'}</button>
+                        <button class="admin-tab" onclick="showAdminTab('settings')">${STATE.language === 'en' ? 'Settings' : 'Configuración'}</button>
+                    </div>
+                    <div class="admin-content" id="adminContent">
+                        ${renderAdminInventory()}
+                    </div>
+                </div>
+            `
+        });
+    }
+   
+    function showAdminTab(tab) {
+        document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
+        event.target.classList.add('active');
+       
+        let content = '';
+        if (tab === 'inventory') {
+            content = renderAdminInventory();
+        } else if (tab === 'orders') {
+            content = renderAdminOrders();
+        } else if (tab === 'settings') {
+            content = renderAdminSettings();
+        }
+       
+        document.getElementById('adminContent').innerHTML = content;
+    }
+   
+    function renderAdminInventory() {
+        return `
+            <button class="btn-primary mb-2" onclick="showAddProductForm()">
+                ${STATE.language === 'en' ? '+ Add Product' : '+ Agregar Producto'}
+            </button>
+            <div class="product-list-admin">
+                ${STATE.products.map(product => `
+                    <div class="product-item-admin">
+                        <div>
+                            <strong>${product.name}</strong><br>
+                            <small style="color: var(--text-muted);">${product.category} | Stock: ${product.stock}</small>
+                        </div>
+                        <div>$${product.price.toFixed(2)}</div>
+                        <div class="admin-actions">
+                            <button class="admin-btn admin-btn-edit" onclick="editProduct(${product.id})">
+                                ${STATE.language === 'en' ? 'Edit' : 'Editar'}
+                            </button>
+                            <button class="admin-btn admin-btn-delete" onclick="deleteProduct(${product.id})">
+                                ${STATE.language === 'en' ? 'Delete' : 'Eliminar'}
+                            </button>
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+        `;
+    }
+   
+    function renderAdminOrders() {
+        const orders = JSON.parse(localStorage.getItem('orders') || '[]');
+        return `
+            <h3>${STATE.language === 'en' ? 'Recent Orders' : 'Pedidos Recientes'}</h3>
+            <div class="product-list-admin">
+                ${orders.length === 0 ? `<p>${STATE.language === 'en' ? 'No orders yet' : 'No hay pedidos todavía'}</p>` : ''}
+                ${orders.reverse().slice(0, 10).map(order => `
+                    <div class="product-item-admin">
+                        <div>
+                            <strong>Order #${order.id}</strong><br>
+                            <small style="color: var(--text-muted);">${new Date(order.timestamp).toLocaleString()}</small>
+                        </div>
+                        <div>
+                            <strong>$${order.total.toFixed(2)}</strong><br>
+                            <small style="color: var(--accent-color);">${order.points} pts</small>
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+        `;
+    }
+   
+    function renderAdminSettings() {
+        return `
+            <h3>${STATE.language === 'en' ? 'Settings' : 'Configuración'}</h3>
+            <button class="btn-primary mb-2" onclick="activateHappyHour()">
+                ${STATE.language === 'en' ? '🎉 Activate Happy Hour' : '🎉 Activar Hora Feliz'}
+            </button>
+            <br><br>
+            <button class="btn-secondary" onclick="exportData()">
+                ${STATE.language === 'en' ? '📊 Export Data' : '📊 Exportar Datos'}
+            </button>
+            <br><br>
+            <button class="btn-secondary" onclick="logoutAdmin()">
+                ${STATE.language === 'en' ? 'Logout' : 'Cerrar Sesión'}
+            </button>
+        `;
+    }
+   
+    function deleteProduct(productId) {
+        if (!confirm(STATE.language === 'en' ? 'Are you sure you want to delete this product?' : '¿Estás seguro de que quieres eliminar este producto?')) return;
+       
+        STATE.products = STATE.products.filter(p => p.id !== productId);
+        saveToStorage();
+        renderProducts();
+        showAdminPanel();
+    }
+   
+    function logoutAdmin() {
+        STATE.adminLoggedIn = false;
+        sessionStorage.removeItem('adminLoggedIn');
+        closeModal();
+    }
+   
+    function exportData() {
+        const data = {
+            products: STATE.products,
+            orders: JSON.parse(localStorage.getItem('orders') || '[]'),
+            timestamp: new Date()
+        };
+       
+        const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `cannabis-platform-export-${Date.now()}.json`;
+        a.click();
+    }
+   
+    // ==================== MODAL SYSTEM ====================
+    function showModal(type, options = {}) {
+        const overlay = document.getElementById('modalOverlay');
+        const title = document.getElementById('modalTitle');
+        const body = document.getElementById('modalBody');
+       
+        title.textContent = options.title || 'Modal';
+        body.innerHTML = options.body || '';
+       
+        overlay.classList.remove('hidden');
+    }
+   
+    function closeModal(event) {
+        if (event && event.target.classList.contains('modal')) return;
+        document.getElementById('modalOverlay').classList.add('hidden');
+    }
+   
+    // ==================== UTILITY FUNCTIONS ====================
+    function showToast(message, duration = 3000) {
+        const toast = document.createElement('div');
+        toast.style.cssText = `
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow-xl);
+            z-index: 10001;
+            animation: slideIn 0.3s ease;
+            font-weight: 600;
+        `;
+        toast.textContent = message;
+        document.body.appendChild(toast);
+       
+        setTimeout(() => {
+            toast.style.animation = 'slideOut 0.3s ease';
+            setTimeout(() => toast.remove(), 300);
+        }, duration);
+    }
+   
+    function scrollToProducts() {
+        document.getElementById('productGrid').scrollIntoView({ behavior: 'smooth' });
+    }
+   
+    function showProductDetail(productId) {
+        const product = STATE.products.find(p => p.id === productId);
+        if (!product) return;
+       
+        showModal('product-detail', {
+            title: product.name,
+            body: `
+                <img src="${product.image}" alt="${product.name}" style="width: 100%; border-radius: 12px; margin-bottom: var(--spacing-lg);">
+                <div class="product-category" style="margin-bottom: var(--spacing-sm);">${product.category.toUpperCase()}</div>
+                ${product.strain !== 'N/A' ? `<div class="product-strain" style="margin-bottom: var(--spacing-md);">${product.strain}</div>` : ''}
+                <p style="color: var(--text-secondary); margin-bottom: var(--spacing-lg);">${product.description}</p>
+                ${product.category !== 'munchies' ? `
+                    <div class="product-potency" style="margin-bottom: var(--spacing-lg);">
+                        ${product.thc > 0 ? `<div class="potency-item">
+                            <span class="potency-label">THC</span>
+                            <span class="potency-value">${product.thc}%</span>
+                        </div>` : ''}
+                        ${product.cbd > 0 ? `<div class="potency-item">
+                            <span class="potency-label">CBD</span>
+                            <span class="potency-value">${product.cbd}${product.cbd >= 100 ? 'mg' : '%'}</span>
+                        </div>` : ''}
+                    </div>
+                ` : ''}
+                <div class="product-effects" style="margin-bottom: var(--spacing-xl);">
+                    ${product.effects.map(effect => `<span class="effect-tag">${effect}</span>`).join('')}
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; padding-top: var(--spacing-lg); border-top: 1px solid var(--bg-tertiary);">
+                    <div>
+                        <div style="font-size: 2rem; font-weight: 900; color: var(--primary-color);">$${calculatePrice(product.price).toFixed(2)}</div>
+                        <div style="color: var(--accent-color); font-weight: 600;">+${product.points} pts</div>
+                    </div>
+                    <button class="btn-primary" onclick="addToCart(event, ${product.id}); closeModal();">
+                        ${STATE.language === 'en' ? 'Add to Cart' : 'Agregar al Carrito'}
+                    </button>
+                </div>
+            `
+        });
+    }
+   
+    // ==================== STORAGE ====================
+    function saveToStorage() {
+        localStorage.setItem('cannabisState', JSON.stringify({
+            cart: STATE.cart,
+            products: STATE.products,
+            user: STATE.user
+        }));
+    }
+   
+    function loadFromStorage() {
+        const saved = localStorage.getItem('cannabisState');
+        if (saved) {
+            const data = JSON.parse(saved);
+            STATE.cart = data.cart || [];
+            STATE.products = data.products || [];
+            STATE.user = data.user || null;
+        }
+    }
+   
+    // ==================== INITIALIZATION ====================
+    document.addEventListener('DOMContentLoaded', init);
+   
+    // Add CSS for slideOut animation
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes slideOut {
+            to {
+                opacity: 0;
+                transform: translateX(100px);
+            }
+        }
+    `;
+    document.head.appendChild(style);
 </script>
-```
 
 </body>
 </html>
