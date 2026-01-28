@@ -5,294 +5,217 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cannabis Delivery Platform</title>
     <style>
-        /* ==================== GLOBAL THEME SYSTEM (WHITE-LABEL READY) ==================== */
+        /* ============================================
+           WHITE-LABEL THEME SYSTEM
+           Change these variables to rebrand instantly
+        ============================================ */
         :root {
-            /* Primary Branding Colors - Change these for white-label */
             --primary-color: #10b981;
             --primary-dark: #059669;
-            --primary-light: #34d399;
+            --secondary-color: #8b5cf6;
             --accent-color: #f59e0b;
-            --accent-dark: #d97706;
-           
-            /* Neutral Colors */
-            --bg-primary: #0f172a;
-            --bg-secondary: #1e293b;
-            --bg-tertiary: #334155;
+            --background: #0f172a;
+            --surface: #1e293b;
+            --surface-light: #334155;
             --text-primary: #f1f5f9;
-            --text-secondary: #cbd5e1;
-            --text-muted: #94a3b8;
-           
-            /* Status Colors */
+            --text-secondary: #94a3b8;
+            --danger: #ef4444;
             --success: #10b981;
             --warning: #f59e0b;
-            --error: #ef4444;
-            --info: #3b82f6;
            
-            /* Typography */
-            --font-primary: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            --font-display: 'Georgia', serif;
+            --font-primary: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            --font-display: 'Impact', 'Arial Black', sans-serif;
            
-            /* Spacing */
-            --spacing-xs: 0.25rem;
-            --spacing-sm: 0.5rem;
-            --spacing-md: 1rem;
-            --spacing-lg: 1.5rem;
-            --spacing-xl: 2rem;
-            --spacing-2xl: 3rem;
-           
-            /* Shadows */
-            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
-            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
-           
-            /* Transitions */
-            --transition-fast: 150ms ease;
-            --transition-base: 300ms ease;
-            --transition-slow: 500ms ease;
+            --radius: 12px;
+            --radius-sm: 8px;
+            --shadow: 0 10px 30px rgba(0,0,0,0.3);
+            --shadow-lg: 0 20px 50px rgba(0,0,0,0.5);
         }
-       
-        /* ==================== RESET & BASE ==================== */
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-       
+
         body {
             font-family: var(--font-primary);
-            background: var(--bg-primary);
+            background: var(--background);
             color: var(--text-primary);
-            line-height: 1.6;
             overflow-x: hidden;
         }
-       
-        img {
-            max-width: 100%;
-            height: auto;
-        }
-       
-        button {
-            cursor: pointer;
-            border: none;
-            background: none;
-            font-family: inherit;
-        }
-       
-        input, textarea, select {
-            font-family: inherit;
-            font-size: inherit;
-        }
-       
-        /* ==================== AGE GATE MODAL ==================== */
-        .age-gate-overlay {
+
+        /* ============================================
+           AGE VERIFICATION MODAL
+        ============================================ */
+        #ageGate {
             position: fixed;
             top: 0;
             left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.98);
-            backdrop-filter: blur(10px);
-            z-index: 10000;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.95);
             display: flex;
             align-items: center;
             justify-content: center;
-            animation: fadeIn 0.3s ease;
+            z-index: 10000;
+            backdrop-filter: blur(10px);
         }
-       
-        .age-gate-modal {
-            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
-            border-radius: 24px;
-            padding: var(--spacing-2xl);
-            max-width: 500px;
-            width: 90%;
+
+        #ageGate.hidden {
+            display: none;
+        }
+
+        .age-gate-content {
+            background: var(--surface);
+            padding: 3rem;
+            border-radius: var(--radius);
             text-align: center;
-            box-shadow: var(--shadow-xl);
+            max-width: 500px;
+            box-shadow: var(--shadow-lg);
             border: 2px solid var(--primary-color);
-            animation: slideUp 0.5s ease;
         }
-       
-        .age-gate-logo {
-            font-size: 4rem;
-            margin-bottom: var(--spacing-lg);
-            animation: pulse 2s infinite;
+
+        .age-gate-content h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
         }
-       
-        .age-gate-title {
-            font-family: var(--font-display);
-            font-size: 2rem;
-            margin-bottom: var(--spacing-md);
-            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-       
-        .age-gate-text {
+
+        .age-gate-content p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
             color: var(--text-secondary);
-            margin-bottom: var(--spacing-xl);
-            font-size: 1.1rem;
         }
-       
+
         .age-gate-buttons {
             display: flex;
-            gap: var(--spacing-md);
+            gap: 1rem;
+            justify-content: center;
         }
-       
-        .age-gate-button {
-            flex: 1;
-            padding: var(--spacing-lg);
-            border-radius: 12px;
+
+        .age-gate-buttons button {
+            padding: 1rem 2rem;
             font-size: 1.1rem;
-            font-weight: 600;
-            transition: all var(--transition-base);
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            border: none;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
         }
-       
-        .age-gate-accept {
-            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+
+        .age-accept {
+            background: var(--primary-color);
             color: white;
         }
-       
-        .age-gate-accept:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(16, 185, 129, 0.3);
+
+        .age-accept:hover {
+            background: var(--primary-dark);
+            transform: scale(1.05);
         }
-       
-        .age-gate-decline {
-            background: var(--bg-tertiary);
-            color: var(--text-secondary);
-            border: 2px solid var(--bg-tertiary);
+
+        .age-decline {
+            background: var(--danger);
+            color: white;
         }
-       
-        .age-gate-decline:hover {
-            border-color: var(--error);
-            color: var(--error);
+
+        .age-decline:hover {
+            background: #dc2626;
+            transform: scale(1.05);
         }
-       
-        /* ==================== HEADER & NAVIGATION ==================== */
-        .header {
-            background: var(--bg-secondary);
-            border-bottom: 1px solid var(--bg-tertiary);
+
+        /* ============================================
+           NAVIGATION
+        ============================================ */
+        nav {
+            background: var(--surface);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow);
             position: sticky;
             top: 0;
-            z-index: 100;
-            box-shadow: var(--shadow-md);
+            z-index: 1000;
         }
-       
-        .header-content {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: var(--spacing-md) var(--spacing-lg);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: var(--spacing-md);
-        }
-       
+
         .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
             display: flex;
             align-items: center;
-            gap: var(--spacing-sm);
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--primary-color);
+            gap: 0.5rem;
+        }
+
+        .logo img {
+            height: 40px;
+            width: auto;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .nav-links button, .nav-links a {
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            cursor: pointer;
+            font-size: 1rem;
+            transition: color 0.3s;
             text-decoration: none;
         }
-       
-        .logo-icon {
-            font-size: 2rem;
-            animation: rotate 20s linear infinite;
+
+        .nav-links button:hover, .nav-links a:hover {
+            color: var(--primary-color);
         }
-       
-        .nav-actions {
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-md);
-        }
-       
-        .lang-switch {
-            padding: var(--spacing-sm) var(--spacing-md);
-            background: var(--bg-tertiary);
-            border-radius: 8px;
-            color: var(--text-primary);
-            font-weight: 500;
-            transition: all var(--transition-fast);
-        }
-       
-        .lang-switch:hover {
-            background: var(--primary-color);
-            color: white;
-        }
-       
-        .nav-button {
-            padding: var(--spacing-sm) var(--spacing-lg);
-            border-radius: 8px;
-            font-weight: 600;
-            transition: all var(--transition-fast);
-        }
-       
-        .nav-button-primary {
-            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
-            color: white;
-        }
-       
-        .nav-button-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
-        }
-       
-        .nav-button-secondary {
-            background: var(--accent-color);
-            color: white;
-        }
-       
-        .nav-button-secondary:hover {
-            background: var(--accent-dark);
-        }
-       
-        .cart-button {
+
+        .cart-badge {
             position: relative;
-            padding: var(--spacing-sm) var(--spacing-lg);
-            background: var(--bg-tertiary);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-sm);
-            transition: all var(--transition-fast);
         }
-       
-        .cart-button:hover {
-            background: var(--primary-color);
-            color: white;
-        }
-       
-        .cart-count {
+
+        .cart-badge span {
             position: absolute;
             top: -8px;
             right: -8px;
-            background: var(--error);
+            background: var(--danger);
             color: white;
             border-radius: 50%;
-            width: 24px;
-            height: 24px;
+            width: 20px;
+            height: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.75rem;
-            font-weight: 700;
+            font-size: 0.7rem;
+            font-weight: bold;
         }
-       
-        /* ==================== HERO SECTION ==================== */
+
+        .para-curioso-btn {
+            background: var(--secondary-color) !important;
+            color: white !important;
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius-sm);
+            font-weight: bold;
+        }
+
+        .para-curioso-btn:hover {
+            background: #7c3aed !important;
+        }
+
+        /* ============================================
+           HERO SECTION
+        ============================================ */
         .hero {
-            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
-            padding: var(--spacing-2xl) var(--spacing-lg);
+            background: linear-gradient(135deg, var(--primary-dark), var(--secondary-color));
+            padding: 4rem 2rem;
             text-align: center;
             position: relative;
             overflow: hidden;
         }
-       
+
         .hero::before {
             content: '';
             position: absolute;
@@ -300,2352 +223,1984 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: radial-gradient(circle at 50% 50%, rgba(16, 185, 129, 0.1) 0%, transparent 50%);
-            animation: pulse 4s ease-in-out infinite;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M50 20 Q30 40 50 60 Q70 40 50 20 M50 60 L50 80" stroke="white" fill="none" opacity="0.1" stroke-width="2"/></svg>') repeat;
+            opacity: 0.1;
         }
-       
-        .hero-content {
-            position: relative;
-            z-index: 1;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-       
-        .hero-title {
+
+        .hero h1 {
             font-family: var(--font-display);
-            font-size: clamp(2.5rem, 8vw, 5rem);
-            font-weight: 900;
-            margin-bottom: var(--spacing-md);
-            background: linear-gradient(135deg, var(--primary-color), var(--accent-color), var(--primary-light));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            letter-spacing: 2px;
-            animation: gradient 3s ease infinite;
-            background-size: 200% 200%;
-        }
-       
-        .hero-subtitle {
-            font-size: clamp(1.5rem, 4vw, 2.5rem);
-            color: var(--text-secondary);
-            font-weight: 300;
-            margin-bottom: var(--spacing-xl);
-            min-height: 3rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-       
-        .rotating-text {
-            display: inline-block;
-            animation: fadeIn 0.5s ease;
-        }
-       
-        .hero-cta {
-            display: inline-flex;
-            align-items: center;
-            gap: var(--spacing-md);
-            padding: var(--spacing-lg) var(--spacing-2xl);
-            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
-            color: white;
-            border-radius: 50px;
-            font-size: 1.25rem;
-            font-weight: 600;
-            transition: all var(--transition-base);
-            box-shadow: var(--shadow-lg);
-        }
-       
-        .hero-cta:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 20px 40px rgba(16, 185, 129, 0.4);
-        }
-       
-        /* ==================== HAPPY HOUR BANNER ==================== */
-        .happy-hour-banner {
-            background: linear-gradient(135deg, var(--accent-color), var(--accent-dark));
-            padding: var(--spacing-lg);
-            text-align: center;
-            animation: slideDown 0.5s ease, pulse 2s ease-in-out infinite;
-            position: relative;
-            overflow: hidden;
-        }
-       
-        .happy-hour-banner::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            animation: shine 2s infinite;
-        }
-       
-        .happy-hour-content {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
             position: relative;
             z-index: 1;
         }
-       
-        .happy-hour-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: white;
-            margin-bottom: var(--spacing-sm);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-       
-        .happy-hour-timer {
+
+        .hero-subtitle {
             font-size: 2rem;
-            font-weight: 900;
-            color: white;
-            font-family: monospace;
+            color: var(--accent-color);
+            font-weight: bold;
+            min-height: 50px;
+            position: relative;
+            z-index: 1;
         }
-       
-        /* ==================== MAIN CONTAINER ==================== */
+
+        .happy-hour-banner {
+            background: var(--warning);
+            color: var(--background);
+            padding: 1rem;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            display: none;
+            animation: pulse 1s infinite;
+        }
+
+        .happy-hour-banner.active {
+            display: block;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        /* ============================================
+           MAIN CONTENT
+        ============================================ */
         .container {
             max-width: 1400px;
             margin: 0 auto;
-            padding: var(--spacing-xl) var(--spacing-lg);
+            padding: 2rem;
         }
-       
-        /* ==================== CATEGORY TABS ==================== */
-        .category-tabs {
+
+        .tabs {
             display: flex;
-            gap: var(--spacing-sm);
-            margin-bottom: var(--spacing-xl);
-            overflow-x: auto;
-            padding-bottom: var(--spacing-sm);
-            scrollbar-width: thin;
-            scrollbar-color: var(--primary-color) var(--bg-secondary);
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
         }
-       
-        .category-tabs::-webkit-scrollbar {
-            height: 4px;
-        }
-       
-        .category-tabs::-webkit-scrollbar-track {
-            background: var(--bg-secondary);
-        }
-       
-        .category-tabs::-webkit-scrollbar-thumb {
-            background: var(--primary-color);
-            border-radius: 2px;
-        }
-       
-        .category-tab {
-            padding: var(--spacing-md) var(--spacing-lg);
-            background: var(--bg-secondary);
-            border-radius: 12px;
-            color: var(--text-secondary);
-            font-weight: 600;
-            white-space: nowrap;
-            transition: all var(--transition-fast);
+
+        .tab {
+            padding: 0.75rem 1.5rem;
+            background: var(--surface);
             border: 2px solid transparent;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
         }
-       
-        .category-tab:hover {
-            background: var(--bg-tertiary);
-            color: var(--text-primary);
+
+        .tab:hover {
+            border-color: var(--primary-color);
         }
-       
-        .category-tab.active {
-            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
-            color: white;
-            border-color: var(--primary-light);
+
+        .tab.active {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
         }
-       
-        /* ==================== PRODUCT GRID ==================== */
+
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        /* ============================================
+           PRODUCT GRID
+        ============================================ */
         .product-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: var(--spacing-lg);
-            margin-bottom: var(--spacing-xl);
+            gap: 1.5rem;
+            margin-bottom: 5rem;
         }
-       
+
         .product-card {
-            background: var(--bg-secondary);
-            border-radius: 16px;
+            background: var(--surface);
+            border-radius: var(--radius);
             overflow: hidden;
-            transition: all var(--transition-base);
-            border: 2px solid transparent;
+            transition: all 0.3s;
             cursor: pointer;
-        }
-       
-        .product-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(16, 185, 129, 0.2);
-            border-color: var(--primary-color);
-        }
-       
-        .product-image-container {
             position: relative;
-            height: 200px;
-            background: var(--bg-tertiary);
-            overflow: hidden;
         }
-       
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
         .product-image {
             width: 100%;
-            height: 100%;
+            height: 200px;
             object-fit: cover;
-            transition: transform var(--transition-slow);
+            background: var(--surface-light);
         }
-       
-        .product-card:hover .product-image {
-            transform: scale(1.1);
-        }
-       
-        .product-badge {
-            position: absolute;
-            top: var(--spacing-sm);
-            right: var(--spacing-sm);
-            padding: var(--spacing-xs) var(--spacing-md);
-            background: var(--accent-color);
-            color: white;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            text-transform: uppercase;
-        }
-       
+
         .product-info {
-            padding: var(--spacing-lg);
+            padding: 1rem;
         }
-       
-        .product-category {
-            color: var(--primary-color);
-            font-size: 0.875rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: var(--spacing-xs);
-        }
-       
+
         .product-name {
-            font-size: 1.25rem;
-            font-weight: 700;
-            margin-bottom: var(--spacing-sm);
-            color: var(--text-primary);
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
         }
-       
+
         .product-strain {
             display: inline-block;
-            padding: var(--spacing-xs) var(--spacing-sm);
-            background: var(--bg-tertiary);
-            border-radius: 6px;
-            font-size: 0.875rem;
+            padding: 0.25rem 0.5rem;
+            background: var(--primary-color);
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-thc {
             color: var(--text-secondary);
-            margin-bottom: var(--spacing-sm);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
         }
-       
-        .product-potency {
-            display: flex;
-            gap: var(--spacing-md);
-            margin-bottom: var(--spacing-sm);
-            font-size: 0.875rem;
-        }
-       
-        .potency-item {
-            display: flex;
-            flex-direction: column;
-        }
-       
-        .potency-label {
-            color: var(--text-muted);
-            font-size: 0.75rem;
-        }
-       
-        .potency-value {
-            color: var(--primary-color);
-            font-weight: 700;
-        }
-       
+
         .product-effects {
             display: flex;
             flex-wrap: wrap;
-            gap: var(--spacing-xs);
-            margin-bottom: var(--spacing-md);
+            gap: 0.25rem;
+            margin-bottom: 0.5rem;
         }
-       
+
         .effect-tag {
-            padding: var(--spacing-xs) var(--spacing-sm);
-            background: var(--bg-primary);
-            border-radius: 6px;
+            background: var(--surface-light);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
             font-size: 0.75rem;
-            color: var(--text-secondary);
         }
-       
+
         .product-footer {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding-top: var(--spacing-md);
-            border-top: 1px solid var(--bg-tertiary);
+            margin-top: 1rem;
         }
-       
-        .product-price-container {
+
+        .product-price {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .product-points {
+            font-size: 0.8rem;
+            color: var(--accent-color);
+        }
+
+        .add-to-cart-btn {
+            width: 100%;
+            padding: 0.75rem;
+            background: var(--primary-color);
+            border: none;
+            border-radius: var(--radius-sm);
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 0.5rem;
+        }
+
+        .add-to-cart-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        .out-of-stock {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        .stock-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--danger);
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+
+        /* ============================================
+           STICKY CART BAR (MOBILE)
+        ============================================ */
+        .sticky-cart {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--surface);
+            padding: 1rem;
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.3);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 999;
+        }
+
+        .sticky-cart-info {
             display: flex;
             flex-direction: column;
         }
-       
-        .product-price {
-            font-size: 1.5rem;
-            font-weight: 900;
+
+        .sticky-cart-total {
+            font-size: 1.2rem;
+            font-weight: bold;
             color: var(--primary-color);
         }
-       
-        .product-points {
-            font-size: 0.75rem;
-            color: var(--accent-color);
-            font-weight: 600;
+
+        .sticky-cart-items {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
         }
-       
-        .add-to-cart-btn {
-            padding: var(--spacing-sm) var(--spacing-lg);
-            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+
+        .checkout-btn {
+            padding: 0.75rem 2rem;
+            background: var(--primary-color);
+            border: none;
+            border-radius: var(--radius-sm);
             color: white;
-            border-radius: 8px;
-            font-weight: 600;
-            transition: all var(--transition-fast);
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
         }
-       
-        .add-to-cart-btn:hover {
+
+        .checkout-btn:hover {
+            background: var(--primary-dark);
             transform: scale(1.05);
-            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
         }
-       
-        .add-to-cart-btn:active {
-            transform: scale(0.95);
-        }
-       
-        /* ==================== MODAL SYSTEM ==================== */
-        .modal-overlay {
+
+        /* ============================================
+           MODAL SYSTEM
+        ============================================ */
+        .modal {
+            display: none;
             position: fixed;
             top: 0;
             left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(4px);
-            z-index: 1000;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 2000;
+            overflow-y: auto;
+            padding: 2rem;
+        }
+
+        .modal.active {
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: var(--spacing-lg);
-            animation: fadeIn 0.3s ease;
         }
-       
-        .modal {
-            background: var(--bg-secondary);
-            border-radius: 24px;
-            width: 100%;
+
+        .modal-content {
+            background: var(--surface);
+            border-radius: var(--radius);
+            padding: 2rem;
             max-width: 600px;
+            width: 100%;
             max-height: 90vh;
             overflow-y: auto;
-            box-shadow: var(--shadow-xl);
-            animation: slideUp 0.3s ease;
+            position: relative;
         }
-       
+
         .modal-header {
-            padding: var(--spacing-xl);
-            border-bottom: 1px solid var(--bg-tertiary);
             display: flex;
             justify-content: space-between;
             align-items: center;
+            margin-bottom: 1.5rem;
         }
-       
-        .modal-title {
-            font-size: 1.5rem;
-            font-weight: 700;
+
+        .modal-header h2 {
+            font-size: 1.8rem;
         }
-       
-        .modal-close {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: var(--bg-tertiary);
-            color: var(--text-primary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            transition: all var(--transition-fast);
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 2rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: color 0.3s;
         }
-       
-        .modal-close:hover {
-            background: var(--error);
-            transform: rotate(90deg);
+
+        .close-modal:hover {
+            color: var(--danger);
         }
-       
-        .modal-body {
-            padding: var(--spacing-xl);
-        }
-       
-        /* ==================== FORM ELEMENTS ==================== */
+
+        /* ============================================
+           FORMS
+        ============================================ */
         .form-group {
-            margin-bottom: var(--spacing-lg);
+            margin-bottom: 1.5rem;
         }
-       
-        .form-label {
+
+        .form-group label {
             display: block;
-            margin-bottom: var(--spacing-sm);
+            margin-bottom: 0.5rem;
             font-weight: 600;
             color: var(--text-secondary);
         }
-       
-        .form-input {
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
             width: 100%;
-            padding: var(--spacing-md);
-            background: var(--bg-tertiary);
+            padding: 0.75rem;
+            background: var(--surface-light);
             border: 2px solid transparent;
-            border-radius: 8px;
+            border-radius: var(--radius-sm);
             color: var(--text-primary);
-            transition: all var(--transition-fast);
+            font-size: 1rem;
+            transition: border-color 0.3s;
         }
-       
-        .form-input:focus {
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
             outline: none;
             border-color: var(--primary-color);
-            background: var(--bg-primary);
         }
-       
-        .form-textarea {
-            width: 100%;
-            padding: var(--spacing-md);
-            background: var(--bg-tertiary);
-            border: 2px solid transparent;
-            border-radius: 8px;
-            color: var(--text-primary);
-            min-height: 100px;
-            resize: vertical;
-            transition: all var(--transition-fast);
-        }
-       
-        .form-textarea:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            background: var(--bg-primary);
-        }
-       
-        .form-select {
-            width: 100%;
-            padding: var(--spacing-md);
-            background: var(--bg-tertiary);
-            border: 2px solid transparent;
-            border-radius: 8px;
-            color: var(--text-primary);
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-weight: bold;
             cursor: pointer;
-            transition: all var(--transition-fast);
+            transition: all 0.3s;
+            font-size: 1rem;
         }
-       
-        .form-select:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            background: var(--bg-primary);
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
         }
-       
-        /* ==================== CART PANEL ==================== */
-        .cart-panel {
-            position: fixed;
-            right: -100%;
-            top: 0;
-            bottom: 0;
-            width: 100%;
-            max-width: 500px;
-            background: var(--bg-secondary);
-            box-shadow: var(--shadow-xl);
-            z-index: 1001;
-            display: flex;
-            flex-direction: column;
-            transition: right var(--transition-base);
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
         }
-       
-        .cart-panel.open {
-            right: 0;
+
+        .btn-danger {
+            background: var(--danger);
+            color: white;
         }
-       
-        .cart-header {
-            padding: var(--spacing-xl);
-            border-bottom: 1px solid var(--bg-tertiary);
+
+        .btn-secondary {
+            background: var(--surface-light);
+            color: var(--text-primary);
+        }
+
+        /* ============================================
+           CART DISPLAY
+        ============================================ */
+        .cart-items {
+            margin-bottom: 2rem;
+        }
+
+        .cart-item {
+            background: var(--surface-light);
+            padding: 1rem;
+            border-radius: var(--radius-sm);
+            margin-bottom: 1rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-       
-        .cart-items {
-            flex: 1;
-            overflow-y: auto;
-            padding: var(--spacing-lg);
+
+        .cart-item-info h4 {
+            margin-bottom: 0.5rem;
         }
-       
-        .cart-item {
-            background: var(--bg-tertiary);
-            border-radius: 12px;
-            padding: var(--spacing-md);
-            margin-bottom: var(--spacing-md);
-            display: flex;
-            gap: var(--spacing-md);
-        }
-       
-        .cart-item-image {
-            width: 80px;
-            height: 80px;
-            border-radius: 8px;
-            object-fit: cover;
-        }
-       
-        .cart-item-info {
-            flex: 1;
-        }
-       
-        .cart-item-name {
-            font-weight: 700;
-            margin-bottom: var(--spacing-xs);
-        }
-       
+
         .cart-item-price {
+            font-weight: bold;
             color: var(--primary-color);
-            font-weight: 700;
         }
-       
+
         .cart-item-controls {
             display: flex;
+            gap: 0.5rem;
             align-items: center;
-            gap: var(--spacing-sm);
-            margin-top: var(--spacing-sm);
         }
-       
+
         .qty-btn {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            background: var(--bg-secondary);
-            color: var(--text-primary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            transition: all var(--transition-fast);
-        }
-       
-        .qty-btn:hover {
+            width: 30px;
+            height: 30px;
             background: var(--primary-color);
+            border: none;
+            border-radius: 4px;
             color: white;
+            cursor: pointer;
+            font-weight: bold;
         }
-       
-        .cart-item-qty {
-            font-weight: 700;
+
+        .qty-display {
             min-width: 30px;
             text-align: center;
+            font-weight: bold;
         }
-       
-        .cart-footer {
-            padding: var(--spacing-xl);
-            border-top: 1px solid var(--bg-tertiary);
-            background: var(--bg-primary);
+
+        .remove-btn {
+            background: var(--danger);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left: 1rem;
         }
-       
+
         .cart-summary {
-            margin-bottom: var(--spacing-lg);
+            background: var(--surface-light);
+            padding: 1.5rem;
+            border-radius: var(--radius-sm);
+            margin-top: 2rem;
         }
-       
+
         .cart-summary-row {
             display: flex;
             justify-content: space-between;
-            margin-bottom: var(--spacing-sm);
-            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
         }
-       
-        .cart-summary-row.total {
+
+        .cart-summary-total {
             font-size: 1.5rem;
-            font-weight: 900;
-            color: var(--text-primary);
-            padding-top: var(--spacing-md);
-            border-top: 2px solid var(--bg-tertiary);
+            font-weight: bold;
+            color: var(--primary-color);
+            border-top: 2px solid var(--surface);
+            padding-top: 1rem;
+            margin-top: 1rem;
         }
-       
-        .checkout-btn {
-            width: 100%;
-            padding: var(--spacing-lg);
-            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
-            color: white;
-            border-radius: 12px;
-            font-size: 1.25rem;
-            font-weight: 700;
-            transition: all var(--transition-fast);
-        }
-       
-        .checkout-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4);
-        }
-       
-        /* ==================== DELIVERY TRACKING ==================== */
-        .tracking-container {
-            background: var(--bg-secondary);
-            border-radius: 24px;
-            padding: var(--spacing-xl);
-            margin-bottom: var(--spacing-xl);
-        }
-       
-        .tracking-map {
+
+        /* ============================================
+           DELIVERY TRACKING
+        ============================================ */
+        .delivery-map {
             width: 100%;
             height: 400px;
-            background: var(--bg-tertiary);
-            border-radius: 16px;
-            margin-bottom: var(--spacing-xl);
+            background: var(--surface-light);
+            border-radius: var(--radius);
             position: relative;
             overflow: hidden;
+            margin-bottom: 2rem;
         }
-       
+
         .map-marker {
             position: absolute;
-            width: 40px;
-            height: 40px;
+            width: 30px;
+            height: 30px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
-            transition: all var(--transition-base);
+            font-size: 1.2rem;
+            transition: all 0.5s;
         }
-       
+
         .store-marker {
             background: var(--primary-color);
-            border: 3px solid white;
-            box-shadow: var(--shadow-lg);
+            top: 20%;
+            left: 20%;
         }
-       
+
         .customer-marker {
             background: var(--accent-color);
-            border: 3px solid white;
-            box-shadow: var(--shadow-lg);
+            top: 70%;
+            left: 80%;
         }
-       
+
         .courier-marker {
-            background: linear-gradient(135deg, var(--success), var(--primary-dark));
-            border: 3px solid white;
-            box-shadow: var(--shadow-lg);
-            animation: bounce 1s ease-in-out infinite;
+            background: var(--secondary-color);
+            animation: bounce 1s infinite;
+            z-index: 10;
         }
-       
-        .route-line {
-            position: absolute;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
-            transform-origin: left;
-            animation: drawLine 2s ease-in-out;
-        }
-       
-        .tracking-status {
-            text-align: center;
-            margin-bottom: var(--spacing-xl);
-        }
-       
-        .tracking-eta {
-            font-size: 2rem;
-            font-weight: 900;
-            color: var(--primary-color);
-            margin-bottom: var(--spacing-sm);
-        }
-       
-        .tracking-distance {
-            color: var(--text-secondary);
-        }
-       
-        .status-pipeline {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: var(--spacing-xl);
-            position: relative;
-        }
-       
-        .status-pipeline::before {
-            content: '';
-            position: absolute;
-            top: 20px;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: var(--bg-tertiary);
-            z-index: 0;
-        }
-       
-        .status-progress-bar {
-            position: absolute;
-            top: 20px;
-            left: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
-            z-index: 1;
-            transition: width var(--transition-slow);
-        }
-       
-        .status-step {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: var(--spacing-sm);
-            flex: 1;
-            position: relative;
-            z-index: 2;
-        }
-       
-        .status-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: var(--bg-tertiary);
-            border: 3px solid var(--bg-secondary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.25rem;
-            transition: all var(--transition-base);
-        }
-       
-        .status-step.completed .status-icon {
-            background: var(--primary-color);
-            color: white;
-        }
-       
-        .status-step.active .status-icon {
-            background: var(--accent-color);
-            color: white;
-            animation: pulse 2s ease-in-out infinite;
-        }
-       
-        .status-label {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            text-align: center;
-        }
-       
-        .status-step.completed .status-label,
-        .status-step.active .status-label {
-            color: var(--text-primary);
-            font-weight: 600;
-        }
-       
-        /* ==================== CHAT SYSTEM ==================== */
-        .chat-container {
-            background: var(--bg-secondary);
-            border-radius: 24px;
-            padding: var(--spacing-xl);
-            margin-bottom: var(--spacing-xl);
-        }
-       
-        .chat-messages {
-            height: 400px;
-            overflow-y: auto;
-            margin-bottom: var(--spacing-lg);
-            padding: var(--spacing-md);
-            background: var(--bg-primary);
-            border-radius: 12px;
-        }
-       
-        .chat-message {
-            display: flex;
-            margin-bottom: var(--spacing-md);
-            animation: slideIn 0.3s ease;
-        }
-       
-        .chat-message.user {
-            justify-content: flex-end;
-        }
-       
-        .chat-bubble {
-            max-width: 70%;
-            padding: var(--spacing-md);
-            border-radius: 16px;
-            position: relative;
-        }
-       
-        .chat-message.driver .chat-bubble {
-            background: var(--bg-tertiary);
-            color: var(--text-primary);
-        }
-       
-        .chat-message.user .chat-bubble {
-            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
-            color: white;
-        }
-       
-        .chat-message.system .chat-bubble {
-            background: var(--accent-color);
-            color: white;
-            max-width: 100%;
-            text-align: center;
-        }
-       
-        .chat-sender {
-            font-weight: 700;
-            font-size: 0.875rem;
-            margin-bottom: var(--spacing-xs);
-        }
-       
-        .chat-time {
-            font-size: 0.75rem;
-            opacity: 0.7;
-            margin-top: var(--spacing-xs);
-        }
-       
-        .typing-indicator {
-            display: flex;
-            gap: 4px;
-            padding: var(--spacing-md);
-        }
-       
-        .typing-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: var(--text-muted);
-            animation: typing 1.4s infinite;
-        }
-       
-        .typing-dot:nth-child(2) {
-            animation-delay: 0.2s;
-        }
-       
-        .typing-dot:nth-child(3) {
-            animation-delay: 0.4s;
-        }
-       
-        .chat-input-container {
-            display: flex;
-            gap: var(--spacing-md);
-        }
-       
-        .chat-input {
-            flex: 1;
-            padding: var(--spacing-md);
-            background: var(--bg-tertiary);
-            border: 2px solid transparent;
-            border-radius: 12px;
-            color: var(--text-primary);
-            transition: all var(--transition-fast);
-        }
-       
-        .chat-input:focus {
-            outline: none;
-            border-color: var(--primary-color);
-        }
-       
-        .chat-send-btn {
-            padding: var(--spacing-md) var(--spacing-xl);
-            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
-            color: white;
-            border-radius: 12px;
-            font-weight: 700;
-            transition: all var(--transition-fast);
-        }
-       
-        .chat-send-btn:hover {
-            transform: scale(1.05);
-        }
-       
-        /* ==================== WHATSAPP FLOAT BUTTON ==================== */
-        .whatsapp-float {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 999;
-        }
-       
-        .whatsapp-button {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #25D366, #128C7E);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.5);
-            transition: all var(--transition-base);
-            animation: pulse 2s ease-in-out infinite;
-        }
-       
-        .whatsapp-button:hover {
-            transform: scale(1.1);
-            box-shadow: 0 8px 30px rgba(37, 211, 102, 0.7);
-        }
-       
-        .whatsapp-tooltip {
-            position: absolute;
-            bottom: 70px;
-            right: 0;
-            background: white;
-            color: #333;
-            padding: var(--spacing-md) var(--spacing-lg);
-            border-radius: 12px;
-            box-shadow: var(--shadow-lg);
-            white-space: nowrap;
-            font-weight: 600;
-            opacity: 0;
-            pointer-events: none;
-            transition: all var(--transition-fast);
-        }
-       
-        .whatsapp-float:hover .whatsapp-tooltip {
-            opacity: 1;
-            bottom: 80px;
-        }
-       
-        /* ==================== STICKY BOTTOM BAR (MOBILE) ==================== */
-        .sticky-bottom-bar {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: var(--bg-secondary);
-            border-top: 2px solid var(--primary-color);
-            padding: var(--spacing-md);
-            z-index: 100;
-            display: none;
-            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
-        }
-       
-        .sticky-bottom-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-       
-        .sticky-total {
-            font-size: 1.25rem;
-            font-weight: 900;
-            color: var(--primary-color);
-        }
-       
-        .sticky-checkout-btn {
-            padding: var(--spacing-md) var(--spacing-xl);
-            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
-            color: white;
-            border-radius: 8px;
-            font-weight: 700;
-            transition: all var(--transition-fast);
-        }
-       
-        /* ==================== ADMIN PANEL ==================== */
-        .admin-panel {
-            background: var(--bg-secondary);
-            border-radius: 24px;
-            padding: var(--spacing-xl);
-            margin-bottom: var(--spacing-xl);
-        }
-       
-        .admin-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: var(--spacing-xl);
-            padding-bottom: var(--spacing-lg);
-            border-bottom: 2px solid var(--bg-tertiary);
-        }
-       
-        .admin-tabs {
-            display: flex;
-            gap: var(--spacing-sm);
-            margin-bottom: var(--spacing-xl);
-            overflow-x: auto;
-        }
-       
-        .admin-tab {
-            padding: var(--spacing-md) var(--spacing-lg);
-            background: var(--bg-tertiary);
-            border-radius: 8px;
-            color: var(--text-secondary);
-            font-weight: 600;
-            white-space: nowrap;
-            transition: all var(--transition-fast);
-        }
-       
-        .admin-tab.active {
-            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
-            color: white;
-        }
-       
-        .admin-content {
-            animation: fadeIn 0.3s ease;
-        }
-       
-        .product-list-admin {
-            display: grid;
-            gap: var(--spacing-md);
-        }
-       
-        .product-item-admin {
-            background: var(--bg-tertiary);
-            padding: var(--spacing-lg);
-            border-radius: 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: var(--spacing-md);
-        }
-       
-        .admin-actions {
-            display: flex;
-            gap: var(--spacing-sm);
-        }
-       
-        .admin-btn {
-            padding: var(--spacing-sm) var(--spacing-md);
-            border-radius: 8px;
-            font-weight: 600;
-            transition: all var(--transition-fast);
-        }
-       
-        .admin-btn-edit {
-            background: var(--info);
-            color: white;
-        }
-       
-        .admin-btn-delete {
-            background: var(--error);
-            color: white;
-        }
-       
-        .admin-btn:hover {
-            transform: scale(1.05);
-        }
-       
-        /* ==================== ANIMATIONS ==================== */
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-       
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-       
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-       
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateX(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-       
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.05); opacity: 0.9; }
-        }
-       
+
         @keyframes bounce {
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-10px); }
         }
-       
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
+
+        .delivery-route {
+            position: absolute;
+            border: 3px dashed var(--primary-color);
+            opacity: 0.5;
         }
-       
-        @keyframes gradient {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+
+        .status-pipeline {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            position: relative;
         }
-       
-        @keyframes shine {
-            from { left: -100%; }
-            to { left: 200%; }
+
+        .status-step {
+            flex: 1;
+            text-align: center;
+            position: relative;
         }
-       
-        @keyframes typing {
-            0%, 60%, 100% { transform: translateY(0); }
-            30% { transform: translateY(-10px); }
+
+        .status-step::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            width: 100%;
+            height: 4px;
+            background: var(--surface-light);
+            z-index: -1;
         }
-       
-        @keyframes drawLine {
-            from { width: 0; }
-            to { width: 100%; }
+
+        .status-step:first-child::before {
+            left: 50%;
+            width: 50%;
         }
-       
-        /* ==================== RESPONSIVE DESIGN ==================== */
-        @media (max-width: 768px) {
-            .header-content {
-                flex-wrap: wrap;
-            }
-           
-            .nav-actions {
-                order: 3;
-                width: 100%;
-                margin-top: var(--spacing-md);
-            }
-           
-            .hero-title {
-                font-size: 2.5rem;
-            }
-           
-            .product-grid {
-                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            }
-           
-            .sticky-bottom-bar {
-                display: block;
-            }
-           
-            .cart-panel {
-                max-width: 100%;
-            }
-           
-            .status-pipeline {
-                flex-wrap: wrap;
-            }
-           
-            .admin-tabs {
-                flex-wrap: wrap;
-            }
+
+        .status-step:last-child::before {
+            width: 50%;
         }
-       
-        /* ==================== UTILITY CLASSES ==================== */
-        .hidden {
-            display: none !important;
+
+        .status-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--surface-light);
+            margin: 0 auto 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            transition: all 0.3s;
         }
-       
-        .text-center {
+
+        .status-step.completed .status-icon {
+            background: var(--primary-color);
+        }
+
+        .status-step.active .status-icon {
+            background: var(--accent-color);
+            animation: pulse 1s infinite;
+        }
+
+        .delivery-eta {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin: 2rem 0;
+        }
+
+        /* ============================================
+           CHAT SYSTEM
+        ============================================ */
+        .chat-container {
+            background: var(--surface-light);
+            border-radius: var(--radius);
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1rem;
+        }
+
+        .chat-message {
+            margin-bottom: 1rem;
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .chat-message.user {
+            flex-direction: row-reverse;
+        }
+
+        .chat-bubble {
+            max-width: 70%;
+            padding: 0.75rem;
+            border-radius: var(--radius-sm);
+            background: var(--surface);
+        }
+
+        .chat-message.user .chat-bubble {
+            background: var(--primary-color);
+        }
+
+        .chat-message.driver .chat-bubble {
+            background: var(--secondary-color);
+        }
+
+        .chat-message.system .chat-bubble {
+            background: var(--accent-color);
+            max-width: 100%;
             text-align: center;
         }
-       
-        .mt-1 { margin-top: var(--spacing-md); }
-        .mt-2 { margin-top: var(--spacing-lg); }
-        .mb-1 { margin-bottom: var(--spacing-md); }
-        .mb-2 { margin-bottom: var(--spacing-lg); }
-       
-        .btn-primary {
-            padding: var(--spacing-md) var(--spacing-xl);
-            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
-            color: white;
-            border-radius: 8px;
-            font-weight: 600;
-            transition: all var(--transition-fast);
+
+        .chat-input-container {
+            padding: 1rem;
+            border-top: 2px solid var(--surface);
+            display: flex;
+            gap: 0.5rem;
         }
-       
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
-        }
-       
-        .btn-secondary {
-            padding: var(--spacing-md) var(--spacing-xl);
-            background: var(--bg-tertiary);
+
+        .chat-input {
+            flex: 1;
+            padding: 0.75rem;
+            background: var(--surface);
+            border: none;
+            border-radius: var(--radius-sm);
             color: var(--text-primary);
-            border-radius: 8px;
-            font-weight: 600;
-            transition: all var(--transition-fast);
         }
-       
-        .btn-secondary:hover {
-            background: var(--bg-primary);
+
+        .chat-send-btn {
+            padding: 0.75rem 1.5rem;
+            background: var(--primary-color);
+            border: none;
+            border-radius: var(--radius-sm);
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        /* ============================================
+           LOYALTY DISPLAY
+        ============================================ */
+        .loyalty-card {
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            padding: 2rem;
+            border-radius: var(--radius);
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .loyalty-points {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .loyalty-label {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        /* ============================================
+           ADMIN PANEL
+        ============================================ */
+        .admin-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .admin-card {
+            background: var(--surface);
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            border: 2px solid var(--surface-light);
+        }
+
+        .admin-card h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        /* ============================================
+           WHATSAPP FLOAT
+        ============================================ */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            background: #25D366;
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 50px;
+            box-shadow: var(--shadow-lg);
+            cursor: pointer;
+            z-index: 998;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 40px rgba(37, 211, 102, 0.4);
+        }
+
+        /* ============================================
+           LANGUAGE TOGGLE
+        ============================================ */
+        .lang-toggle {
+            display: flex;
+            gap: 0.5rem;
+            background: var(--surface-light);
+            padding: 0.25rem;
+            border-radius: var(--radius-sm);
+        }
+
+        .lang-btn {
+            padding: 0.5rem 1rem;
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+
+        .lang-btn.active {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        /* ============================================
+           RESPONSIVE
+        ============================================ */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.5rem;
+            }
+
+            .product-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+
+            nav {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .modal-content {
+                padding: 1rem;
+            }
+
+            .tabs {
+                overflow-x: auto;
+                flex-wrap: nowrap;
+            }
+        }
+
+        /* ============================================
+           ANIMATIONS
+        ============================================ */
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-in {
+            animation: slideIn 0.5s ease-out;
+        }
+
+        /* ============================================
+           LOADING STATES
+        ============================================ */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* ============================================
+           MASCOT
+        ============================================ */
+        .mascot {
+            width: 40px;
+            height: 40px;
+            display: inline-block;
+            font-size: 2rem;
+            animation: wiggle 2s infinite;
+        }
+
+        @keyframes wiggle {
+            0%, 100% { transform: rotate(-5deg); }
+            50% { transform: rotate(5deg); }
         }
     </style>
 </head>
 <body>
-   
-    <!-- AGE GATE -->
-    <div id="ageGate" class="age-gate-overlay">
-        <div class="age-gate-modal">
-            <div class="age-gate-logo">🍃</div>
-            <h1 class="age-gate-title" data-en="Age Verification Required" data-es="Verificación de Edad Requerida">Age Verification Required</h1>
-            <p class="age-gate-text" data-en="You must be 19+ years old to enter this site. By clicking Accept, you confirm that you meet the legal age requirement." data-es="Debes tener 19+ años para entrar a este sitio. Al hacer clic en Aceptar, confirmas que cumples con el requisito de edad legal.">
-                You must be 19+ years old to enter this site. By clicking Accept, you confirm that you meet the legal age requirement.
+
+    <!-- ============================================
+         AGE VERIFICATION GATE
+    ============================================ -->
+    <div id="ageGate">
+        <div class="age-gate-content">
+            <div class="mascot">🍃</div>
+            <h1 data-en="Age Verification" data-es="Verificación de Edad">Age Verification</h1>
+            <p data-en="You must be 19+ years old to enter this site" data-es="Debes tener 19+ años para entrar a este sitio">
+                You must be 19+ years old to enter this site
             </p>
             <div class="age-gate-buttons">
-                <button class="age-gate-button age-gate-accept" onclick="acceptAge()" data-en="Accept" data-es="Aceptar">Accept</button>
-                <button class="age-gate-button age-gate-decline" onclick="declineAge()" data-en="Decline" data-es="Rechazar">Decline</button>
+                <button class="age-accept" onclick="acceptAge()" data-en="I'm 19+" data-es="Tengo 19+">I'm 19+</button>
+                <button class="age-decline" onclick="declineAge()" data-en="I'm Under 19" data-es="Soy Menor de 19">I'm Under 19</button>
             </div>
         </div>
     </div>
-   
-    <!-- HEADER -->
-    <header class="header">
-        <div class="header-content">
-            <a href="#" class="logo">
-                <span class="logo-icon">🍃</span>
-                <span data-en="Cannabis Direct" data-es="Cannabis Directo">Cannabis Direct</span>
-            </a>
-           
-            <div class="nav-actions">
-                <button class="lang-switch" onclick="toggleLanguage()" id="langBtn">ES</button>
-                <button class="nav-button nav-button-secondary" onclick="showModal('paraC urioso')" data-en="Para Curioso" data-es="Para Curioso">Para Curioso</button>
-                <button class="nav-button nav-button-primary" onclick="showModal('login')" data-en="Account" data-es="Cuenta">Account</button>
-                <button class="cart-button" onclick="toggleCart()">
-                    <span data-en="Cart" data-es="Carrito">Cart</span>
-                    <span class="cart-count" id="cartCount">0</span>
-                </button>
-                <button class="nav-button nav-button-primary" onclick="showAdminLogin()" data-en="Admin" data-es="Admin">Admin</button>
-            </div>
+
+    <!-- ============================================
+         NAVIGATION
+    ============================================ -->
+    <nav>
+        <div class="logo">
+            <div class="mascot">🍃</div>
+            <span data-en="GreenLeaf Delivery" data-es="Entrega GreenLeaf">GreenLeaf Delivery</span>
         </div>
-    </header>
-   
-    <!-- HAPPY HOUR BANNER -->
-    <div id="happyHourBanner" class="happy-hour-banner hidden">
-        <div class="happy-hour-content">
-            <div class="happy-hour-title" data-en="🎉 HAPPY HOUR ACTIVE! 🎉" data-es="🎉 ¡HORA FELIZ ACTIVA! 🎉">🎉 HAPPY HOUR ACTIVE! 🎉</div>
-            <div class="happy-hour-timer" id="happyHourTimer">00:60</div>
+        <div class="nav-links">
+            <div class="lang-toggle">
+                <button class="lang-btn active" onclick="setLanguage('en')">EN</button>
+                <button class="lang-btn" onclick="setLanguage('es')">ES</button>
+            </div>
+            <button onclick="showSection('shop')" data-en="Shop" data-es="Tienda">Shop</button>
+            <button onclick="showSection('munchies')" data-en="All My Munchies" data-es="Todos Mis Antojos">All My Munchies</button>
+            <button onclick="openModal('accountModal')" data-en="Account" data-es="Cuenta">Account</button>
+            <button class="cart-badge" onclick="openModal('cartModal')">
+                🛒
+                <span id="cartCount">0</span>
+            </button>
+            <a href="https://horizonventura.com" target="_blank" class="para-curioso-btn" data-en="Para Curioso" data-es="Para Curioso">Para Curioso</a>
+            <button onclick="showAdminLogin()" style="opacity: 0.3;">⚙️</button>
+        </div>
+    </nav>
+
+    <!-- ============================================
+         HAPPY HOUR BANNER
+    ============================================ -->
+    <div id="happyHourBanner" class="happy-hour-banner">
+        <div class="mascot">🍃</div>
+        <span data-en="🎉 HAPPY HOUR ACTIVE! Special prices for " data-es="🎉 HAPPY HOUR ACTIVO! Precios especiales por ">
+            🎉 HAPPY HOUR ACTIVE! Special prices for
+        </span>
+        <span id="happyHourTimer">60</span>
+        <span data-en=" seconds!" data-es=" segundos!"> seconds!</span>
+    </div>
+
+    <!-- ============================================
+         HERO SECTION
+    ============================================ -->
+    <div class="hero">
+        <h1 data-en="LET'S GET HIGH" data-es="VAMOS A ELEVARNOS">LET'S GET HIGH</h1>
+        <div class="hero-subtitle" id="heroSubtitle">Sativa</div>
+    </div>
+
+    <!-- ============================================
+         MAIN CONTENT
+    ============================================ -->
+    <div class="container">
+        <!-- TABS -->
+        <div class="tabs">
+            <button class="tab active" onclick="filterCategory('all')" data-en="All Products" data-es="Todos los Productos">All Products</button>
+            <button class="tab" onclick="filterCategory('flower')" data-en="Flower" data-es="Flores">Flower</button>
+            <button class="tab" onclick="filterCategory('prerolls')" data-en="Pre-Rolls" data-es="Pre-Armados">Pre-Rolls</button>
+            <button class="tab" onclick="filterCategory('vapes')" data-en="Vapes" data-es="Vaporizadores">Vapes</button>
+            <button class="tab" onclick="filterCategory('edibles')" data-en="Edibles" data-es="Comestibles">Edibles</button>
+            <button class="tab" onclick="filterCategory('drinks')" data-en="Drinks" data-es="Bebidas">Drinks</button>
+            <button class="tab" onclick="filterCategory('concentrates')" data-en="Concentrates" data-es="Concentrados">Concentrates</button>
+            <button class="tab" onclick="filterCategory('cbd')" data-en="CBD" data-es="CBD">CBD</button>
+            <button class="tab" onclick="filterCategory('accessories')" data-en="Accessories" data-es="Accesorios">Accessories</button>
+        </div>
+
+        <!-- SHOP SECTION -->
+        <div id="shopSection" class="section active">
+            <div id="productGrid" class="product-grid"></div>
+        </div>
+
+        <!-- MUNCHIES SECTION -->
+        <div id="munchiesSection" class="section">
+            <h2 data-en="🍭 All My Munchies - Exotic Snacks & Treats" data-es="🍭 Todos Mis Antojos - Snacks Exóticos">
+                🍭 All My Munchies - Exotic Snacks & Treats
+            </h2>
+            <div id="munchiesGrid" class="product-grid"></div>
         </div>
     </div>
-   
-    <!-- HERO SECTION -->
-    <section class="hero">
-        <div class="hero-content">
-            <h1 class="hero-title" data-en="LET'S GET HIGH" data-es="ELEVÉMONOS">LET'S GET HIGH</h1>
-            <div class="hero-subtitle">
-                <span class="rotating-text" id="rotatingText">Sativa</span>
-            </div>
-            <button class="hero-cta" onclick="scrollToProducts()" data-en="🛒 Browse Menu" data-es="🛒 Ver Menú">🛒 Browse Menu</button>
+
+    <!-- ============================================
+         STICKY CART BAR
+    ============================================ -->
+    <div class="sticky-cart">
+        <div class="sticky-cart-info">
+            <div class="sticky-cart-total">$<span id="stickyTotal">0.00</span></div>
+            <div class="sticky-cart-items"><span id="stickyItems">0</span> <span data-en="items" data-es="artículos">items</span> • <span id="stickyPoints">0</span> <span data-en="pts" data-es="pts">pts</span></div>
         </div>
-    </section>
-   
-    <!-- MAIN CONTENT -->
-    <div class="container" id="mainContent">
-       
-        <!-- CATEGORY TABS -->
-        <div class="category-tabs" id="categoryTabs">
-            <button class="category-tab active" data-category="all" onclick="filterCategory('all')" data-en="All Products" data-es="Todos">All Products</button>
-            <button class="category-tab" data-category="flower" onclick="filterCategory('flower')" data-en="Flower" data-es="Flor">Flower</button>
-            <button class="category-tab" data-category="prerolls" onclick="filterCategory('prerolls')" data-en="Pre-rolls" data-es="Pre-armados">Pre-rolls</button>
-            <button class="category-tab" data-category="vapes" onclick="filterCategory('vapes')" data-en="Vapes" data-es="Vaporizadores">Vapes</button>
-            <button class="category-tab" data-category="edibles" onclick="filterCategory('edibles')" data-en="Edibles" data-es="Comestibles">Edibles</button>
-            <button class="category-tab" data-category="drinks" onclick="filterCategory('drinks')" data-en="Drinks" data-es="Bebidas">Drinks</button>
-            <button class="category-tab" data-category="concentrates" onclick="filterCategory('concentrates')" data-en="Concentrates" data-es="Concentrados">Concentrates</button>
-            <button class="category-tab" data-category="cbd" onclick="filterCategory('cbd')" data-en="CBD" data-es="CBD">CBD</button>
-            <button class="category-tab" data-category="munchies" onclick="filterCategory('munchies')" data-en="🍭 All My Munchies" data-es="🍭 Todas Mis Golosinas">🍭 All My Munchies</button>
-        </div>
-       
-        <!-- PRODUCT GRID -->
-        <div class="product-grid" id="productGrid"></div>
-       
+        <button class="checkout-btn" onclick="openModal('cartModal')" data-en="View Cart" data-es="Ver Carrito">View Cart</button>
     </div>
-   
-    <!-- CART PANEL -->
-    <div class="cart-panel" id="cartPanel">
-        <div class="cart-header">
-            <h2 data-en="Your Cart" data-es="Tu Carrito">Your Cart</h2>
-            <button class="modal-close" onclick="toggleCart()">×</button>
-        </div>
-        <div class="cart-items" id="cartItems">
-            <p class="text-center text-muted" data-en="Your cart is empty" data-es="Tu carrito está vacío">Your cart is empty</p>
-        </div>
-        <div class="cart-footer">
+
+    <!-- ============================================
+         CART MODAL
+    ============================================ -->
+    <div id="cartModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 data-en="🛒 Your Cart" data-es="🛒 Tu Carrito">🛒 Your Cart</h2>
+                <button class="close-modal" onclick="closeModal('cartModal')">×</button>
+            </div>
+            <div id="cartItems" class="cart-items"></div>
             <div class="cart-summary">
                 <div class="cart-summary-row">
                     <span data-en="Subtotal:" data-es="Subtotal:">Subtotal:</span>
-                    <span id="cartSubtotal">$0.00</span>
+                    <span>$<span id="cartSubtotal">0.00</span></span>
                 </div>
                 <div class="cart-summary-row">
-                    <span data-en="Loyalty Points:" data-es="Puntos de Lealtad:">Loyalty Points:</span>
-                    <span id="cartPoints">0 pts</span>
+                    <span data-en="Delivery:" data-es="Entrega:">Delivery:</span>
+                    <span>$<span id="deliveryFee">5.00</span></span>
                 </div>
-                <div class="cart-summary-row total">
+                <div class="cart-summary-row">
+                    <span data-en="Loyalty Points Earned:" data-es="Puntos Ganados:">Loyalty Points Earned:</span>
+                    <span id="cartPoints">0</span>
+                </div>
+                <div class="cart-summary-row cart-summary-total">
                     <span data-en="Total:" data-es="Total:">Total:</span>
-                    <span id="cartTotal">$0.00</span>
+                    <span>$<span id="cartTotal">0.00</span></span>
                 </div>
             </div>
-            <button class="checkout-btn" onclick="showCheckout()" data-en="Proceed to Checkout" data-es="Proceder al Pago">Proceed to Checkout</button>
+            <button class="btn btn-primary" style="width: 100%; margin-top: 1rem;" onclick="proceedToCheckout()" data-en="Proceed to Checkout" data-es="Proceder al Pago">
+                Proceed to Checkout
+            </button>
         </div>
     </div>
-   
-    <!-- STICKY BOTTOM BAR (MOBILE) -->
-    <div class="sticky-bottom-bar">
-        <div class="sticky-bottom-content">
-            <div>
-                <div class="sticky-total" id="stickyTotal">$0.00</div>
-                <div style="font-size: 0.875rem; color: var(--text-muted);" id="stickyItems">0 items</div>
-            </div>
-            <button class="sticky-checkout-btn" onclick="toggleCart()" data-en="View Cart" data-es="Ver Carrito">View Cart</button>
-        </div>
-    </div>
-   
-    <!-- WHATSAPP FLOAT BUTTON -->
-    <div class="whatsapp-float">
-        <div class="whatsapp-tooltip" data-en="Reach me if you want a website like this" data-es="Contáctame si quieres un sitio web como este">Reach me if you want a website like this</div>
-        <a href="https://wa.me/1234567890?text=Hi!%20I%20want%20a%20website%20like%20this" class="whatsapp-button" target="_blank">
-            <svg viewBox="0 0 24 24" width="32" height="32" fill="currentColor">
-                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
-            </svg>
-        </a>
-    </div>
-   
-    <!-- MODAL SYSTEM -->
-    <div id="modalOverlay" class="modal-overlay hidden" onclick="closeModal(event)">
-        <div class="modal" onclick="event.stopPropagation()">
+
+    <!-- ============================================
+         CHECKOUT MODAL
+    ============================================ -->
+    <div id="checkoutModal" class="modal">
+        <div class="modal-content">
             <div class="modal-header">
-                <h2 class="modal-title" id="modalTitle">Modal</h2>
-                <button class="modal-close" onclick="closeModal()">×</button>
+                <h2 data-en="📦 Checkout" data-es="📦 Finalizar Compra">📦 Checkout</h2>
+                <button class="close-modal" onclick="closeModal('checkoutModal')">×</button>
             </div>
-            <div class="modal-body" id="modalBody"></div>
+            <form onsubmit="placeOrder(event)">
+                <div class="form-group">
+                    <label data-en="Full Name" data-es="Nombre Completo">Full Name</label>
+                    <input type="text" id="checkoutName" required>
+                </div>
+                <div class="form-group">
+                    <label data-en="Phone Number" data-es="Número de Teléfono">Phone Number</label>
+                    <input type="tel" id="checkoutPhone" required>
+                </div>
+                <div class="form-group">
+                    <label data-en="Delivery Address" data-es="Dirección de Entrega">Delivery Address</label>
+                    <input type="text" id="checkoutAddress" required>
+                </div>
+                <div class="form-group">
+                    <label data-en="Postal Code" data-es="Código Postal">Postal Code</label>
+                    <input type="text" id="checkoutPostal" required>
+                </div>
+                <div class="form-group">
+                    <label data-en="Delivery Instructions" data-es="Instrucciones de Entrega">Delivery Instructions</label>
+                    <textarea id="checkoutInstructions" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label data-en="Delivery Method" data-es="Método de Entrega">Delivery Method</label>
+                    <select id="deliveryMethod">
+                        <option value="delivery" data-en="Delivery" data-es="Entrega">Delivery</option>
+                        <option value="pickup" data-en="Pickup" data-es="Recoger">Pickup</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;" data-en="Place Order" data-es="Realizar Pedido">
+                    Place Order
+                </button>
+            </form>
         </div>
     </div>
-   
+
+    <!-- ============================================
+         DELIVERY TRACKING MODAL
+    ============================================ -->
+    <div id="trackingModal" class="modal">
+        <div class="modal-content" style="max-width: 800px;">
+            <div class="modal-header">
+                <h2 data-en="🚚 Track Your Order" data-es="🚚 Rastrear Tu Pedido">🚚 Track Your Order</h2>
+                <button class="close-modal" onclick="closeModal('trackingModal')">×</button>
+            </div>
+
+            <!-- ETA Display -->
+            <div class="delivery-eta">
+                <span data-en="ETA: " data-es="Tiempo Estimado: ">ETA: </span>
+                <span id="deliveryETA">25</span>
+                <span data-en=" min" data-es=" min"> min</span>
+            </div>
+
+            <!-- Status Pipeline -->
+            <div class="status-pipeline">
+                <div class="status-step completed" id="status1">
+                    <div class="status-icon">✓</div>
+                    <div data-en="Received" data-es="Recibido">Received</div>
+                </div>
+                <div class="status-step active" id="status2">
+                    <div class="status-icon">📦</div>
+                    <div data-en="Preparing" data-es="Preparando">Preparing</div>
+                </div>
+                <div class="status-step" id="status3">
+                    <div class="status-icon">📦</div>
+                    <div data-en="Packaging" data-es="Empacando">Packaging</div>
+                </div>
+                <div class="status-step" id="status4">
+                    <div class="status-icon">🚗</div>
+                    <div data-en="On The Way" data-es="En Camino">On The Way</div>
+                </div>
+                <div class="status-step" id="status5">
+                    <div class="status-icon">📍</div>
+                    <div data-en="Arriving" data-es="Llegando">Arriving</div>
+                </div>
+                <div class="status-step" id="status6">
+                    <div class="status-icon">🎉</div>
+                    <div data-en="Delivered" data-es="Entregado">Delivered</div>
+                </div>
+            </div>
+
+            <!-- Delivery Map -->
+            <div class="delivery-map" id="deliveryMap">
+                <div class="map-marker store-marker" title="Store">🏪</div>
+                <div class="map-marker customer-marker" title="You">🏠</div>
+                <div class="map-marker courier-marker" id="courierMarker" style="left: 20%; top: 20%;">
+                    <span class="mascot">🍃</span>
+                </div>
+            </div>
+
+            <!-- Chat System -->
+            <h3 data-en="💬 Chat with Driver" data-es="💬 Chatear con Conductor">💬 Chat with Driver</h3>
+            <div class="chat-container">
+                <div class="chat-messages" id="chatMessages">
+                    <div class="chat-message system">
+                        <div class="chat-bubble" data-en="Your driver is on the way!" data-es="¡Tu conductor está en camino!">
+                            Your driver is on the way!
+                        </div>
+                    </div>
+                </div>
+                <div class="chat-input-container">
+                    <input type="text" class="chat-input" id="chatInput" placeholder="Type a message..." data-en-placeholder="Type a message..." data-es-placeholder="Escribe un mensaje...">
+                    <button class="chat-send-btn" onclick="sendChatMessage()" data-en="Send" data-es="Enviar">Send</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================
+         ACCOUNT MODAL
+    ============================================ -->
+    <div id="accountModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 data-en="👤 My Account" data-es="👤 Mi Cuenta">👤 My Account</h2>
+                <button class="close-modal" onclick="closeModal('accountModal')">×</button>
+            </div>
+
+            <div id="accountLogin">
+                <h3 data-en="Login / Register" data-es="Iniciar Sesión / Registrarse">Login / Register</h3>
+                <div class="form-group">
+                    <label data-en="Email" data-es="Email">Email</label>
+                    <input type="email" id="loginEmail">
+                </div>
+                <div class="form-group">
+                    <label data-en="Password" data-es="Contraseña">Password</label>
+                    <input type="password" id="loginPassword">
+                </div>
+                <button class="btn btn-primary" onclick="login()" data-en="Login" data-es="Iniciar Sesión">Login</button>
+                <button class="btn btn-secondary" onclick="showRegister()" data-en="Create Account" data-es="Crear Cuenta">Create Account</button>
+            </div>
+
+            <div id="accountDashboard" style="display: none;">
+                <!-- Loyalty Card -->
+                <div class="loyalty-card">
+                    <div class="loyalty-points"><span id="userPoints">0</span></div>
+                    <div class="loyalty-label" data-en="Loyalty Points" data-es="Puntos de Lealtad">Loyalty Points</div>
+                </div>
+
+                <h3 data-en="Account Info" data-es="Información de Cuenta">Account Info</h3>
+                <p><strong data-en="Name:" data-es="Nombre:">Name:</strong> <span id="userName"></span></p>
+                <p><strong data-en="Email:" data-es="Email:">Email:</strong> <span id="userEmail"></span></p>
+                <p><strong data-en="Phone:" data-es="Teléfono:">Phone:</strong> <span id="userPhone"></span></p>
+
+                <h3 data-en="Order History" data-es="Historial de Pedidos">Order History</h3>
+                <div id="orderHistory"></div>
+
+                <button class="btn btn-danger" onclick="logout()" data-en="Logout" data-es="Cerrar Sesión">Logout</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================
+         ADMIN MODAL
+    ============================================ -->
+    <div id="adminModal" class="modal">
+        <div class="modal-content" style="max-width: 1000px;">
+            <div class="modal-header">
+                <h2>⚙️ Admin Dashboard</h2>
+                <button class="close-modal" onclick="closeModal('adminModal')">×</button>
+            </div>
+
+            <div class="admin-grid">
+                <!-- Inventory Management -->
+                <div class="admin-card">
+                    <h3>📦 Add Product</h3>
+                    <div class="form-group">
+                        <input type="text" id="adminProductName" placeholder="Product Name">
+                    </div>
+                    <div class="form-group">
+                        <select id="adminProductCategory">
+                            <option value="flower">Flower</option>
+                            <option value="prerolls">Pre-Rolls</option>
+                            <option value="vapes">Vapes</option>
+                            <option value="edibles">Edibles</option>
+                            <option value="drinks">Drinks</option>
+                            <option value="concentrates">Concentrates</option>
+                            <option value="cbd">CBD</option>
+                            <option value="accessories">Accessories</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <input type="number" id="adminProductPrice" placeholder="Price" step="0.01">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="adminProductTHC" placeholder="THC % / CBD %">
+                    </div>
+                    <div class="form-group">
+                        <select id="adminProductStrain">
+                            <option value="Sativa">Sativa</option>
+                            <option value="Indica">Indica</option>
+                            <option value="Hybrid">Hybrid</option>
+                            <option value="N/A">N/A</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <input type="number" id="adminProductStock" placeholder="Stock" value="100">
+                    </div>
+                    <button class="btn btn-primary" onclick="addProduct()">Add Product</button>
+                </div>
+
+                <!-- Happy Hour -->
+                <div class="admin-card">
+                    <h3>🎉 Happy Hour</h3>
+                    <button class="btn btn-primary" onclick="toggleHappyHour()">Toggle Happy Hour</button>
+                    <div class="form-group">
+                        <label>Duration (seconds)</label>
+                        <input type="number" id="happyHourDuration" value="60">
+                    </div>
+                    <div class="form-group">
+                        <label>Discount %</label>
+                        <input type="number" id="happyHourDiscount" value="20">
+                    </div>
+                </div>
+
+                <!-- Delivery Control -->
+                <div class="admin-card">
+                    <h3>🚚 Delivery Control</h3>
+                    <button class="btn btn-primary" onclick="simulateDelivery()">Simulate Delivery</button>
+                    <div class="form-group">
+                        <label>Delivery Speed (seconds per step)</label>
+                        <input type="number" id="deliverySpeed" value="5">
+                    </div>
+                </div>
+
+                <!-- Chat Injection -->
+                <div class="admin-card">
+                    <h3>💬 Send Driver Message</h3>
+                    <div class="form-group">
+                        <textarea id="adminChatMessage" rows="3" placeholder="Type message..."></textarea>
+                    </div>
+                    <button class="btn btn-primary" onclick="injectChatMessage()">Send Message</button>
+                </div>
+
+                <!-- Loyalty Settings -->
+                <div class="admin-card">
+                    <h3>⭐ Loyalty Settings</h3>
+                    <div class="form-group">
+                        <label>Points per $1</label>
+                        <input type="number" id="pointsPerDollar" value="1">
+                    </div>
+                    <button class="btn btn-primary" onclick="updateLoyaltySettings()">Update Settings</button>
+                </div>
+
+                <!-- Munchies Commission -->
+                <div class="admin-card">
+                    <h3>🍭 Munchies Stats</h3>
+                    <p><strong>Total Sales:</strong> $<span id="munchiesRevenue">0.00</span></p>
+                    <p><strong>Commission Earned:</strong> $<span id="munchiesCommission">0.00</span></p>
+                </div>
+            </div>
+
+            <h3 style="margin-top: 2rem;">Current Inventory</h3>
+            <div id="adminInventory" style="max-height: 400px; overflow-y: auto;"></div>
+        </div>
+    </div>
+
+    <!-- ============================================
+         WHATSAPP FLOAT
+    ============================================ -->
+    <a href="https://wa.me/1234567890?text=Hi!%20I%20want%20a%20website%20like%20this" target="_blank" class="whatsapp-float">
+        <span style="font-size: 1.5rem;">💬</span>
+        <span data-en="Reach me if you want a website like this" data-es="Contáctame si quieres un sitio como este">
+            Reach me if you want a website like this
+        </span>
+    </a>
+
+    <!-- ============================================
+         JAVASCRIPT ENGINE
+    ============================================ -->
     <script>
-        // ==================== GLOBAL STATE ====================
-        const STATE = {
-            language: 'en',
-            cart: [],
-            products: [],
-            user: null,
-            currentCategory: 'all',
-            happyHourActive: false,
-            happyHourTimer: null,
-            deliveryTracking: null,
-            adminLoggedIn: false
-        };
-       
-        // ==================== TRANSLATIONS ====================
-        const TRANSLATIONS = {
-            rotatingWords: {
-                en: ['Sativa', 'Hybrid', 'Indica', 'Flowers', 'Infusions', 'THC Snacks', 'Gummies', 'Beverages', 'Teas', 'Pre-rolls', 'Vapes', 'Concentrates', 'Accessories'],
-                es: ['Sativa', 'Híbrido', 'Indica', 'Flores', 'Infusiones', 'Snacks THC', 'Gomitas', 'Bebidas', 'Tés', 'Pre-armados', 'Vaporizadores', 'Concentrados', 'Accesorios']
-            }
-        };
-       
-        // ==================== SAMPLE PRODUCTS DATA ====================
-        const SAMPLE_PRODUCTS = [
-            {
-                id: 1,
-                name: 'Northern Lights',
-                category: 'flower',
-                strain: 'Indica',
-                thc: 22,
-                cbd: 1,
-                price: 45.00,
-                points: 45,
-                stock: 20,
-                effects: ['Relaxed', 'Sleepy', 'Happy'],
-                terpenes: ['Myrcene', 'Caryophyllene'],
-                image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="300"%3E%3Crect fill="%2310b981" width="400" height="300"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" font-family="Arial" font-size="24" fill="white"%3ENorthern Lights%3C/text%3E%3C/svg%3E',
-                description: 'Classic Indica strain known for its relaxing effects'
-            },
-            {
-                id: 2,
-                name: 'Sour Diesel',
-                category: 'flower',
-                strain: 'Sativa',
-                thc: 24,
-                cbd: 0.5,
-                price: 50.00,
-                points: 50,
-                stock: 15,
-                effects: ['Energetic', 'Uplifted', 'Creative'],
-                terpenes: ['Limonene', 'Caryophyllene'],
-                image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="300"%3E%3Crect fill="%23f59e0b" width="400" height="300"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" font-family="Arial" font-size="24" fill="white"%3ESour Diesel%3C/text%3E%3C/svg%3E',
-                description: 'Energizing Sativa perfect for daytime use'
-            },
-            {
-                id: 3,
-                name: 'Blue Dream',
-                category: 'flower',
-                strain: 'Hybrid',
-                thc: 18,
-                cbd: 2,
-                price: 40.00,
-                points: 40,
-                stock: 25,
-                effects: ['Relaxed', 'Happy', 'Creative'],
-                terpenes: ['Myrcene', 'Pinene'],
-                image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="300"%3E%3Crect fill="%233b82f6" width="400" height="300"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" font-family="Arial" font-size="24" fill="white"%3EBlue Dream%3C/text%3E%3C/svg%3E',
-                description: 'Balanced hybrid loved by beginners and veterans'
-            },
-            {
-                id: 4,
-                name: 'Lemon Haze Pre-Roll',
-                category: 'prerolls',
-                strain: 'Sativa',
-                thc: 20,
-                cbd: 1,
-                price: 12.00,
-                points: 12,
-                stock: 50,
-                effects: ['Energetic', 'Uplifted', 'Focused'],
-                terpenes: ['Limonene'],
-                image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="300"%3E%3Crect fill="%23fbbf24" width="400" height="300"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" font-family="Arial" font-size="20" fill="white"%3ELemon Haze%3C/text%3E%3C/svg%3E',
-                description: 'Convenient pre-rolled joint ready to enjoy'
-            },
-            {
-                id: 5,
-                name: 'Platinum Vape Pen',
-                category: 'vapes',
-                strain: 'Hybrid',
-                thc: 85,
-                cbd: 0,
-                price: 65.00,
-                points: 65,
-                stock: 30,
-                effects: ['Balanced', 'Smooth', 'Potent'],
-                terpenes: ['Various'],
-                image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="300"%3E%3Crect fill="%236366f1" width="400" height="300"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" font-family="Arial" font-size="24" fill="white"%3EPlatinum Vape%3C/text%3E%3C/svg%3E',
-                description: 'Premium distillate vape cartridge'
-            },
-            {
-                id: 6,
-                name: 'THC Gummies',
-                category: 'edibles',
-                strain: 'Hybrid',
-                thc: 10,
-                cbd: 0,
-                price: 25.00,
-                points: 25,
-                stock: 40,
-                effects: ['Relaxed', 'Happy', 'Euphoric'],
-                terpenes: ['Fruit Flavored'],
-                image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="300"%3E%3Crect fill="%23ec4899" width="400" height="300"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" font-family="Arial" font-size="24" fill="white"%3ETHC Gummies%3C/text%3E%3C/svg%3E',
-                description: '10mg per gummy, 10 pack'
-            },
-            {
-                id: 7,
-                name: 'Cannabis Iced Tea',
-                category: 'drinks',
-                strain: 'Sativa',
-                thc: 10,
-                cbd: 5,
-                price: 8.00,
-                points: 8,
-                stock: 60,
-                effects: ['Refreshing', 'Uplifting', 'Focused'],
-                terpenes: ['Natural'],
-                image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="300"%3E%3Crect fill="%2314b8a6" width="400" height="300"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" font-family="Arial" font-size="24" fill="white"%3EIced Tea%3C/text%3E%3C/svg%3E',
-                description: 'Refreshing cannabis-infused beverage'
-            },
-            {
-                id: 8,
-                name: 'Diamond Shatter',
-                category: 'concentrates',
-                strain: 'Hybrid',
-                thc: 90,
-                cbd: 0,
-                price: 80.00,
-                points: 80,
-                stock: 10,
-                effects: ['Intense', 'Powerful', 'Long-lasting'],
-                terpenes: ['Preserved'],
-                image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="300"%3E%3Crect fill="%23fbbf24" width="400" height="300"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" font-family="Arial" font-size="24" fill="white"%3EDiamond Shatter%3C/text%3E%3C/svg%3E',
-                description: 'Premium concentrate for experienced users'
-            },
-            {
-                id: 9,
-                name: 'CBD Relief Oil',
-                category: 'cbd',
-                strain: 'CBD',
-                thc: 0,
-                cbd: 1000,
-                price: 60.00,
-                points: 60,
-                stock: 35,
-                effects: ['Calming', 'Pain Relief', 'Anti-inflammatory'],
-                terpenes: ['Natural'],
-                image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="300"%3E%3Crect fill="%2310b981" width="400" height="300"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" font-family="Arial" font-size="24" fill="white"%3ECBD Oil%3C/text%3E%3C/svg%3E',
-                description: '1000mg CBD tincture, THC-free'
-            },
-            {
-                id: 10,
-                name: 'Japanese Matcha KitKat',
-                category: 'munchies',
-                strain: 'N/A',
-                thc: 0,
-                cbd: 0,
-                price: 5.99,
-                points: 6,
-                stock: 100,
-                effects: ['Delicious', 'Exotic', 'Sweet'],
-                terpenes: ['Matcha'],
-                image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="300"%3E%3Crect fill="%2334d399" width="400" height="300"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" font-family="Arial" font-size="20" fill="white"%3EMatcha KitKat%3C/text%3E%3C/svg%3E',
-                description: 'Imported from Japan - Matcha green tea flavor',
-                country: 'Japan',
-                commission: 15
-            },
-            {
-                id: 11,
-                name: 'Korean Honey Butter Chips',
-                category: 'munchies',
-                strain: 'N/A',
-                thc: 0,
-                cbd: 0,
-                price: 7.99,
-                points: 8,
-                stock: 80,
-                effects: ['Crunchy', 'Sweet', 'Savory'],
-                terpenes: ['Honey'],
-                image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="300"%3E%3Crect fill="%23fbbf24" width="400" height="300"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" font-family="Arial" font-size="18" fill="white"%3EHoney Butter Chips%3C/text%3E%3C/svg%3E',
-                description: 'Korean viral snack - Sweet and buttery',
-                country: 'South Korea',
-                commission: 18
-            },
-            {
-                id: 12,
-                name: 'Mexican Takis Fuego',
-                category: 'munchies',
-                strain: 'N/A',
-                thc: 0,
-                cbd: 0,
-                price: 4.99,
-                points: 5,
-                stock: 120,
-                effects: ['Spicy', 'Crunchy', 'Intense'],
-                terpenes: ['Chili'],
-                image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="300"%3E%3Crect fill="%23ef4444" width="400" height="300"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" font-family="Arial" font-size="24" fill="white"%3ETakis Fuego%3C/text%3E%3C/svg%3E',
-                description: 'Extremely hot rolled tortilla chips',
-                country: 'Mexico',
-                commission: 12
-            }
-        ];
-       
-        // ==================== INITIALIZATION ====================
-        function init() {
-            // Check age verification
-            const ageVerified = localStorage.getItem('ageVerified');
-            if (ageVerified === 'true') {
+        // ============================================
+        // GLOBAL STATE MANAGEMENT
+        // ============================================
+        let currentLanguage = 'en';
+        let cart = [];
+        let currentUser = null;
+        let products = [];
+        let munchies = [];
+        let orders = [];
+        let loyaltyRate = 1; // points per dollar
+        let happyHourActive = false;
+        let happyHourDiscount = 20;
+        let deliveryInProgress = false;
+
+        // ============================================
+        // AGE VERIFICATION
+        // ============================================
+        function checkAgeVerification() {
+            const verified = localStorage.getItem('ageVerified');
+            if (verified === 'true') {
                 document.getElementById('ageGate').classList.add('hidden');
             }
-           
-            // Load data from localStorage
-            loadFromStorage();
-           
-            // Initialize products if empty
-            if (STATE.products.length === 0) {
-                STATE.products = SAMPLE_PRODUCTS;
-                saveToStorage();
-            }
-           
-            // Render initial view
-            renderProducts();
-            updateCartDisplay();
-           
-            // Start rotating hero text
-            startRotatingText();
-           
-            // Update translations
-            updateTranslations();
-           
-            // Check for admin session
-            const adminSession = sessionStorage.getItem('adminLoggedIn');
-            if (adminSession === 'true') {
-                STATE.adminLoggedIn = true;
-            }
         }
-       
-        // ==================== AGE VERIFICATION ====================
+
         function acceptAge() {
             localStorage.setItem('ageVerified', 'true');
             document.getElementById('ageGate').classList.add('hidden');
         }
-       
+
         function declineAge() {
-            alert('You must be 19+ to access this site.');
+            alert(translate('Sorry, you must be 19+ to access this site.', 'Lo sentimos, debes tener 19+ para acceder a este sitio.'));
             window.location.href = 'https://www.google.com';
         }
-       
-        // ==================== LANGUAGE SYSTEM ====================
-        function toggleLanguage() {
-            STATE.language = STATE.language === 'en' ? 'es' : 'en';
-            document.getElementById('langBtn').textContent = STATE.language === 'en' ? 'ES' : 'EN';
-            updateTranslations();
-            renderProducts();
+
+        // ============================================
+        // LANGUAGE SYSTEM
+        // ============================================
+        function setLanguage(lang) {
+            currentLanguage = lang;
+            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            translatePage();
+            localStorage.setItem('language', lang);
         }
-       
-        function updateTranslations() {
-            const elements = document.querySelectorAll('[data-en]');
-            elements.forEach(el => {
-                const text = el.getAttribute(`data-${STATE.language}`);
-                if (text) {
-                    if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
-                        el.placeholder = text;
-                    } else {
-                        el.textContent = text;
-                    }
+
+        function translate(en, es) {
+            return currentLanguage === 'en' ? en : es;
+        }
+
+        function translatePage() {
+            document.querySelectorAll('[data-en]').forEach(el => {
+                if (el.hasAttribute('data-en-placeholder')) {
+                    el.placeholder = currentLanguage === 'en' ? el.getAttribute('data-en-placeholder') : el.getAttribute('data-es-placeholder');
+                } else {
+                    el.textContent = currentLanguage === 'en' ? el.getAttribute('data-en') : el.getAttribute('data-es');
                 }
             });
         }
-       
-        // ==================== ROTATING HERO TEXT ====================
-        let rotatingIndex = 0;
-        function startRotatingText() {
-            const words = TRANSLATIONS.rotatingWords[STATE.language];
-            setInterval(() => {
-                rotatingIndex = (rotatingIndex + 1) % words.length;
-                const textEl = document.getElementById('rotatingText');
-                textEl.style.opacity = '0';
-                setTimeout(() => {
-                    textEl.textContent = words[rotatingIndex];
-                    textEl.style.opacity = '1';
-                }, 250);
-            }, 3000);
+
+        // ============================================
+        // HERO SUBTITLE ROTATION
+        // ============================================
+        const subtitles = {
+            en: ['Sativa', 'Hybrid', 'Indica', 'Flowers', 'Infusions', 'THC Snacks', 'Gummies', 'Beverages', 'Teas', 'Pre-rolls', 'Vapes', 'Concentrates', 'Accessories'],
+            es: ['Sativa', 'Híbrido', 'Indica', 'Flores', 'Infusiones', 'Snacks THC', 'Gomitas', 'Bebidas', 'Tés', 'Pre-armados', 'Vaporizadores', 'Concentrados', 'Accesorios']
+        };
+
+        let subtitleIndex = 0;
+        function rotateSubtitle() {
+            const list = subtitles[currentLanguage];
+            document.getElementById('heroSubtitle').textContent = list[subtitleIndex];
+            subtitleIndex = (subtitleIndex + 1) % list.length;
         }
-       
-        // ==================== PRODUCT RENDERING ====================
-        function renderProducts() {
+        setInterval(rotateSubtitle, 2000);
+
+        // ============================================
+        // INITIALIZE DEFAULT PRODUCTS
+        // ============================================
+        function initializeProducts() {
+            products = [
+                { id: 1, name: 'Purple Haze', category: 'flower', price: 45.00, thc: '22% THC', strain: 'Sativa', effects: ['Energetic', 'Creative', 'Uplifting'], stock: 50, image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"%3E%3Crect fill="%238b5cf6" width="200" height="200"/%3E%3Ctext x="100" y="100" font-size="60" text-anchor="middle" fill="white"%3E🌿%3C/text%3E%3C/svg%3E' },
+                { id: 2, name: 'OG Kush', category: 'flower', price: 50.00, thc: '24% THC', strain: 'Hybrid', effects: ['Relaxed', 'Happy', 'Euphoric'], stock: 30, image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"%3E%3Crect fill="%2310b981" width="200" height="200"/%3E%3Ctext x="100" y="100" font-size="60" text-anchor="middle" fill="white"%3E🌿%3C/text%3E%3C/svg%3E' },
+                { id: 3, name: 'Granddaddy Purple', category: 'flower', price: 48.00, thc: '20% THC', strain: 'Indica', effects: ['Sleepy', 'Relaxed', 'Hungry'], stock: 40, image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"%3E%3Crect fill="%236b21a8" width="200" height="200"/%3E%3Ctext x="100" y="100" font-size="60" text-anchor="middle" fill="white"%3E🌿%3C/text%3E%3C/svg%3E' },
+                { id: 4, name: 'Blueberry Bliss Pre-Roll', category: 'prerolls', price: 12.00, thc: '18% THC', strain: 'Indica', effects: ['Relaxed', 'Happy'], stock: 100, image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"%3E%3Crect fill="%233b82f6" width="200" height="200"/%3E%3Ctext x="100" y="100" font-size="60" text-anchor="middle" fill="white"%3E🚬%3C/text%3E%3C/svg%3E' },
+                { id: 5, name: 'Sour Diesel Vape', category: 'vapes', price: 55.00, thc: '85% THC', strain: 'Sativa', effects: ['Energetic', 'Focused'], stock: 25, image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"%3E%3Crect fill="%23f59e0b" width="200" height="200"/%3E%3Ctext x="100" y="100" font-size="60" text-anchor="middle" fill="white"%3E💨%3C/text%3E%3C/svg%3E' },
+                { id: 6, name: 'Gummy Bears 10pk', category: 'edibles', price: 20.00, thc: '10mg/piece', strain: 'Hybrid', effects: ['Happy', 'Relaxed'], stock: 60, image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"%3E%3Crect fill="%23ef4444" width="200" height="200"/%3E%3Ctext x="100" y="100" font-size="60" text-anchor="middle" fill="white"%3E🍬%3C/text%3E%3C/svg%3E' },
+                { id: 7, name: 'THC Infused Lemonade', category: 'drinks', price: 15.00, thc: '10mg THC', strain: 'Sativa', effects: ['Uplifting', 'Creative'], stock: 50, image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"%3E%3Crect fill="%23fbbf24" width="200" height="200"/%3E%3Ctext x="100" y="100" font-size="60" text-anchor="middle" fill="white"%3E🍋%3C/text%3E%3C/svg%3E' },
+                { id: 8, name: 'Live Resin Concentrate', category: 'concentrates', price: 65.00, thc: '92% THC', strain: 'Hybrid', effects: ['Potent', 'Long-lasting'], stock: 15, image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"%3E%3Crect fill="%2306b6d4" width="200" height="200"/%3E%3Ctext x="100" y="100" font-size="60" text-anchor="middle" fill="white"%3E💎%3C/text%3E%3C/svg%3E' },
+                { id: 9, name: 'CBD Wellness Oil', category: 'cbd', price: 40.00, thc: '1000mg CBD', strain: 'N/A', effects: ['Calm', 'Pain Relief'], stock: 35, image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"%3E%3Crect fill="%2310b981" width="200" height="200"/%3E%3Ctext x="100" y="100" font-size="60" text-anchor="middle" fill="white"%3E🧴%3C/text%3E%3C/svg%3E' },
+                { id: 10, name: 'Glass Bong - Dragon Design', category: 'accessories', price: 75.00, thc: 'N/A', strain: 'N/A', effects: [], stock: 10, image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"%3E%3Crect fill="%236366f1" width="200" height="200"/%3E%3Ctext x="100" y="100" font-size="60" text-anchor="middle" fill="white"%3E🔮%3C/text%3E%3C/svg%3E' }
+            ];
+
+            munchies = [
+                { id: 101, name: 'Japanese Kit Kat - Matcha', origin: 'Japan', price: 8.50, description: 'Green tea flavored chocolate wafers', commission: 0.30, stock: 50, image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"%3E%3Crect fill="%2310b981" width="200" height="200"/%3E%3Ctext x="100" y="100" font-size="60" text-anchor="middle" fill="white"%3E🍫%3C/text%3E%3C/svg%3E' },
+                { id: 102, name: 'Korean Honey Butter Chips', origin: 'South Korea', price: 6.00, description: 'Sweet and savory potato chips', commission: 0.25, stock: 80, image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"%3E%3Crect fill="%23f59e0b" width="200" height="200"/%3E%3Ctext x="100" y="100" font-size="60" text-anchor="middle" fill="white"%3E🥔%3C/text%3E%3C/svg%3E' },
+                { id: 103, name: 'Mexican Takis Fuego', origin: 'Mexico', price: 5.50, description: 'Spicy rolled tortilla chips', commission: 0.20, stock: 100, image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"%3E%3Crect fill="%23ef4444" width="200" height="200"/%3E%3Ctext x="100" y="100" font-size="60" text-anchor="middle" fill="white"%3E🌶️%3C/text%3E%3C/svg%3E' },
+                { id: 104, name: 'British Cadbury Flake', origin: 'UK', price: 7.00, description: 'Crumbly milk chocolate bar', commission: 0.28, stock: 60, image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"%3E%3Crect fill="%238b5cf6" width="200" height="200"/%3E%3Ctext x="100" y="100" font-size="60" text-anchor="middle" fill="white"%3E🍫%3C/text%3E%3C/svg%3E' },
+                { id: 105, name: 'Thai Coconut Rolls', origin: 'Thailand', price: 6.50, description: 'Crispy coconut wafer rolls', commission: 0.22, stock: 70, image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"%3E%3Crect fill="%2306b6d4" width="200" height="200"/%3E%3Ctext x="100" y="100" font-size="60" text-anchor="middle" fill="white"%3E🥥%3C/text%3E%3C/svg%3E' },
+                { id: 106, name: 'German Haribo Gummy Bears', origin: 'Germany', price: 4.50, description: 'Original gummy bears', commission: 0.18, stock: 120, image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"%3E%3Crect fill="%23fbbf24" width="200" height="200"/%3E%3Ctext x="100" y="100" font-size="60" text-anchor="middle" fill="white"%3E🐻%3C/text%3E%3C/svg%3E' }
+            ];
+
+            saveData();
+            renderProducts();
+            renderMunchies();
+        }
+
+        // ============================================
+        // RENDER PRODUCTS
+        // ============================================
+        function renderProducts(filter = 'all') {
             const grid = document.getElementById('productGrid');
-            const filteredProducts = STATE.currentCategory === 'all'
-                ? STATE.products
-                : STATE.products.filter(p => p.category === STATE.currentCategory);
+            let filtered = filter === 'all' ? products : products.filter(p => p.category === filter);
            
-            if (filteredProducts.length === 0) {
-                grid.innerHTML = `<p class="text-center" style="grid-column: 1/-1; color: var(--text-muted);">
-                    ${STATE.language === 'en' ? 'No products found in this category.' : 'No se encontraron productos en esta categoría.'}
-                </p>`;
-                return;
-            }
-           
-            grid.innerHTML = filteredProducts.map(product => `
-                <div class="product-card" onclick="showProductDetail(${product.id})">
-                    <div class="product-image-container">
-                        <img src="${product.image}" alt="${product.name}" class="product-image" loading="lazy">
-                        ${product.category === 'munchies' ? `<div class="product-badge">🌍 ${product.country}</div>` : ''}
-                        ${STATE.happyHourActive && product.category !== 'munchies' ? `<div class="product-badge">HAPPY HOUR!</div>` : ''}
-                    </div>
-                    <div class="product-info">
-                        <div class="product-category">${product.category.toUpperCase()}</div>
-                        <h3 class="product-name">${product.name}</h3>
-                        ${product.strain !== 'N/A' ? `<span class="product-strain">${product.strain}</span>` : ''}
-                        ${product.category !== 'munchies' ? `
-                            <div class="product-potency">
-                                ${product.thc > 0 ? `<div class="potency-item">
-                                    <span class="potency-label">THC</span>
-                                    <span class="potency-value">${product.thc}%</span>
-                                </div>` : ''}
-                                ${product.cbd > 0 ? `<div class="potency-item">
-                                    <span class="potency-label">CBD</span>
-                                    <span class="potency-value">${product.cbd}${product.cbd >= 100 ? 'mg' : '%'}</span>
-                                </div>` : ''}
+            grid.innerHTML = filtered.map(product => {
+                const price = happyHourActive ? (product.price * (1 - happyHourDiscount / 100)).toFixed(2) : product.price.toFixed(2);
+                const points = Math.floor(parseFloat(price) * loyaltyRate);
+                const outOfStock = product.stock <= 0;
+               
+                return `
+                    <div class="product-card ${outOfStock ? 'out-of-stock' : ''}" onclick="addToCart(${product.id}, false)">
+                        ${outOfStock ? '<div class="stock-badge">OUT OF STOCK</div>' : ''}
+                        <img src="${product.image}" alt="${product.name}" class="product-image">
+                        <div class="product-info">
+                            <div class="product-name">${product.name}</div>
+                            <span class="product-strain">${product.strain}</span>
+                            <div class="product-thc">${product.thc}</div>
+                            <div class="product-effects">
+                                ${product.effects.map(e => `<span class="effect-tag">${e}</span>`).join('')}
                             </div>
-                        ` : ''}
-                        <div class="product-effects">
-                            ${product.effects.map(effect => `<span class="effect-tag">${effect}</span>`).join('')}
-                        </div>
-                        <div class="product-footer">
-                            <div class="product-price-container">
-                                <div class="product-price">$${calculatePrice(product.price).toFixed(2)}</div>
-                                <div class="product-points">+${product.points} ${STATE.language === 'en' ? 'pts' : 'pts'}</div>
+                            <div class="product-footer">
+                                <div>
+                                    <div class="product-price">$${price}</div>
+                                    <div class="product-points">+${points} pts</div>
+                                </div>
                             </div>
-                            <button class="add-to-cart-btn" onclick="addToCart(event, ${product.id})">
-                                ${STATE.language === 'en' ? 'Add' : 'Agregar'}
+                            <button class="add-to-cart-btn" ${outOfStock ? 'disabled' : ''}>
+                                ${translate('Add to Cart', 'Agregar al Carrito')}
                             </button>
                         </div>
                     </div>
-                </div>
-            `).join('');
+                `;
+            }).join('');
         }
-       
-        function calculatePrice(basePrice) {
-            return STATE.happyHourActive ? basePrice * 0.8 : basePrice;
+
+        function renderMunchies() {
+            const grid = document.getElementById('munchiesGrid');
+            grid.innerHTML = munchies.map(item => {
+                const points = Math.floor(item.price * loyaltyRate);
+                const outOfStock = item.stock <= 0;
+               
+                return `
+                    <div class="product-card ${outOfStock ? 'out-of-stock' : ''}" onclick="addToCart(${item.id}, true)">
+                        ${outOfStock ? '<div class="stock-badge">OUT OF STOCK</div>' : ''}
+                        <img src="${item.image}" alt="${item.name}" class="product-image">
+                        <div class="product-info">
+                            <div class="product-name">${item.name}</div>
+                            <span class="product-strain">${item.origin}</span>
+                            <div class="product-thc">${item.description}</div>
+                            <div class="product-footer">
+                                <div>
+                                    <div class="product-price">$${item.price.toFixed(2)}</div>
+                                    <div class="product-points">+${points} pts</div>
+                                </div>
+                            </div>
+                            <button class="add-to-cart-btn" ${outOfStock ? 'disabled' : ''}>
+                                ${translate('Add to Cart', 'Agregar')}
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
         }
-       
-        // ==================== CATEGORY FILTERING ====================
-        function filterCategory(category) {
-            STATE.currentCategory = category;
+
+        // ============================================
+        // CART MANAGEMENT
+        // ============================================
+        function addToCart(id, isMunchie) {
+            const item = isMunchie ? munchies.find(m => m.id === id) : products.find(p => p.id === id);
+            if (!item || item.stock <= 0) return;
            
-            // Update active tab
-            document.querySelectorAll('.category-tab').forEach(tab => {
-                tab.classList.remove('active');
-                if (tab.getAttribute('data-category') === category) {
-                    tab.classList.add('active');
+            const existing = cart.find(c => c.id === id && c.isMunchie === isMunchie);
+            if (existing) {
+                if (existing.quantity < item.stock) {
+                    existing.quantity++;
                 }
-            });
-           
-            renderProducts();
-        }
-       
-        // ==================== CART SYSTEM ====================
-        function addToCart(event, productId) {
-            event.stopPropagation();
-            const product = STATE.products.find(p => p.id === productId);
-            if (!product) return;
-           
-            const existingItem = STATE.cart.find(item => item.id === productId);
-            if (existingItem) {
-                existingItem.quantity++;
             } else {
-                STATE.cart.push({
-                    ...product,
-                    quantity: 1,
-                    priceAtPurchase: calculatePrice(product.price)
-                });
+                cart.push({ ...item, quantity: 1, isMunchie });
             }
            
-            saveToStorage();
-            updateCartDisplay();
-           
-            // Show feedback
-            showToast(STATE.language === 'en' ? 'Added to cart!' : '¡Agregado al carrito!');
+            updateCart();
+            saveData();
         }
-       
-        function removeFromCart(productId) {
-            STATE.cart = STATE.cart.filter(item => item.id !== productId);
-            saveToStorage();
-            updateCartDisplay();
+
+        function removeFromCart(id, isMunchie) {
+            cart = cart.filter(item => !(item.id === id && item.isMunchie === isMunchie));
+            updateCart();
+            saveData();
         }
-       
-        function updateQuantity(productId, change) {
-            const item = STATE.cart.find(item => item.id === productId);
+
+        function updateQuantity(id, isMunchie, delta) {
+            const item = cart.find(c => c.id === id && c.isMunchie === isMunchie);
             if (!item) return;
            
-            item.quantity += change;
-            if (item.quantity <= 0) {
-                removeFromCart(productId);
+            const product = isMunchie ? munchies.find(m => m.id === id) : products.find(p => p.id === id);
+            item.quantity = Math.max(1, Math.min(item.quantity + delta, product.stock));
+           
+            updateCart();
+            saveData();
+        }
+
+        function updateCart() {
+            const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+            const subtotal = cart.reduce((sum, item) => {
+                const price = happyHourActive && !item.isMunchie ? item.price * (1 - happyHourDiscount / 100) : item.price;
+                return sum + (price * item.quantity);
+            }, 0);
+            const deliveryFee = subtotal > 0 ? 5.00 : 0;
+            const total = subtotal + deliveryFee;
+            const points = Math.floor(subtotal * loyaltyRate);
+
+            document.getElementById('cartCount').textContent = cartCount;
+            document.getElementById('stickyTotal').textContent = total.toFixed(2);
+            document.getElementById('stickyItems').textContent = cartCount;
+            document.getElementById('stickyPoints').textContent = points;
+
+            // Render cart items
+            const cartItemsDiv = document.getElementById('cartItems');
+            if (cart.length === 0) {
+                cartItemsDiv.innerHTML = `<p style="text-align: center; color: var(--text-secondary);">${translate('Your cart is empty', 'Tu carrito está vacío')}</p>`;
             } else {
-                saveToStorage();
-                updateCartDisplay();
+                cartItemsDiv.innerHTML = cart.map(item => {
+                    const price = happyHourActive && !item.isMunchie ? item.price * (1 - happyHourDiscount / 100) : item.price;
+                    return `
+                        <div class="cart-item">
+                            <div class="cart-item-info">
+                                <h4>${item.name}</h4>
+                                <div class="cart-item-price">$${(price * item.quantity).toFixed(2)}</div>
+                            </div>
+                            <div class="cart-item-controls">
+                                <button class="qty-btn" onclick="updateQuantity(${item.id}, ${item.isMunchie}, -1)">-</button>
+                                <span class="qty-display">${item.quantity}</span>
+                                <button class="qty-btn" onclick="updateQuantity(${item.id}, ${item.isMunchie}, 1)">+</button>
+                                <button class="remove-btn" onclick="removeFromCart(${item.id}, ${item.isMunchie})">×</button>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            document.getElementById('cartSubtotal').textContent = subtotal.toFixed(2);
+            document.getElementById('deliveryFee').textContent = deliveryFee.toFixed(2);
+            document.getElementById('cartTotal').textContent = total.toFixed(2);
+            document.getElementById('cartPoints').textContent = points;
+        }
+
+        // ============================================
+        // CHECKOUT PROCESS
+        // ============================================
+        function proceedToCheckout() {
+            if (cart.length === 0) {
+                alert(translate('Your cart is empty!', '¡Tu carrito está vacío!'));
+                return;
+            }
+            closeModal('cartModal');
+            openModal('checkoutModal');
+        }
+
+        function placeOrder(event) {
+            event.preventDefault();
+           
+            const order = {
+                id: Date.now(),
+                items: [...cart],
+                total: parseFloat(document.getElementById('cartTotal').textContent),
+                points: parseInt(document.getElementById('cartPoints').textContent),
+                customer: {
+                    name: document.getElementById('checkoutName').value,
+                    phone: document.getElementById('checkoutPhone').value,
+                    address: document.getElementById('checkoutAddress').value,
+                    postal: document.getElementById('checkoutPostal').value,
+                    instructions: document.getElementById('checkoutInstructions').value
+                },
+                method: document.getElementById('deliveryMethod').value,
+                status: 'received',
+                timestamp: new Date().toISOString()
+            };
+
+            // Update stock
+            cart.forEach(item => {
+                const product = item.isMunchie ? munchies.find(m => m.id === item.id) : products.find(p => p.id === item.id);
+                if (product) product.stock -= item.quantity;
+            });
+
+            // Add points to user
+            if (currentUser) {
+                currentUser.points = (currentUser.points || 0) + order.points;
+                updateUserDisplay();
+            }
+
+            orders.push(order);
+            cart = [];
+            updateCart();
+            saveData();
+            renderProducts();
+            renderMunchies();
+
+            closeModal('checkoutModal');
+            openModal('trackingModal');
+            startDeliverySimulation();
+        }
+
+        // ============================================
+        // DELIVERY SIMULATION
+        // ============================================
+        let deliveryStep = 0;
+        let deliveryInterval = null;
+
+        function startDeliverySimulation() {
+            deliveryStep = 1;
+            deliveryInProgress = true;
+            updateDeliveryStatus();
+
+            const speed = parseInt(document.getElementById('deliverySpeed')?.value || 5) * 1000;
+            deliveryInterval = setInterval(() => {
+                if (deliveryStep < 6) {
+                    deliveryStep++;
+                    updateDeliveryStatus();
+                } else {
+                    clearInterval(deliveryInterval);
+                    deliveryInProgress = false;
+                    setTimeout(() => {
+                        addChatMessage('system', translate('Order delivered! Enjoy! 🎉', '¡Pedido entregado! ¡Disfruta! 🎉'));
+                    }, 1000);
+                }
+            }, speed);
+        }
+
+        function updateDeliveryStatus() {
+            // Update status pipeline
+            for (let i = 1; i <= 6; i++) {
+                const step = document.getElementById(`status${i}`);
+                step.classList.remove('active', 'completed');
+                if (i < deliveryStep) {
+                    step.classList.add('completed');
+                } else if (i === deliveryStep) {
+                    step.classList.add('active');
+                }
+            }
+
+            // Update ETA
+            const eta = Math.max(0, 25 - (deliveryStep * 4));
+            document.getElementById('deliveryETA').textContent = eta;
+
+            // Move courier marker
+            const courier = document.getElementById('courierMarker');
+            const progress = deliveryStep / 6;
+            const startX = 20;
+            const startY = 20;
+            const endX = 80;
+            const endY = 70;
+           
+            courier.style.left = `${startX + (endX - startX) * progress}%`;
+            courier.style.top = `${startY + (endY - startY) * progress}%`;
+
+            // Add status messages
+            const messages = {
+                1: { en: 'Order received! Preparing your items...', es: '¡Pedido recibido! Preparando tus artículos...' },
+                2: { en: 'Packing your order with care...', es: 'Empacando tu pedido con cuidado...' },
+                3: { en: 'Quality check complete!', es: '¡Verificación de calidad completa!' },
+                4: { en: 'Driver is on the way! 🚗', es: '¡El conductor está en camino! 🚗' },
+                5: { en: 'Almost there! Just 2 minutes away!', es: '¡Casi llegamos! ¡A solo 2 minutos!' },
+                6: { en: 'Driver has arrived! 🎉', es: '¡El conductor ha llegado! 🎉' }
+            };
+
+            if (messages[deliveryStep]) {
+                addChatMessage('system', translate(messages[deliveryStep].en, messages[deliveryStep].es));
             }
         }
-       
-        function updateCartDisplay() {
-            const cartCount = STATE.cart.reduce((sum, item) => sum + item.quantity, 0);
-            const subtotal = STATE.cart.reduce((sum, item) => sum + (item.priceAtPurchase * item.quantity), 0);
-            const totalPoints = STATE.cart.reduce((sum, item) => sum + (item.points * item.quantity), 0);
+
+        function simulateDelivery() {
+            if (deliveryInProgress) {
+                alert('Delivery already in progress');
+                return;
+            }
+            openModal('trackingModal');
+            startDeliverySimulation();
+        }
+
+        // ============================================
+        // CHAT SYSTEM
+        // ============================================
+        function addChatMessage(type, message) {
+            const messagesDiv = document.getElementById('chatMessages');
+            const messageEl = document.createElement('div');
+            messageEl.className = `chat-message ${type}`;
+            messageEl.innerHTML = `<div class="chat-bubble">${message}</div>`;
+            messagesDiv.appendChild(messageEl);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+
+        function sendChatMessage() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            if (!message) return;
+
+            addChatMessage('user', message);
+            input.value = '';
+
+            // Simulate driver response
+            setTimeout(() => {
+                const responses = {
+                    en: ['Got it, thanks!', 'On my way!', 'Will be there soon!', 'Thanks for the heads up!'],
+                    es: ['¡Entendido, gracias!', '¡En camino!', '¡Llegaré pronto!', '¡Gracias por avisar!']
+                };
+                const response = responses[currentLanguage][Math.floor(Math.random() * responses[currentLanguage].length)];
+                addChatMessage('driver', response);
+            }, 2000);
+        }
+
+        function injectChatMessage() {
+            const message = document.getElementById('adminChatMessage').value.trim();
+            if (!message) return;
            
-            document.getElementById('cartCount').textContent = cartCount;
-            document.getElementById('cartSubtotal').textContent = `$${subtotal.toFixed(2)}`;
-            document.getElementById('cartTotal').textContent = `$${subtotal.toFixed(2)}`;
-            document.getElementById('cartPoints').textContent = `${totalPoints} ${STATE.language === 'en' ? 'pts' : 'pts'}`;
+            addChatMessage('driver', message);
+            document.getElementById('adminChatMessage').value = '';
+            alert('Message sent!');
+        }
+
+        // ============================================
+        // ACCOUNT SYSTEM
+        // ============================================
+        function login() {
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
            
-            // Update sticky bar
-            document.getElementById('stickyTotal').textContent = `$${subtotal.toFixed(2)}`;
-            document.getElementById('stickyItems').textContent = `${cartCount} ${STATE.language === 'en' ? 'items' : 'artículos'}`;
+            // Simple demo login
+            currentUser = {
+                name: 'Demo User',
+                email: email,
+                phone: '555-0123',
+                points: 250
+            };
            
-            // Render cart items
-            const cartItemsEl = document.getElementById('cartItems');
-            if (STATE.cart.length === 0) {
-                cartItemsEl.innerHTML = `<p class="text-center" style="color: var(--text-muted);">
-                    ${STATE.language === 'en' ? 'Your cart is empty' : 'Tu carrito está vacío'}
-                </p>`;
+            updateUserDisplay();
+            document.getElementById('accountLogin').style.display = 'none';
+            document.getElementById('accountDashboard').style.display = 'block';
+            saveData();
+        }
+
+        function logout() {
+            currentUser = null;
+            document.getElementById('accountLogin').style.display = 'block';
+            document.getElementById('accountDashboard').style.display = 'none';
+            saveData();
+        }
+
+        function showRegister() {
+            alert(translate('Registration system would be implemented here', 'Sistema de registro se implementaría aquí'));
+        }
+
+        function updateUserDisplay() {
+            if (!currentUser) return;
+           
+            document.getElementById('userName').textContent = currentUser.name;
+            document.getElementById('userEmail').textContent = currentUser.email;
+            document.getElementById('userPhone').textContent = currentUser.phone;
+            document.getElementById('userPoints').textContent = currentUser.points || 0;
+
+            // Show order history
+            const userOrders = orders.filter(o => o.customer.email === currentUser.email);
+            const historyDiv = document.getElementById('orderHistory');
+            if (userOrders.length === 0) {
+                historyDiv.innerHTML = `<p>${translate('No orders yet', 'No hay pedidos aún')}</p>`;
             } else {
-                cartItemsEl.innerHTML = STATE.cart.map(item => `
+                historyDiv.innerHTML = userOrders.map(order => `
                     <div class="cart-item">
-                        <img src="${item.image}" alt="${item.name}" class="cart-item-image">
-                        <div class="cart-item-info">
-                            <div class="cart-item-name">${item.name}</div>
-                            <div class="cart-item-price">$${(item.priceAtPurchase * item.quantity).toFixed(2)}</div>
-                            <div class="cart-item-controls">
-                                <button class="qty-btn" onclick="updateQuantity(${item.id}, -1)">-</button>
-                                <span class="cart-item-qty">${item.quantity}</span>
-                                <button class="qty-btn" onclick="updateQuantity(${item.id}, 1)">+</button>
-                                <button class="qty-btn" onclick="removeFromCart(${item.id})" style="margin-left: auto; background: var(--error);">🗑️</button>
-                            </div>
+                        <div>
+                            <strong>${translate('Order #', 'Pedido #')}${order.id}</strong>
+                            <div>${new Date(order.timestamp).toLocaleDateString()}</div>
+                            <div>$${order.total.toFixed(2)}</div>
+                        </div>
+                        <div>
+                            <button class="btn btn-secondary" onclick="reorder(${order.id})">
+                                ${translate('Reorder', 'Reordenar')}
+                            </button>
                         </div>
                     </div>
                 `).join('');
             }
         }
-       
-        function toggleCart() {
-            document.getElementById('cartPanel').classList.toggle('open');
-        }
-       
-        // ==================== CHECKOUT SYSTEM ====================
-        function showCheckout() {
-            if (STATE.cart.length === 0) {
-                showToast(STATE.language === 'en' ? 'Your cart is empty!' : '¡Tu carrito está vacío!');
-                return;
-            }
-           
-            const subtotal = STATE.cart.reduce((sum, item) => sum + (item.priceAtPurchase * item.quantity), 0);
-            const totalPoints = STATE.cart.reduce((sum, item) => sum + (item.points * item.quantity), 0);
-           
-            showModal('checkout', {
-                title: STATE.language === 'en' ? 'Checkout' : 'Finalizar Compra',
-                body: `
-                    <form onsubmit="processCheckout(event)">
-                        <div class="form-group">
-                            <label class="form-label">${STATE.language === 'en' ? 'Full Name' : 'Nombre Completo'}</label>
-                            <input type="text" class="form-input" required>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">${STATE.language === 'en' ? 'Phone Number' : 'Número de Teléfono'}</label>
-                            <input type="tel" class="form-input" required>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">${STATE.language === 'en' ? 'Email' : 'Correo Electrónico'}</label>
-                            <input type="email" class="form-input" required>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">${STATE.language === 'en' ? 'Delivery Address' : 'Dirección de Entrega'}</label>
-                            <input type="text" class="form-input" required>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">${STATE.language === 'en' ? 'Postal/ZIP Code' : 'Código Postal'}</label>
-                            <input type="text" class="form-input" required>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">${STATE.language === 'en' ? 'Delivery Instructions' : 'Instrucciones de Entrega'}</label>
-                            <textarea class="form-textarea" placeholder="${STATE.language === 'en' ? 'Optional notes for delivery' : 'Notas opcionales para la entrega'}"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">${STATE.language === 'en' ? 'Delivery Method' : 'Método de Entrega'}</label>
-                            <select class="form-select" required>
-                                <option value="delivery">${STATE.language === 'en' ? 'Delivery' : 'Entrega'}</option>
-                                <option value="pickup">${STATE.language === 'en' ? 'Pickup' : 'Recoger'}</option>
-                            </select>
-                        </div>
-                        <div class="cart-summary" style="margin-top: var(--spacing-xl);">
-                            <div class="cart-summary-row">
-                                <span>${STATE.language === 'en' ? 'Subtotal:' : 'Subtotal:'}</span>
-                                <span>$${subtotal.toFixed(2)}</span>
-                            </div>
-                            <div class="cart-summary-row">
-                                <span>${STATE.language === 'en' ? 'You will earn:' : 'Ganarás:'}</span>
-                                <span style="color: var(--accent-color); font-weight: 700;">${totalPoints} ${STATE.language === 'en' ? 'points' : 'puntos'}</span>
-                            </div>
-                            <div class="cart-summary-row total">
-                                <span>${STATE.language === 'en' ? 'Total:' : 'Total:'}</span>
-                                <span>$${subtotal.toFixed(2)}</span>
-                            </div>
-                        </div>
-                        <button type="submit" class="btn-primary" style="width: 100%; margin-top: var(--spacing-lg);">
-                            ${STATE.language === 'en' ? 'Place Order' : 'Realizar Pedido'}
-                        </button>
-                    </form>
-                `
-            });
-        }
-       
-        function processCheckout(event) {
-            event.preventDefault();
-           
-            // Create order
-            const order = {
-                id: Date.now(),
-                items: STATE.cart,
-                total: STATE.cart.reduce((sum, item) => sum + (item.priceAtPurchase * item.quantity), 0),
-                points: STATE.cart.reduce((sum, item) => sum + (item.points * item.quantity), 0),
-                status: 'received',
-                timestamp: new Date()
-            };
-           
-            // Save order
-            const orders = JSON.parse(localStorage.getItem('orders') || '[]');
-            orders.push(order);
-            localStorage.setItem('orders', JSON.stringify(orders));
-           
-            // Clear cart
-            STATE.cart = [];
-            saveToStorage();
-            updateCartDisplay();
-            toggleCart();
-            closeModal();
-           
-            // Show tracking
-            startDeliveryTracking(order);
-        }
-       
-        // ==================== DELIVERY TRACKING ====================
-        function startDeliveryTracking(order) {
-            STATE.deliveryTracking = {
-                order: order,
-                status: 'received',
-                statusIndex: 0,
-                eta: 30,
-                distance: 5.2,
-                courierPosition: { x: 20, y: 50 }
-            };
-           
-            showModal('tracking', {
-                title: STATE.language === 'en' ? '🚗 Order Tracking' : '🚗 Seguimiento de Pedido',
-                body: renderTrackingInterface()
-            });
-           
-            // Start simulation
-            simulateDelivery();
-        }
-       
-        function renderTrackingInterface() {
-            const statuses = [
-                { key: 'received', icon: '✓', label: STATE.language === 'en' ? 'Received' : 'Recibido' },
-                { key: 'preparing', icon: '👨‍🍳', label: STATE.language === 'en' ? 'Preparing' : 'Preparando' },
-                { key: 'packaging', icon: '📦', label: STATE.language === 'en' ? 'Packaging' : 'Empacando' },
-                { key: 'delivery', icon: '🚗', label: STATE.language === 'en' ? 'Out for Delivery' : 'En Camino' },
-                { key: 'arriving', icon: '🏠', label: STATE.language === 'en' ? 'Arriving' : 'Llegando' },
-                { key: 'delivered', icon: '✅', label: STATE.language === 'en' ? 'Delivered' : 'Entregado' }
-            ];
-           
-            const currentIndex = STATE.deliveryTracking.statusIndex;
-           
-            return `
-                <div class="tracking-container">
-                    <div class="tracking-map">
-                        <div class="map-marker store-marker" style="left: 20%; top: 50%;">🏪</div>
-                        <div class="map-marker customer-marker" style="left: 80%; top: 50%;">🏠</div>
-                        <div class="map-marker courier-marker" id="courierMarker" style="left: ${STATE.deliveryTracking.courierPosition.x}%; top: ${STATE.deliveryTracking.courierPosition.y}%;">🍃</div>
-                        <div class="route-line" style="left: 20%; top: 50%; width: 60%;"></div>
-                    </div>
-                   
-                    <div class="tracking-status">
-                        <div class="tracking-eta">${STATE.deliveryTracking.eta} ${STATE.language === 'en' ? 'min' : 'min'}</div>
-                        <div class="tracking-distance">${STATE.deliveryTracking.distance} km ${STATE.language === 'en' ? 'away' : 'de distancia'}</div>
-                    </div>
-                   
-                    <div class="status-pipeline">
-                        <div class="status-progress-bar" style="width: ${(currentIndex / (statuses.length - 1)) * 100}%;"></div>
-                        ${statuses.map((status, index) => `
-                            <div class="status-step ${index < currentIndex ? 'completed' : ''} ${index === currentIndex ? 'active' : ''}">
-                                <div class="status-icon">${status.icon}</div>
-                                <div class="status-label">${status.label}</div>
-                            </div>
-                        `).join('')}
-                    </div>
-                   
-                    <div class="chat-container">
 
-<div class="chat-messages" id="trackingChat">
-                            <div class="chat-message system">
-                                <div class="chat-bubble">
-                                    ${STATE.language === 'en' ? 'Your order has been confirmed!' : '¡Tu pedido ha sido confirmado!'}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="chat-input-container">
-                            <input type="text" class="chat-input" placeholder="${STATE.language === 'en' ? 'Message your driver...' : 'Mensaje para tu conductor...'}" id="chatInput">
-                            <button class="chat-send-btn" onclick="sendChatMessage()">
-                                ${STATE.language === 'en' ? 'Send' : 'Enviar'}
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            `;
-        }
-    function simulateDelivery() {
-        const deliveryInterval = setInterval(() => {
-            if (!STATE.deliveryTracking) {
-                clearInterval(deliveryInterval);
-                return;
-            }
+        function reorder(orderId) {
+            const order = orders.find(o => o.id === orderId);
+            if (!order) return;
            
-            // Update status every 10 seconds
-            if (STATE.deliveryTracking.statusIndex < 5) {
-                STATE.deliveryTracking.statusIndex++;
-                STATE.deliveryTracking.eta = Math.max(0, STATE.deliveryTracking.eta - 5);
-                STATE.deliveryTracking.distance = Math.max(0, STATE.deliveryTracking.distance - 0.9);
-               
-                // Move courier
-                STATE.deliveryTracking.courierPosition.x = 20 + (STATE.deliveryTracking.statusIndex / 5) * 60;
-               
-                // Update UI if modal is still open
-                if (!document.getElementById('modalOverlay').classList.contains('hidden')) {
-                    document.getElementById('modalBody').innerHTML = renderTrackingInterface();
-                   
-                    // Add automated driver message
-                    addDriverMessage(getStatusMessage(STATE.deliveryTracking.statusIndex));
-                }
+            cart = order.items.map(item => ({ ...item, quantity: item.quantity }));
+            updateCart();
+            closeModal('accountModal');
+            openModal('cartModal');
+        }
+
+        // ============================================
+        // HAPPY HOUR
+        // ============================================
+        let happyHourTimer = null;
+
+        function toggleHappyHour() {
+            if (happyHourActive) {
+                stopHappyHour();
             } else {
-                clearInterval(deliveryInterval);
-                showDeliveryComplete();
+                startHappyHour();
             }
-        }, 10000); // 10 seconds per status
-    }
-   
-    function getStatusMessage(statusIndex) {
-        const messages = {
-            en: [
-                "Hi! I've got your order and I'm getting it ready for you! 🍃",
-                "Packing everything up carefully now! 📦",
-                "On my way! Should be there in about 30 minutes! 🚗",
-                "Getting close! Be there in 15 minutes! 🏃",
-                "I'm outside! 🎉"
-            ],
-            es: [
-                "¡Hola! ¡Tengo tu pedido y lo estoy preparando para ti! 🍃",
-                "¡Empacando todo con cuidado ahora! 📦",
-                "¡En camino! ¡Debería estar allí en unos 30 minutos! 🚗",
-                "¡Acercándome! ¡Estaré allí en 15 minutos! 🏃",
-                "¡Estoy afuera! 🎉"
-            ]
-        };
-       
-        return messages[STATE.language][statusIndex - 1];
-    }
-   
-    function sendChatMessage() {
-        const input = document.getElementById('chatInput');
-        const message = input.value.trim();
-        if (!message) return;
-       
-        const chatContainer = document.getElementById('trackingChat');
-        chatContainer.innerHTML += `
-            <div class="chat-message user">
-                <div class="chat-bubble">
-                    <div class="chat-text">${message}</div>
-                    <div class="chat-time">${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</div>
-                </div>
-            </div>
-        `;
-       
-        input.value = '';
-        chatContainer.scrollTop = chatContainer.scrollHeight;
-       
-        // Simulate driver response
-        setTimeout(() => {
-            addDriverMessage(STATE.language === 'en' ? "Got it! Thanks for letting me know 👍" : "¡Entendido! Gracias por avisarme 👍");
-        }, 2000);
-    }
-   
-    function addDriverMessage(message) {
-        const chatContainer = document.getElementById('trackingChat');
-        if (!chatContainer) return;
-       
-        chatContainer.innerHTML += `
-            <div class="chat-message driver">
-                <div class="chat-bubble">
-                    <div class="chat-sender">${STATE.language === 'en' ? 'Driver' : 'Conductor'} 🍃</div>
-                    <div class="chat-text">${message}</div>
-                    <div class="chat-time">${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</div>
-                </div>
-            </div>
-        `;
-        chatContainer.scrollTop = chatContainer.scrollHeight;
-    }
-   
-    function showDeliveryComplete() {
-        showToast(STATE.language === 'en' ? '🎉 Order Delivered! Enjoy!' : '🎉 ¡Pedido Entregado! ¡Disfruta!', 5000);
-        STATE.deliveryTracking = null;
-    }
-   
-    // ==================== HAPPY HOUR SYSTEM ====================
-    function activateHappyHour() {
-        if (STATE.happyHourActive) return;
-       
-        STATE.happyHourActive = true;
-        document.getElementById('happyHourBanner').classList.remove('hidden');
-       
-        let seconds = 60;
-        STATE.happyHourTimer = setInterval(() => {
-            seconds--;
-            document.getElementById('happyHourTimer').textContent = `00:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        function startHappyHour() {
+            happyHourActive = true;
+            happyHourDiscount = parseInt(document.getElementById('happyHourDiscount')?.value || 20);
+            const duration = parseInt(document.getElementById('happyHourDuration')?.value || 60);
            
-            if (seconds <= 0) {
-                deactivateHappyHour();
+            document.getElementById('happyHourBanner').classList.add('active');
+            renderProducts();
+           
+            let timeLeft = duration;
+            document.getElementById('happyHourTimer').textContent = timeLeft;
+           
+            happyHourTimer = setInterval(() => {
+                timeLeft--;
+                document.getElementById('happyHourTimer').textContent = timeLeft;
+               
+                if (timeLeft <= 0) {
+                    stopHappyHour();
+                }
+            }, 1000);
+        }
+
+        function stopHappyHour() {
+            happyHourActive = false;
+            document.getElementById('happyHourBanner').classList.remove('active');
+            if (happyHourTimer) clearInterval(happyHourTimer);
+            renderProducts();
+        }
+
+        // ============================================
+        // ADMIN FUNCTIONS
+        // ============================================
+        function showAdminLogin() {
+            const password = prompt('Enter admin password:');
+            if (password === 'admin123') {
+                openModal('adminModal');
+                renderAdminInventory();
+                updateMunchiesStats();
+            } else if (password !== null) {
+                alert('Incorrect password');
             }
-        }, 1000);
-       
-        renderProducts();
-        showToast(STATE.language === 'en' ? '🎉 Happy Hour Activated! 20% Off!' : '🎉 ¡Hora Feliz Activada! ¡20% de Descuento!');
-    }
-   
-    function deactivateHappyHour() {
-        STATE.happyHourActive = false;
-        document.getElementById('happyHourBanner').classList.add('hidden');
-        if (STATE.happyHourTimer) {
-            clearInterval(STATE.happyHourTimer);
-            STATE.happyHourTimer = null;
         }
-        renderProducts();
-    }
-   
-    // ==================== ADMIN SYSTEM ====================
-    function showAdminLogin() {
-        showModal('admin-login', {
-            title: STATE.language === 'en' ? 'Admin Login' : 'Inicio de Sesión Admin',
-            body: `
-                <form onsubmit="adminLogin(event)">
-                    <div class="form-group">
-                        <label class="form-label">${STATE.language === 'en' ? 'Password' : 'Contraseña'}</label>
-                        <input type="password" class="form-input" id="adminPassword" required>
-                    </div>
-                    <button type="submit" class="btn-primary" style="width: 100%;">
-                        ${STATE.language === 'en' ? 'Login' : 'Iniciar Sesión'}
-                    </button>
-                </form>
-            `
-        });
-    }
-   
-    function adminLogin(event) {
-        event.preventDefault();
-        const password = document.getElementById('adminPassword').value;
-       
-        // Simple password check (in production, use proper authentication)
-        if (password === 'admin123') {
-            STATE.adminLoggedIn = true;
-            sessionStorage.setItem('adminLoggedIn', 'true');
-            closeModal();
-            showAdminPanel();
-        } else {
-            showToast(STATE.language === 'en' ? 'Incorrect password' : 'Contraseña incorrecta');
+
+        function addProduct() {
+            const product = {
+                id: Date.now(),
+                name: document.getElementById('adminProductName').value,
+                category: document.getElementById('adminProductCategory').value,
+                price: parseFloat(document.getElementById('adminProductPrice').value),
+                thc: document.getElementById('adminProductTHC').value,
+                strain: document.getElementById('adminProductStrain').value,
+                stock: parseInt(document.getElementById('adminProductStock').value),
+                effects: ['New'],
+                image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"%3E%3Crect fill="%2310b981" width="200" height="200"/%3E%3Ctext x="100" y="100" font-size="60" text-anchor="middle" fill="white"%3E🌿%3C/text%3E%3C/svg%3E'
+            };
+
+            products.push(product);
+            saveData();
+            renderProducts();
+            renderAdminInventory();
+           
+            // Clear form
+            document.getElementById('adminProductName').value = '';
+            document.getElementById('adminProductPrice').value = '';
+            document.getElementById('adminProductTHC').value = '';
+            document.getElementById('adminProductStock').value = '100';
+           
+            alert('Product added!');
         }
-    }
-   
-    function showAdminPanel() {
-        if (!STATE.adminLoggedIn) {
-            showAdminLogin();
-            return;
-        }
-       
-        showModal('admin', {
-            title: STATE.language === 'en' ? 'Admin Dashboard' : 'Panel de Administración',
-            body: `
-                <div class="admin-panel">
-                    <div class="admin-tabs">
-                        <button class="admin-tab active" onclick="showAdminTab('inventory')">${STATE.language === 'en' ? 'Inventory' : 'Inventario'}</button>
-                        <button class="admin-tab" onclick="showAdminTab('orders')">${STATE.language === 'en' ? 'Orders' : 'Pedidos'}</button>
-                        <button class="admin-tab" onclick="showAdminTab('settings')">${STATE.language === 'en' ? 'Settings' : 'Configuración'}</button>
-                    </div>
-                    <div class="admin-content" id="adminContent">
-                        ${renderAdminInventory()}
-                    </div>
-                </div>
-            `
-        });
-    }
-   
-    function showAdminTab(tab) {
-        document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
-        event.target.classList.add('active');
-       
-        let content = '';
-        if (tab === 'inventory') {
-            content = renderAdminInventory();
-        } else if (tab === 'orders') {
-            content = renderAdminOrders();
-        } else if (tab === 'settings') {
-            content = renderAdminSettings();
-        }
-       
-        document.getElementById('adminContent').innerHTML = content;
-    }
-   
-    function renderAdminInventory() {
-        return `
-            <button class="btn-primary mb-2" onclick="showAddProductForm()">
-                ${STATE.language === 'en' ? '+ Add Product' : '+ Agregar Producto'}
-            </button>
-            <div class="product-list-admin">
-                ${STATE.products.map(product => `
-                    <div class="product-item-admin">
-                        <div>
-                            <strong>${product.name}</strong><br>
-                            <small style="color: var(--text-muted);">${product.category} | Stock: ${product.stock}</small>
-                        </div>
-                        <div>$${product.price.toFixed(2)}</div>
-                        <div class="admin-actions">
-                            <button class="admin-btn admin-btn-edit" onclick="editProduct(${product.id})">
-                                ${STATE.language === 'en' ? 'Edit' : 'Editar'}
-                            </button>
-                            <button class="admin-btn admin-btn-delete" onclick="deleteProduct(${product.id})">
-                                ${STATE.language === 'en' ? 'Delete' : 'Eliminar'}
-                            </button>
-                        </div>
-                    </div>
-                `).join('')}
-            </div>
-        `;
-    }
-   
-    function renderAdminOrders() {
-        const orders = JSON.parse(localStorage.getItem('orders') || '[]');
-        return `
-            <h3>${STATE.language === 'en' ? 'Recent Orders' : 'Pedidos Recientes'}</h3>
-            <div class="product-list-admin">
-                ${orders.length === 0 ? `<p>${STATE.language === 'en' ? 'No orders yet' : 'No hay pedidos todavía'}</p>` : ''}
-                ${orders.reverse().slice(0, 10).map(order => `
-                    <div class="product-item-admin">
-                        <div>
-                            <strong>Order #${order.id}</strong><br>
-                            <small style="color: var(--text-muted);">${new Date(order.timestamp).toLocaleString()}</small>
-                        </div>
-                        <div>
-                            <strong>$${order.total.toFixed(2)}</strong><br>
-                            <small style="color: var(--accent-color);">${order.points} pts</small>
-                        </div>
-                    </div>
-                `).join('')}
-            </div>
-        `;
-    }
-   
-    function renderAdminSettings() {
-        return `
-            <h3>${STATE.language === 'en' ? 'Settings' : 'Configuración'}</h3>
-            <button class="btn-primary mb-2" onclick="activateHappyHour()">
-                ${STATE.language === 'en' ? '🎉 Activate Happy Hour' : '🎉 Activar Hora Feliz'}
-            </button>
-            <br><br>
-            <button class="btn-secondary" onclick="exportData()">
-                ${STATE.language === 'en' ? '📊 Export Data' : '📊 Exportar Datos'}
-            </button>
-            <br><br>
-            <button class="btn-secondary" onclick="logoutAdmin()">
-                ${STATE.language === 'en' ? 'Logout' : 'Cerrar Sesión'}
-            </button>
-        `;
-    }
-   
-    function deleteProduct(productId) {
-        if (!confirm(STATE.language === 'en' ? 'Are you sure you want to delete this product?' : '¿Estás seguro de que quieres eliminar este producto?')) return;
-       
-        STATE.products = STATE.products.filter(p => p.id !== productId);
-        saveToStorage();
-        renderProducts();
-        showAdminPanel();
-    }
-   
-    function logoutAdmin() {
-        STATE.adminLoggedIn = false;
-        sessionStorage.removeItem('adminLoggedIn');
-        closeModal();
-    }
-   
-    function exportData() {
-        const data = {
-            products: STATE.products,
-            orders: JSON.parse(localStorage.getItem('orders') || '[]'),
-            timestamp: new Date()
-        };
-       
-        const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `cannabis-platform-export-${Date.now()}.json`;
-        a.click();
-    }
-   
-    // ==================== MODAL SYSTEM ====================
-    function showModal(type, options = {}) {
-        const overlay = document.getElementById('modalOverlay');
-        const title = document.getElementById('modalTitle');
-        const body = document.getElementById('modalBody');
-       
-        title.textContent = options.title || 'Modal';
-        body.innerHTML = options.body || '';
-       
-        overlay.classList.remove('hidden');
-    }
-   
-    function closeModal(event) {
-        if (event && event.target.classList.contains('modal')) return;
-        document.getElementById('modalOverlay').classList.add('hidden');
-    }
-   
-    // ==================== UTILITY FUNCTIONS ====================
-    function showToast(message, duration = 3000) {
-        const toast = document.createElement('div');
-        toast.style.cssText = `
-            position: fixed;
-            top: 100px;
-            right: 20px;
-            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
-            color: white;
-            padding: 1rem 2rem;
-            border-radius: 12px;
-            box-shadow: var(--shadow-xl);
-            z-index: 10001;
-            animation: slideIn 0.3s ease;
-            font-weight: 600;
-        `;
-        toast.textContent = message;
-        document.body.appendChild(toast);
-       
-        setTimeout(() => {
-            toast.style.animation = 'slideOut 0.3s ease';
-            setTimeout(() => toast.remove(), 300);
-        }, duration);
-    }
-   
-    function scrollToProducts() {
-        document.getElementById('productGrid').scrollIntoView({ behavior: 'smooth' });
-    }
-   
-    function showProductDetail(productId) {
-        const product = STATE.products.find(p => p.id === productId);
-        if (!product) return;
-       
-        showModal('product-detail', {
-            title: product.name,
-            body: `
-                <img src="${product.image}" alt="${product.name}" style="width: 100%; border-radius: 12px; margin-bottom: var(--spacing-lg);">
-                <div class="product-category" style="margin-bottom: var(--spacing-sm);">${product.category.toUpperCase()}</div>
-                ${product.strain !== 'N/A' ? `<div class="product-strain" style="margin-bottom: var(--spacing-md);">${product.strain}</div>` : ''}
-                <p style="color: var(--text-secondary); margin-bottom: var(--spacing-lg);">${product.description}</p>
-                ${product.category !== 'munchies' ? `
-                    <div class="product-potency" style="margin-bottom: var(--spacing-lg);">
-                        ${product.thc > 0 ? `<div class="potency-item">
-                            <span class="potency-label">THC</span>
-                            <span class="potency-value">${product.thc}%</span>
-                        </div>` : ''}
-                        ${product.cbd > 0 ? `<div class="potency-item">
-                            <span class="potency-label">CBD</span>
-                            <span class="potency-value">${product.cbd}${product.cbd >= 100 ? 'mg' : '%'}</span>
-                        </div>` : ''}
-                    </div>
-                ` : ''}
-                <div class="product-effects" style="margin-bottom: var(--spacing-xl);">
-                    ${product.effects.map(effect => `<span class="effect-tag">${effect}</span>`).join('')}
-                </div>
-                <div style="display: flex; justify-content: space-between; align-items: center; padding-top: var(--spacing-lg); border-top: 1px solid var(--bg-tertiary);">
+
+        function renderAdminInventory() {
+            const div = document.getElementById('adminInventory');
+            div.innerHTML = products.map(p => `
+                <div class="cart-item">
                     <div>
-                        <div style="font-size: 2rem; font-weight: 900; color: var(--primary-color);">$${calculatePrice(product.price).toFixed(2)}</div>
-                        <div style="color: var(--accent-color); font-weight: 600;">+${product.points} pts</div>
+                        <strong>${p.name}</strong>
+                        <div>${p.category} - $${p.price.toFixed(2)}</div>
+                        <div>Stock: ${p.stock}</div>
                     </div>
-                    <button class="btn-primary" onclick="addToCart(event, ${product.id}); closeModal();">
-                        ${STATE.language === 'en' ? 'Add to Cart' : 'Agregar al Carrito'}
-                    </button>
+                    <button class="btn btn-danger" onclick="deleteProduct(${p.id})">Delete</button>
                 </div>
-            `
-        });
-    }
-   
-    // ==================== STORAGE ====================
-    function saveToStorage() {
-        localStorage.setItem('cannabisState', JSON.stringify({
-            cart: STATE.cart,
-            products: STATE.products,
-            user: STATE.user
-        }));
-    }
-   
-    function loadFromStorage() {
-        const saved = localStorage.getItem('cannabisState');
-        if (saved) {
-            const data = JSON.parse(saved);
-            STATE.cart = data.cart || [];
-            STATE.products = data.products || [];
-            STATE.user = data.user || null;
+            `).join('');
         }
-    }
-   
-    // ==================== INITIALIZATION ====================
-    document.addEventListener('DOMContentLoaded', init);
-   
-    // Add CSS for slideOut animation
-    const style = document.createElement('style');
-    style.textContent = `
-        @keyframes slideOut {
-            to {
-                opacity: 0;
-                transform: translateX(100px);
+
+        function deleteProduct(id) {
+            if (confirm('Delete this product?')) {
+                products = products.filter(p => p.id !== id);
+                saveData();
+                renderProducts();
+                renderAdminInventory();
             }
         }
-    `;
-    document.head.appendChild(style);
-</script>
+
+        function updateLoyaltySettings() {
+            loyaltyRate = parseFloat(document.getElementById('pointsPerDollar').value);
+            saveData();
+            alert('Loyalty settings updated!');
+        }
+
+        function updateMunchiesStats() {
+            const munchiesOrders = orders.flatMap(o => o.items.filter(i => i.isMunchie));
+            const revenue = munchiesOrders.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const commission = munchiesOrders.reduce((sum, item) => sum + (item.price * item.quantity * item.commission), 0);
+           
+            document.getElementById('munchiesRevenue').textContent = revenue.toFixed(2);
+            document.getElementById('munchiesCommission').textContent = commission.toFixed(2);
+        }
+
+        // ============================================
+        // MODAL MANAGEMENT
+        // ============================================
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.add('active');
+            if (modalId === 'accountModal' && currentUser) {
+                updateUserDisplay();
+            }
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        }
+
+        // ============================================
+        // SECTION MANAGEMENT
+        // ============================================
+        function showSection(section) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            if (section === 'shop') {
+                document.getElementById('shopSection').classList.add('active');
+            } else if (section === 'munchies') {
+                document.getElementById('munchiesSection').classList.add('active');
+            }
+        }
+
+        function filterCategory(category) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+            renderProducts(category);
+        }
+
+        // ============================================
+        // DATA PERSISTENCE
+        // ============================================
+        function saveData() {
+            localStorage.setItem('cannabisData', JSON.stringify({
+                products,
+                munchies,
+                orders,
+                cart,
+                currentUser,
+                loyaltyRate
+            }));
+        }
+
+        function loadData() {
+            const saved = localStorage.getItem('cannabisData');
+            if (saved) {
+                const data = JSON.parse(saved);
+                products = data.products || [];
+                munchies = data.munchies || [];
+                orders = data.orders || [];
+                cart = data.cart || [];
+                currentUser = data.currentUser || null;
+                loyaltyRate = data.loyaltyRate || 1;
+               
+                if (currentUser) {
+                    document.getElementById('accountLogin').style.display = 'none';
+                    document.getElementById('accountDashboard').style.display = 'block';
+                }
+            }
+        }
+
+        // ============================================
+        // INITIALIZATION
+        // ============================================
+        window.addEventListener('DOMContentLoaded', () => {
+            checkAgeVerification();
+            loadData();
+           
+            if (products.length === 0) {
+                initializeProducts();
+            } else {
+                renderProducts();
+                renderMunchies();
+            }
+           
+            updateCart();
+           
+            // Load saved language
+            const savedLang = localStorage.getItem('language');
+            if (savedLang) {
+                currentLanguage = savedLang;
+                document.querySelectorAll('.lang-btn').forEach(btn => {
+                    btn.classList.toggle('active', btn.textContent === savedLang.toUpperCase());
+                });
+                translatePage();
+            }
+
+            // Enable Enter key for chat
+            document.getElementById('chatInput').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') sendChatMessage();
+            });
+
+            // Close modals on background click
+            document.querySelectorAll('.modal').forEach(modal => {
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        modal.classList.remove('active');
+                    }
+                });
+            });
+        });
+    </script>
 
 </body>
-</html>
+</htm
