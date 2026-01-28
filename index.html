@@ -3,486 +3,371 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cannabis Delivery Platform</title>
+    <title>Boutique Cannabis - Premium Dispensary</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lucide-static@0.294.0/font/lucide.min.css">
     <style>
-        /* ============================================
-           WHITE-LABEL THEME SYSTEM
-           Change these variables to rebrand instantly
-        ============================================ */
-        :root {
-            --primary-color: #10b981;
-            --primary-dark: #059669;
-            --secondary-color: #8b5cf6;
-            --accent-color: #f59e0b;
-            --background: #0f172a;
-            --surface: #1e293b;
-            --surface-light: #334155;
-            --text-primary: #f1f5f9;
-            --text-secondary: #94a3b8;
-            --danger: #ef4444;
-            --success: #10b981;
-            --warning: #f59e0b;
-           
-            --font-primary: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            --font-display: 'Impact', 'Arial Black', sans-serif;
-           
-            --radius: 12px;
-            --radius-sm: 8px;
-            --shadow: 0 10px 30px rgba(0,0,0,0.3);
-            --shadow-lg: 0 20px 50px rgba(0,0,0,0.5);
-        }
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
+        :root {
+            --primary-green: #00ff88;
+            --dark-bg: #0a0e0a;
+            --card-bg: rgba(20, 30, 20, 0.8);
+            --glass-bg: rgba(15, 25, 15, 0.6);
+            --accent-glow: #00ff8844;
+            --text-primary: #ffffff;
+            --text-secondary: #b0b0b0;
+            --happy-hour-glow: #ff3366;
+        }
+
         body {
-            font-family: var(--font-primary);
-            background: var(--background);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--dark-bg);
             color: var(--text-primary);
             overflow-x: hidden;
         }
 
-        /* ============================================
-           AGE VERIFICATION MODAL
-        ============================================ */
-        #ageGate {
+        .animated-background {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.95);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 10000;
-            backdrop-filter: blur(10px);
+            z-index: 0;
+            background: linear-gradient(45deg, #0a0e0a, #0d1a0d, #0a0e0a);
+            background-size: 400% 400%;
+            animation: gradientFlow 15s ease infinite;
         }
 
-        #ageGate.hidden {
-            display: none;
+        .smoke-effect {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            opacity: 0.3;
+            z-index: 1;
         }
 
-        .age-gate-content {
-            background: var(--surface);
-            padding: 3rem;
-            border-radius: var(--radius);
-            text-align: center;
-            max-width: 500px;
-            box-shadow: var(--shadow-lg);
-            border: 2px solid var(--primary-color);
+        .smoke-particle {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(40px);
+            animation: float 20s infinite;
         }
 
-        .age-gate-content h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            color: var(--primary-color);
+        .smoke-particle:nth-child(1) {
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(0, 255, 136, 0.3), transparent);
+            left: 10%;
+            animation-delay: 0s;
         }
 
-        .age-gate-content p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-            color: var(--text-secondary);
+        .smoke-particle:nth-child(2) {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(0, 255, 136, 0.2), transparent);
+            right: 10%;
+            animation-delay: 5s;
         }
 
-        .age-gate-buttons {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
+        .smoke-particle:nth-child(3) {
+            width: 350px;
+            height: 350px;
+            background: radial-gradient(circle, rgba(0, 255, 136, 0.25), transparent);
+            left: 50%;
+            animation-delay: 10s;
         }
 
-        .age-gate-buttons button {
-            padding: 1rem 2rem;
-            font-size: 1.1rem;
-            border: none;
-            border-radius: var(--radius-sm);
-            cursor: pointer;
-            font-weight: bold;
-            transition: all 0.3s;
+        @keyframes gradientFlow {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
         }
 
-        .age-accept {
-            background: var(--primary-color);
-            color: white;
+        @keyframes float {
+            0%, 100% { transform: translateY(0) translateX(0); }
+            25% { transform: translateY(-100px) translateX(50px); }
+            50% { transform: translateY(-200px) translateX(-30px); }
+            75% { transform: translateY(-100px) translateX(-50px); }
         }
 
-        .age-accept:hover {
-            background: var(--primary-dark);
-            transform: scale(1.05);
+        .content-wrapper {
+            position: relative;
+            z-index: 2;
         }
 
-        .age-decline {
-            background: var(--danger);
-            color: white;
-        }
-
-        .age-decline:hover {
-            background: #dc2626;
-            transform: scale(1.05);
-        }
-
-        /* ============================================
-           NAVIGATION
-        ============================================ */
+        /* Navigation */
         nav {
-            background: var(--surface);
+            position: sticky;
+            top: 0;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0, 255, 136, 0.1);
             padding: 1rem 2rem;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: var(--shadow);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
+            flex-wrap: wrap;
+            gap: 1rem;
         }
 
         .logo {
             font-size: 1.5rem;
-            font-weight: bold;
-            color: var(--primary-color);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .logo img {
-            height: 40px;
-            width: auto;
+            font-weight: 700;
+            color: var(--primary-green);
+            text-decoration: none;
         }
 
         .nav-links {
             display: flex;
-            gap: 1.5rem;
-            align-items: center;
+            gap: 2rem;
+            list-style: none;
+            flex-wrap: wrap;
         }
 
-        .nav-links button, .nav-links a {
-            background: none;
-            border: none;
+        .nav-links a {
             color: var(--text-primary);
-            cursor: pointer;
-            font-size: 1rem;
-            transition: color 0.3s;
             text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: color 0.3s;
+            font-size: 0.95rem;
         }
 
-        .nav-links button:hover, .nav-links a:hover {
-            color: var(--primary-color);
+        .nav-links a:hover {
+            color: var(--primary-green);
         }
 
-        .cart-badge {
+        .nav-links a i {
+            font-size: 1.2rem;
+        }
+
+        .lang-selector {
+            background: var(--card-bg);
+            border: 1px solid rgba(0, 255, 136, 0.2);
+            color: var(--text-primary);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .cart-icon {
             position: relative;
         }
 
-        .cart-badge span {
+        .cart-count {
             position: absolute;
             top: -8px;
             right: -8px;
-            background: var(--danger);
-            color: white;
+            background: var(--primary-green);
+            color: var(--dark-bg);
             border-radius: 50%;
             width: 20px;
             height: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.7rem;
-            font-weight: bold;
+            font-size: 0.75rem;
+            font-weight: 700;
         }
 
-        .para-curioso-btn {
-            background: var(--secondary-color) !important;
-            color: white !important;
-            padding: 0.5rem 1rem;
-            border-radius: var(--radius-sm);
-            font-weight: bold;
-        }
-
-        .para-curioso-btn:hover {
-            background: #7c3aed !important;
-        }
-
-        /* ============================================
-           HERO SECTION
-        ============================================ */
-        .hero {
-            background: linear-gradient(135deg, var(--primary-dark), var(--secondary-color));
-            padding: 4rem 2rem;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M50 20 Q30 40 50 60 Q70 40 50 20 M50 60 L50 80" stroke="white" fill="none" opacity="0.1" stroke-width="2"/></svg>') repeat;
-            opacity: 0.1;
-        }
-
-        .hero h1 {
-            font-family: var(--font-display);
-            font-size: 4rem;
-            margin-bottom: 1rem;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .hero-subtitle {
-            font-size: 2rem;
-            color: var(--accent-color);
-            font-weight: bold;
-            min-height: 50px;
-            position: relative;
-            z-index: 1;
-        }
-
+        /* Happy Hour Banner */
         .happy-hour-banner {
-            background: var(--warning);
-            color: var(--background);
+            display: none;
+            background: linear-gradient(90deg, #ff3366, #ff6b6b, #ff3366);
+            background-size: 200% 100%;
+            animation: gradientSlide 3s ease infinite;
             padding: 1rem;
             text-align: center;
-            font-weight: bold;
             font-size: 1.2rem;
-            display: none;
-            animation: pulse 1s infinite;
+            font-weight: 700;
+            box-shadow: 0 4px 20px rgba(255, 51, 102, 0.5);
         }
 
         .happy-hour-banner.active {
             display: block;
+            animation: pulse 1s ease infinite, gradientSlide 3s ease infinite;
         }
 
         @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.8; }
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
         }
 
-        /* ============================================
-           MAIN CONTENT
-        ============================================ */
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 2rem;
+        @keyframes gradientSlide {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
         }
 
-        .tabs {
+        /* Hero Section */
+        .hero {
+            min-height: 70vh;
             display: flex;
-            gap: 1rem;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
-        }
-
-        .tab {
-            padding: 0.75rem 1.5rem;
-            background: var(--surface);
-            border: 2px solid transparent;
-            border-radius: var(--radius-sm);
-            cursor: pointer;
-            transition: all 0.3s;
-            font-weight: 600;
-        }
-
-        .tab:hover {
-            border-color: var(--primary-color);
-        }
-
-        .tab.active {
-            background: var(--primary-color);
-            border-color: var(--primary-color);
-        }
-
-        .section {
-            display: none;
-        }
-
-        .section.active {
-            display: block;
-        }
-
-        /* ============================================
-           PRODUCT GRID
-        ============================================ */
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 5rem;
-        }
-
-        .product-card {
-            background: var(--surface);
-            border-radius: var(--radius);
-            overflow: hidden;
-            transition: all 0.3s;
-            cursor: pointer;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 4rem 2rem;
             position: relative;
         }
 
+        .hero-subtitle {
+            font-size: 1.2rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--primary-green);
+            margin-bottom: 1rem;
+        }
+
+        .hero-title {
+            font-size: 5rem;
+            font-weight: 900;
+            margin-bottom: 2rem;
+            text-shadow: 0 0 40px var(--accent-glow);
+        }
+
+        .category-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            max-width: 1000px;
+        }
+
+        .pill {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .pill:hover, .pill.active {
+            background: var(--primary-green);
+            color: var(--dark-bg);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px var(--accent-glow);
+        }
+
+        /* Product Grid */
+        .section {
+            max-width: 1400px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .product-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 255, 136, 0.1);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
         .product-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-lg);
+            transform: translateY(-8px);
+            box-shadow: 0 12px 40px var(--accent-glow);
+            border-color: var(--primary-green);
         }
 
         .product-image {
             width: 100%;
             height: 200px;
             object-fit: cover;
-            background: var(--surface-light);
         }
 
         .product-info {
-            padding: 1rem;
+            padding: 1.5rem;
+        }
+
+        .product-category {
+            font-size: 0.8rem;
+            color: var(--primary-green);
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .product-name {
-            font-size: 1.1rem;
-            font-weight: bold;
-            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin: 0.5rem 0;
         }
 
-        .product-strain {
-            display: inline-block;
-            padding: 0.25rem 0.5rem;
-            background: var(--primary-color);
-            border-radius: 4px;
-            font-size: 0.8rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .product-thc {
+        .product-specs {
+            display: flex;
+            gap: 1rem;
+            margin: 0.5rem 0;
+            font-size: 0.85rem;
             color: var(--text-secondary);
-            font-size: 0.9rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .product-effects {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.25rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .effect-tag {
-            background: var(--surface-light);
-            padding: 0.2rem 0.5rem;
-            border-radius: 4px;
-            font-size: 0.75rem;
-        }
-
-        .product-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 1rem;
         }
 
         .product-price {
-            font-size: 1.3rem;
-            font-weight: bold;
-            color: var(--primary-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 1rem 0;
         }
 
-        .product-points {
-            font-size: 0.8rem;
-            color: var(--accent-color);
+        .price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-green);
+        }
+
+        .points {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
         }
 
         .add-to-cart-btn {
             width: 100%;
-            padding: 0.75rem;
-            background: var(--primary-color);
+            background: var(--primary-green);
+            color: var(--dark-bg);
             border: none;
-            border-radius: var(--radius-sm);
-            color: white;
-            font-weight: bold;
+            padding: 0.75rem;
+            border-radius: 8px;
+            font-weight: 700;
             cursor: pointer;
             transition: all 0.3s;
-            margin-top: 0.5rem;
         }
 
         .add-to-cart-btn:hover {
-            background: var(--primary-dark);
-        }
-
-        .out-of-stock {
-            opacity: 0.5;
-            pointer-events: none;
-        }
-
-        .stock-badge {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: var(--danger);
-            color: white;
-            padding: 0.25rem 0.5rem;
-            border-radius: 4px;
-            font-size: 0.75rem;
-            font-weight: bold;
-        }
-
-        /* ============================================
-           STICKY CART BAR (MOBILE)
-        ============================================ */
-        .sticky-cart {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: var(--surface);
-            padding: 1rem;
-            box-shadow: 0 -5px 20px rgba(0,0,0,0.3);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 999;
-        }
-
-        .sticky-cart-info {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .sticky-cart-total {
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: var(--primary-color);
-        }
-
-        .sticky-cart-items {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-        }
-
-        .checkout-btn {
-            padding: 0.75rem 2rem;
-            background: var(--primary-color);
-            border: none;
-            border-radius: var(--radius-sm);
-            color: white;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .checkout-btn:hover {
-            background: var(--primary-dark);
             transform: scale(1.05);
+            box-shadow: 0 4px 20px var(--accent-glow);
         }
 
-        /* ============================================
-           MODAL SYSTEM
-        ============================================ */
+        /* Modal */
         .modal {
             display: none;
             position: fixed;
@@ -490,27 +375,27 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.8);
+            background: rgba(0, 0, 0, 0.9);
             z-index: 2000;
-            overflow-y: auto;
+            align-items: center;
+            justify-content: center;
             padding: 2rem;
         }
 
         .modal.active {
             display: flex;
-            align-items: center;
-            justify-content: center;
         }
 
         .modal-content {
-            background: var(--surface);
-            border-radius: var(--radius);
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 255, 136, 0.2);
+            border-radius: 16px;
             padding: 2rem;
-            max-width: 600px;
+            max-width: 500px;
             width: 100%;
             max-height: 90vh;
             overflow-y: auto;
-            position: relative;
         }
 
         .modal-header {
@@ -520,26 +405,14 @@
             margin-bottom: 1.5rem;
         }
 
-        .modal-header h2 {
-            font-size: 1.8rem;
-        }
-
-        .close-modal {
+        .close-btn {
             background: none;
             border: none;
-            font-size: 2rem;
-            color: var(--text-secondary);
+            color: var(--text-primary);
+            font-size: 1.5rem;
             cursor: pointer;
-            transition: color 0.3s;
         }
 
-        .close-modal:hover {
-            color: var(--danger);
-        }
-
-        /* ============================================
-           FORMS
-        ============================================ */
         .form-group {
             margin-bottom: 1.5rem;
         }
@@ -547,267 +420,171 @@
         .form-group label {
             display: block;
             margin-bottom: 0.5rem;
-            font-weight: 600;
             color: var(--text-secondary);
         }
 
-        .form-group input,
-        .form-group textarea,
-        .form-group select {
+        .form-group input, .form-group select, .form-group textarea {
             width: 100%;
-            padding: 0.75rem;
-            background: var(--surface-light);
-            border: 2px solid transparent;
-            border-radius: var(--radius-sm);
+            background: var(--dark-bg);
+            border: 1px solid rgba(0, 255, 136, 0.2);
             color: var(--text-primary);
-            font-size: 1rem;
-            transition: border-color 0.3s;
-        }
-
-        .form-group input:focus,
-        .form-group textarea:focus,
-        .form-group select:focus {
-            outline: none;
-            border-color: var(--primary-color);
-        }
-
-        .btn {
-            padding: 0.75rem 1.5rem;
-            border: none;
-            border-radius: var(--radius-sm);
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s;
+            padding: 0.75rem;
+            border-radius: 8px;
             font-size: 1rem;
         }
 
         .btn-primary {
-            background: var(--primary-color);
-            color: white;
+            width: 100%;
+            background: var(--primary-green);
+            color: var(--dark-bg);
+            border: none;
+            padding: 1rem;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
         }
 
         .btn-primary:hover {
-            background: var(--primary-dark);
-        }
-
-        .btn-danger {
-            background: var(--danger);
-            color: white;
+            transform: scale(1.02);
+            box-shadow: 0 4px 20px var(--accent-glow);
         }
 
         .btn-secondary {
-            background: var(--surface-light);
-            color: var(--text-primary);
-        }
-
-        /* ============================================
-           CART DISPLAY
-        ============================================ */
-        .cart-items {
-            margin-bottom: 2rem;
-        }
-
-        .cart-item {
-            background: var(--surface-light);
+            width: 100%;
+            background: transparent;
+            color: var(--primary-green);
+            border: 1px solid var(--primary-green);
             padding: 1rem;
-            border-radius: var(--radius-sm);
-            margin-bottom: 1rem;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 1rem;
+        }
+
+        /* Cart */
+        .cart-item {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            border-bottom: 1px solid rgba(0, 255, 136, 0.1);
         }
 
-        .cart-item-info h4 {
-            margin-bottom: 0.5rem;
+        .cart-item-image {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 8px;
         }
 
-        .cart-item-price {
-            font-weight: bold;
-            color: var(--primary-color);
+        .cart-item-info {
+            flex: 1;
         }
 
         .cart-item-controls {
             display: flex;
             gap: 0.5rem;
             align-items: center;
+            margin-top: 0.5rem;
         }
 
-        .qty-btn {
+        .quantity-btn {
+            background: var(--card-bg);
+            border: 1px solid rgba(0, 255, 136, 0.2);
+            color: var(--text-primary);
             width: 30px;
             height: 30px;
-            background: var(--primary-color);
-            border: none;
-            border-radius: 4px;
-            color: white;
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        .qty-display {
-            min-width: 30px;
-            text-align: center;
-            font-weight: bold;
-        }
-
-        .remove-btn {
-            background: var(--danger);
-            color: white;
-            border: none;
-            padding: 0.5rem 1rem;
             border-radius: 4px;
             cursor: pointer;
-            margin-left: 1rem;
         }
 
         .cart-summary {
-            background: var(--surface-light);
-            padding: 1.5rem;
-            border-radius: var(--radius-sm);
             margin-top: 2rem;
+            padding: 1rem;
+            background: var(--dark-bg);
+            border-radius: 8px;
         }
 
-        .cart-summary-row {
+        .summary-row {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 1rem;
-            font-size: 1.1rem;
+            margin: 0.5rem 0;
         }
 
-        .cart-summary-total {
+        .summary-row.total {
             font-size: 1.5rem;
-            font-weight: bold;
-            color: var(--primary-color);
-            border-top: 2px solid var(--surface);
+            font-weight: 700;
+            color: var(--primary-green);
+            border-top: 1px solid rgba(0, 255, 136, 0.2);
             padding-top: 1rem;
             margin-top: 1rem;
         }
 
-        /* ============================================
-           DELIVERY TRACKING
-        ============================================ */
-        .delivery-map {
+        /* Delivery Tracking */
+        .tracking-map {
             width: 100%;
             height: 400px;
-            background: var(--surface-light);
-            border-radius: var(--radius);
+            background: var(--dark-bg);
+            border-radius: 16px;
             position: relative;
             overflow: hidden;
-            margin-bottom: 2rem;
+            margin: 2rem 0;
         }
 
         .map-marker {
             position: absolute;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            transition: all 0.5s ease;
+        }
+
+        .tracking-status {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .status-item {
             display: flex;
             align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            transition: all 0.5s;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--card-bg);
+            border-radius: 8px;
         }
 
-        .store-marker {
-            background: var(--primary-color);
-            top: 20%;
-            left: 20%;
-        }
-
-        .customer-marker {
-            background: var(--accent-color);
-            top: 70%;
-            left: 80%;
-        }
-
-        .courier-marker {
-            background: var(--secondary-color);
-            animation: bounce 1s infinite;
-            z-index: 10;
-        }
-
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        .delivery-route {
-            position: absolute;
-            border: 3px dashed var(--primary-color);
-            opacity: 0.5;
-        }
-
-        .status-pipeline {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 2rem;
-            position: relative;
-        }
-
-        .status-step {
-            flex: 1;
-            text-align: center;
-            position: relative;
-        }
-
-        .status-step::before {
-            content: '';
-            position: absolute;
-            top: 20px;
-            left: 50%;
-            width: 100%;
-            height: 4px;
-            background: var(--surface-light);
-            z-index: -1;
-        }
-
-        .status-step:first-child::before {
-            left: 50%;
-            width: 50%;
-        }
-
-        .status-step:last-child::before {
-            width: 50%;
+        .status-item.active {
+            border: 2px solid var(--primary-green);
         }
 
         .status-icon {
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            background: var(--surface-light);
-            margin: 0 auto 0.5rem;
+            background: var(--primary-green);
+            color: var(--dark-bg);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
-            transition: all 0.3s;
         }
 
-        .status-step.completed .status-icon {
-            background: var(--primary-color);
+        .status-item:not(.active) .status-icon {
+            background: var(--dark-bg);
+            border: 2px solid rgba(0, 255, 136, 0.3);
         }
 
-        .status-step.active .status-icon {
-            background: var(--accent-color);
-            animation: pulse 1s infinite;
-        }
-
-        .delivery-eta {
-            text-align: center;
-            font-size: 2rem;
-            font-weight: bold;
-            color: var(--primary-color);
-            margin: 2rem 0;
-        }
-
-        /* ============================================
-           CHAT SYSTEM
-        ============================================ */
+        /* Chat */
         .chat-container {
-            background: var(--surface-light);
-            border-radius: var(--radius);
             height: 400px;
             display: flex;
             flex-direction: column;
+            background: var(--dark-bg);
+            border-radius: 16px;
+            overflow: hidden;
         }
 
         .chat-messages {
@@ -817,221 +594,270 @@
         }
 
         .chat-message {
-            margin-bottom: 1rem;
-            display: flex;
-            gap: 0.5rem;
+            margin: 0.5rem 0;
+            padding: 0.75rem 1rem;
+            border-radius: 12px;
+            max-width: 80%;
         }
 
         .chat-message.user {
-            flex-direction: row-reverse;
+            background: var(--primary-green);
+            color: var(--dark-bg);
+            margin-left: auto;
         }
 
-        .chat-bubble {
-            max-width: 70%;
-            padding: 0.75rem;
-            border-radius: var(--radius-sm);
-            background: var(--surface);
-        }
-
-        .chat-message.user .chat-bubble {
-            background: var(--primary-color);
-        }
-
-        .chat-message.driver .chat-bubble {
-            background: var(--secondary-color);
-        }
-
-        .chat-message.system .chat-bubble {
-            background: var(--accent-color);
-            max-width: 100%;
-            text-align: center;
+        .chat-message.driver {
+            background: var(--card-bg);
         }
 
         .chat-input-container {
-            padding: 1rem;
-            border-top: 2px solid var(--surface);
             display: flex;
             gap: 0.5rem;
+            padding: 1rem;
+            border-top: 1px solid rgba(0, 255, 136, 0.1);
         }
 
         .chat-input {
             flex: 1;
-            padding: 0.75rem;
-            background: var(--surface);
-            border: none;
-            border-radius: var(--radius-sm);
+            background: var(--card-bg);
+            border: 1px solid rgba(0, 255, 136, 0.2);
             color: var(--text-primary);
+            padding: 0.75rem;
+            border-radius: 8px;
         }
 
         .chat-send-btn {
-            padding: 0.75rem 1.5rem;
-            background: var(--primary-color);
+            background: var(--primary-green);
+            color: var(--dark-bg);
             border: none;
-            border-radius: var(--radius-sm);
-            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
             cursor: pointer;
-            font-weight: bold;
         }
 
-        /* ============================================
-           LOYALTY DISPLAY
-        ============================================ */
-        .loyalty-card {
-            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+        /* Avatar Assistant */
+        .avatar-assistant {
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            z-index: 1500;
+            cursor: pointer;
+        }
+
+        .avatar-character {
+            width: 100px;
+            height: 100px;
+            animation: avatarFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes avatarFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .avatar-bubble {
+            position: absolute;
+            bottom: 110px;
+            right: 0;
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 255, 136, 0.2);
+            border-radius: 16px;
+            padding: 1rem;
+            max-width: 250px;
+            display: none;
+        }
+
+        .avatar-bubble.active {
+            display: block;
+            animation: bubblePop 0.3s ease;
+        }
+
+        @keyframes bubblePop {
+            0% { transform: scale(0); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* Floating Buttons */
+        .floating-buttons {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            z-index: 1400;
+        }
+
+        .floating-btn {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--primary-green);
+            color: var(--dark-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 20px var(--accent-glow);
+        }
+
+        .floating-btn:hover {
+            transform: scale(1.1);
+        }
+
+        /* Admin Panel */
+        .admin-panel {
+            max-width: 1200px;
+            margin: 2rem auto;
             padding: 2rem;
-            border-radius: var(--radius);
-            text-align: center;
-            margin-bottom: 2rem;
         }
 
-        .loyalty-points {
-            font-size: 3rem;
-            font-weight: bold;
-            margin-bottom: 0.5rem;
-        }
-
-        .loyalty-label {
-            font-size: 1.2rem;
-            opacity: 0.9;
-        }
-
-        /* ============================================
-           ADMIN PANEL
-        ============================================ */
         .admin-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
         }
 
         .admin-card {
-            background: var(--surface);
-            padding: 1.5rem;
-            border-radius: var(--radius);
-            border: 2px solid var(--surface-light);
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 255, 136, 0.2);
+            border-radius: 16px;
+            padding: 2rem;
         }
 
         .admin-card h3 {
             margin-bottom: 1rem;
-            color: var(--primary-color);
+            color: var(--primary-green);
         }
 
-        /* ============================================
-           WHATSAPP FLOAT
-        ============================================ */
-        .whatsapp-float {
-            position: fixed;
-            bottom: 80px;
-            right: 20px;
-            background: #25D366;
-            color: white;
-            padding: 1rem 1.5rem;
+        /* Rewards */
+        .rewards-dashboard {
+            text-align: center;
+            padding: 2rem;
+            background: var(--card-bg);
+            border-radius: 16px;
+            margin: 2rem 0;
+        }
+
+        .points-display {
+            font-size: 4rem;
+            font-weight: 900;
+            color: var(--primary-green);
+            text-shadow: 0 0 40px var(--accent-glow);
+        }
+
+        .tier-badge {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            background: var(--primary-green);
+            color: var(--dark-bg);
             border-radius: 50px;
-            box-shadow: var(--shadow-lg);
-            cursor: pointer;
-            z-index: 998;
+            font-weight: 700;
+            margin-top: 1rem;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(0, 255, 136, 0.1);
+            padding: 3rem 2rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-section h4 {
+            color: var(--primary-green);
+            margin-bottom: 1rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin: 0.5rem 0;
+        }
+
+        .footer-section a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: var(--primary-green);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--dark-bg);
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            font-weight: bold;
-            transition: all 0.3s;
+            justify-content: center;
+            font-size: 1.2rem;
         }
 
-        .whatsapp-float:hover {
-            transform: scale(1.05);
-            box-shadow: 0 15px 40px rgba(37, 211, 102, 0.4);
-        }
-
-        /* ============================================
-           LANGUAGE TOGGLE
-        ============================================ */
-        .lang-toggle {
-            display: flex;
-            gap: 0.5rem;
-            background: var(--surface-light);
-            padding: 0.25rem;
-            border-radius: var(--radius-sm);
-        }
-
-        .lang-btn {
-            padding: 0.5rem 1rem;
-            background: transparent;
-            border: none;
+        .legal-disclaimer {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(0, 255, 136, 0.1);
+            font-size: 0.85rem;
             color: var(--text-secondary);
-            cursor: pointer;
-            border-radius: 4px;
-            transition: all 0.3s;
         }
 
-        .lang-btn.active {
-            background: var(--primary-color);
-            color: white;
-        }
-
-        /* ============================================
-           RESPONSIVE
-        ============================================ */
+        /* Responsive */
         @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .hero-subtitle {
-                font-size: 1.5rem;
-            }
-
-            .product-grid {
-                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            }
-
-            nav {
-                flex-direction: column;
-                gap: 1rem;
+            .hero-title {
+                font-size: 3rem;
             }
 
             .nav-links {
-                flex-wrap: wrap;
-                justify-content: center;
+                gap: 1rem;
             }
 
-            .modal-content {
-                padding: 1rem;
+            .product-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             }
 
-            .tabs {
-                overflow-x: auto;
-                flex-wrap: nowrap;
+            .floating-buttons {
+                bottom: 20px;
+                right: 20px;
             }
-        }
 
-        /* ============================================
-           ANIMATIONS
-        ============================================ */
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
+            .avatar-assistant {
+                bottom: 80px;
+                right: 20px;
             }
         }
 
-        .animate-in {
-            animation: slideIn 0.5s ease-out;
-        }
-
-        /* ============================================
-           LOADING STATES
-        ============================================ */
+        /* Loading Animation */
         .loading {
             display: inline-block;
             width: 20px;
             height: 20px;
-            border: 3px solid rgba(255,255,255,.3);
+            border: 3px solid rgba(0, 255, 136, 0.3);
             border-radius: 50%;
-            border-top-color: #fff;
+            border-top-color: var(--primary-green);
             animation: spin 1s ease-in-out infinite;
         }
 
@@ -1039,1168 +865,1427 @@
             to { transform: rotate(360deg); }
         }
 
-        /* ============================================
-           MASCOT
-        ============================================ */
-        .mascot {
-            width: 40px;
-            height: 40px;
-            display: inline-block;
-            font-size: 2rem;
-            animation: wiggle 2s infinite;
+        /* Utilities */
+        .hidden {
+            display: none !important;
         }
 
-        @keyframes wiggle {
-            0%, 100% { transform: rotate(-5deg); }
-            50% { transform: rotate(5deg); }
+        .text-center {
+            text-align: center;
+        }
+
+        .mt-2 {
+            margin-top: 2rem;
+        }
+
+        .mb-2 {
+            margin-bottom: 2rem;
         }
     </style>
 </head>
 <body>
+    <div class="animated-background"></div>
+    <div class="smoke-effect">
+        <div class="smoke-particle"></div>
+        <div class="smoke-particle"></div>
+        <div class="smoke-particle"></div>
+    </div>
 
-    <!-- ============================================
-         AGE VERIFICATION GATE
-    ============================================ -->
-    <div id="ageGate">
-        <div class="age-gate-content">
-            <div class="mascot">🍃</div>
-            <h1 data-en="Age Verification" data-es="Verificación de Edad">Age Verification</h1>
-            <p data-en="You must be 19+ years old to enter this site" data-es="Debes tener 19+ años para entrar a este sitio">
-                You must be 19+ years old to enter this site
-            </p>
-            <div class="age-gate-buttons">
-                <button class="age-accept" onclick="acceptAge()" data-en="I'm 19+" data-es="Tengo 19+">I'm 19+</button>
-                <button class="age-decline" onclick="declineAge()" data-en="I'm Under 19" data-es="Soy Menor de 19">I'm Under 19</button>
+    <div class="content-wrapper">
+        <!-- Happy Hour Banner -->
+        <div class="happy-hour-banner" id="happyHourBanner">
+            <span id="happyHourText">HAPPY HOUR ACTIVE</span> |
+            <span id="happyHourTimer">60s</span> remaining
+        </div>
+
+        <!-- Navigation -->
+        <nav>
+            <div class="nav-container">
+                <a href="#" class="logo" id="storeName">Boutique Cannabis</a>
+                <ul class="nav-links">
+                    <li><a href="#home" onclick="showSection('home')"><i data-lucide="home"></i> <span data-translate="nav.home">Home</span></a></li>
+                    <li><a href="#shop" onclick="showSection('shop')"><i data-lucide="shopping-bag"></i> <span data-translate="nav.shop">Shop</span></a></li>
+                    <li><a href="#deals" onclick="showSection('deals')"><i data-lucide="tag"></i> <span data-translate="nav.deals">Deals</span></a></li>
+                    <li><a href="#happy-hour" onclick="showSection('happyHour')"><i data-lucide="zap"></i> <span data-translate="nav.happyHour">Happy Hour</span></a></li>
+                    <li><a href="#rewards" onclick="showSection('rewards')"><i data-lucide="gift"></i> <span data-translate="nav.rewards">Rewards</span></a></li>
+                    <li><a href="#tracking" onclick="showSection('tracking')"><i data-lucide="truck"></i> <span data-translate="nav.track">Track Order</span></a></li>
+                    <li><a href="#munchies" onclick="showSection('munchies')"><i data-lucide="cookie"></i> <span data-translate="nav.munchies">All My Munchies</span></a></li>
+                    <li><a href="#contact" onclick="showSection('contact')"><i data-lucide="mail"></i> <span data-translate="nav.contact">Contact</span></a></li>
+                    <li class="cart-icon"><a href="#" onclick="openCart()"><i data-lucide="shopping-cart"></i><span class="cart-count" id="cartCount">0</span></a></li>
+                    <li id="loginLink"><a href="#" onclick="openModal('loginModal')"><i data-lucide="user"></i> <span data-translate="nav.login">Login</span></a></li>
+                    <li id="userMenu" class="hidden"><a href="#" onclick="openModal('accountModal')"><i data-lucide="user-check"></i> <span id="userName"></span></a></li>
+                    <li id="adminLink" class="hidden"><a href="#admin" onclick="showSection('admin')"><i data-lucide="shield"></i> <span data-translate="nav.admin">Admin</span></a></li>
+                </ul>
+                <select class="lang-selector" id="langSelector" onchange="changeLanguage(this.value)">
+                    <option value="en">English</option>
+                    <option value="es">Español</option>
+                    <option value="fr">Français</option>
+                    <option value="hi">हिन्दी</option>
+                </select>
             </div>
-        </div>
-    </div>
+        </nav>
 
-    <!-- ============================================
-         NAVIGATION
-    ============================================ -->
-    <nav>
-        <div class="logo">
-            <div class="mascot">🍃</div>
-            <span data-en="GreenLeaf Delivery" data-es="Entrega GreenLeaf">GreenLeaf Delivery</span>
-        </div>
-        <div class="nav-links">
-            <div class="lang-toggle">
-                <button class="lang-btn active" onclick="setLanguage('en')">EN</button>
-                <button class="lang-btn" onclick="setLanguage('es')">ES</button>
+        <!-- Hero Section -->
+        <section class="hero" id="home">
+            <div class="hero-subtitle" data-translate="hero.subtitle">Boutique Cannabis</div>
+            <h1 class="hero-title" data-translate="hero.title">Let's Get High</h1>
+            <div class="category-pills" id="categoryPills"></div>
+        </section>
+
+        <!-- Product Section -->
+        <section class="section" id="shop">
+            <h2 class="section-title" data-translate="shop.title">Premium Selection</h2>
+            <div class="product-grid" id="productGrid"></div>
+        </section>
+
+        <!-- Munchies Section -->
+        <section class="section hidden" id="munchies">
+            <h2 class="section-title" data-translate="munchies.title">All My Munchies</h2>
+            <p class="text-center" style="color: var(--text-secondary); margin-bottom: 2rem;" data-translate="munchies.subtitle">Exotic Snacks from Around the World</p>
+            <div class="product-grid" id="munchiesGrid"></div>
+        </section>
+
+        <!-- Rewards Section -->
+        <section class="section hidden" id="rewards">
+            <h2 class="section-title" data-translate="rewards.title">Your Rewards</h2>
+            <div class="rewards-dashboard">
+                <div class="points-display" id="userPoints">0</div>
+                <p data-translate="rewards.points">Points</p>
+                <div class="tier-badge" id="userTier">Bronze Member</div>
             </div>
-            <button onclick="showSection('shop')" data-en="Shop" data-es="Tienda">Shop</button>
-            <button onclick="showSection('munchies')" data-en="All My Munchies" data-es="Todos Mis Antojos">All My Munchies</button>
-            <button onclick="openModal('accountModal')" data-en="Account" data-es="Cuenta">Account</button>
-            <button class="cart-badge" onclick="openModal('cartModal')">
-                🛒
-                <span id="cartCount">0</span>
-            </button>
-            <a href="https://horizonventura.com" target="_blank" class="para-curioso-btn" data-en="Para Curioso" data-es="Para Curioso">Para Curioso</a>
-            <button onclick="showAdminLogin()" style="opacity: 0.3;">⚙️</button>
-        </div>
-    </nav>
+            <div class="product-grid" id="rewardsGrid"></div>
+        </section>
 
-    <!-- ============================================
-         HAPPY HOUR BANNER
-    ============================================ -->
-    <div id="happyHourBanner" class="happy-hour-banner">
-        <div class="mascot">🍃</div>
-        <span data-en="🎉 HAPPY HOUR ACTIVE! Special prices for " data-es="🎉 HAPPY HOUR ACTIVO! Precios especiales por ">
-            🎉 HAPPY HOUR ACTIVE! Special prices for
-        </span>
-        <span id="happyHourTimer">60</span>
-        <span data-en=" seconds!" data-es=" segundos!"> seconds!</span>
+        <!-- Tracking Section -->
+        <section class="section hidden" id="tracking">
+            <h2 class="section-title" data-translate="tracking.title">Track Your Order</h2>
+            <div class="tracking-map" id="trackingMap">
+                <svg class="map-marker" id="deliveryMarker" viewBox="0 0 100 100">
+                    <path d="M50 10 L60 30 L50 50 L40 30 Z M30 50 Q50 70 70 50 L65 60 L50 80 L35 60 Z" fill="#00ff88"/>
+                    <circle cx="50" cy="35" r="8" fill="#0a0e0a"/>
+                </svg>
+            </div>
+            <div class="tracking-status" id="trackingStatus"></div>
+            <div class="chat-container" id="chatContainer">
+                <div class="chat-messages" id="chatMessages"></div>
+                <div class="chat-input-container">
+                    <input type="text" class="chat-input" id="chatInput" placeholder="Message your driver..." data-translate="tracking.chatPlaceholder">
+                    <button class="chat-send-btn" onclick="sendChatMessage()"><i data-lucide="send"></i></button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section class="section hidden" id="contact">
+            <h2 class="section-title" data-translate="contact.title">Get In Touch</h2>
+            <div class="admin-card" style="max-width: 600px; margin: 0 auto;">
+                <form onsubmit="sendContactMessage(event)">
+                    <div class="form-group">
+                        <label data-translate="contact.name">Name</label>
+                        <input type="text" required>
+                    </div>
+                    <div class="form-group">
+                        <label data-translate="contact.email">Email</label>
+                        <input type="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label data-translate="contact.message">Message</label>
+                        <textarea rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="btn-primary" data-translate="contact.send">Send Message</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Admin Section -->
+        <section class="section hidden" id="admin">
+            <h2 class="section-title" data-translate="admin.title">Admin Panel</h2>
+            <div class="admin-panel">
+                <div class="admin-grid">
+                    <div class="admin-card">
+                        <h3 data-translate="admin.branding">Branding</h3>
+                        <div class="form-group">
+                            <label data-translate="admin.storeName">Store Name</label>
+                            <input type="text" id="adminStoreName" onchange="updateBranding()">
+                        </div>
+                        <div class="form-group">
+                            <label data-translate="admin.slogan">Slogan</label>
+                            <input type="text" id="adminSlogan" onchange="updateBranding()">
+                        </div>
+                    </div>
+                    <div class="admin-card">
+                        <h3 data-translate="admin.happyHour">Happy Hour Control</h3>
+                        <div class="form-group">
+                            <label data-translate="admin.discount">Discount %</label>
+                            <input type="number" id="happyHourDiscount" value="20" min="0" max="50">
+                        </div>
+                        <div class="form-group">
+                            <label data-translate="admin.duration">Duration (seconds)</label>
+                            <input type="number" id="happyHourDuration" value="60" min="10" max="300">
+                        </div>
+                        <button class="btn-primary" onclick="activateHappyHour()" data-translate="admin.activateHH">Activate Happy Hour</button>
+                    </div>
+                    <div class="admin-card">
+                        <h3 data-translate="admin.addProduct">Add Product</h3>
+                        <div class="form-group">
+                            <label data-translate="admin.productName">Product Name</label>
+                            <input type="text" id="newProductName">
+                        </div>
+                        <div class="form-group">
+                            <label data-translate="admin.category">Category</label>
+                            <select id="newProductCategory">
+                                <option>Flower</option>
+                                <option>Concentrates</option>
+                                <option>Edibles</option>
+                                <option>Vapes</option>
+                                <option>Accessories</option>
+                                <option>Apparel</option>
+                                <option>Munchies</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label data-translate="admin.price">Price</label>
+                            <input type="number" id="newProductPrice" step="0.01">
+                        </div>
+                        <div class="form-group">
+                            <label data-translate="admin.imageUrl">Image URL</label>
+                            <input type="text" id="newProductImage">
+                        </div>
+                        <button class="btn-primary" onclick="addProduct()" data-translate="admin.add">Add Product</button>
+                    </div>
+                    <div class="admin-card">
+                        <h3 data-translate="admin.orders">Active Orders</h3>
+                        <div id="adminOrders"></div>
+                        <button class="btn-primary" onclick="simulateDelivery()" data-translate="admin.simulate">Simulate Delivery</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4 data-translate="footer.about">About Us</h4>
+                    <p id="footerAbout" data-translate="footer.aboutText">Premium cannabis dispensary serving quality products with exceptional service.</p>
+                </div>
+                <div class="footer-section">
+                    <h4 data-translate="footer.contact">Contact</h4>
+                    <ul>
+                        <li><i data-lucide="map-pin"></i> <span id="footerAddress">123 Green Street, CA 90210</span></li>
+                        <li><i data-lucide="phone"></i> <span id="footerPhone">+1 (555) 420-7890</span></li>
+                        <li><i data-lucide="mail"></i> <span id="footerEmail">info@boutiquecannabis.com</span></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4 data-translate="footer.legal">Legal</h4>
+                    <ul>
+                        <li><a href="#" data-translate="footer.terms">Terms of Service</a></li>
+                        <li><a href="#" data-translate="footer.privacy">Privacy Policy</a></li>
+                        <li><a href="#" data-translate="footer.compliance">Compliance</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4 data-translate="footer.social">Follow Us</h4>
+                    <div class="social-links">
+                        <a href="#" id="instagramLink"><i data-lucide="instagram"></i></a>
+                        <a href="#" id="tiktokLink"><i data-lucide="video"></i></a>
+                        <a href="#" id="whatsappLink"><i data-lucide="message-circle"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="legal-disclaimer">
+                <p data-translate="footer.warning">⚠️ Cannabis products are for adults 21+ only. Must provide valid ID. Not for sale to minors. Use responsibly.</p>
+                <p data-translate="footer.compliance">Licensed cannabis retailer. Fully compliant with local and state regulations.</p>
+            </div>
+        </footer>
     </div>
 
-    <!-- ============================================
-         HERO SECTION
-    ============================================ -->
-    <div class="hero">
-        <h1 data-en="LET'S GET HIGH" data-es="VAMOS A ELEVARNOS">LET'S GET HIGH</h1>
-        <div class="hero-subtitle" id="heroSubtitle">Sativa</div>
+    <!-- Avatar Assistant -->
+    <div class="avatar-assistant" onclick="toggleAvatar()">
+        <svg class="avatar-character" viewBox="0 0 100 100">
+            <path d="M50 20 Q30 30 30 50 L30 70 Q30 80 40 85 L50 90 L60 85 Q70 80 70 70 L70 50 Q70 30 50 20 Z" fill="#00ff88"/>
+            <circle cx="40" cy="50" r="5" fill="#0a0e0a"/>
+            <circle cx="60" cy="50" r="5" fill="#0a0e0a"/>
+            <path d="M40 65 Q50 70 60 65" stroke="#0a0e0a" stroke-width="3" fill="none"/>
+        </svg>
+        <div class="avatar-bubble" id="avatarBubble"></div>
     </div>
 
-    <!-- ============================================
-         MAIN CONTENT
-    ============================================ -->
-    <div class="container">
-        <!-- TABS -->
-        <div class="tabs">
-            <button class="tab active" onclick="filterCategory('all')" data-en="All Products" data-es="Todos los Productos">All Products</button>
-            <button class="tab" onclick="filterCategory('flower')" data-en="Flower" data-es="Flores">Flower</button>
-            <button class="tab" onclick="filterCategory('prerolls')" data-en="Pre-Rolls" data-es="Pre-Armados">Pre-Rolls</button>
-            <button class="tab" onclick="filterCategory('vapes')" data-en="Vapes" data-es="Vaporizadores">Vapes</button>
-            <button class="tab" onclick="filterCategory('edibles')" data-en="Edibles" data-es="Comestibles">Edibles</button>
-            <button class="tab" onclick="filterCategory('drinks')" data-en="Drinks" data-es="Bebidas">Drinks</button>
-            <button class="tab" onclick="filterCategory('concentrates')" data-en="Concentrates" data-es="Concentrados">Concentrates</button>
-            <button class="tab" onclick="filterCategory('cbd')" data-en="CBD" data-es="CBD">CBD</button>
-            <button class="tab" onclick="filterCategory('accessories')" data-en="Accessories" data-es="Accesorios">Accessories</button>
-        </div>
-
-        <!-- SHOP SECTION -->
-        <div id="shopSection" class="section active">
-            <div id="productGrid" class="product-grid"></div>
-        </div>
-
-        <!-- MUNCHIES SECTION -->
-        <div id="munchiesSection" class="section">
-            <h2 data-en="🍭 All My Munchies - Exotic Snacks & Treats" data-es="🍭 Todos Mis Antojos - Snacks Exóticos">
-                🍭 All My Munchies - Exotic Snacks & Treats
-            </h2>
-            <div id="munchiesGrid" class="product-grid"></div>
-        </div>
+    <!-- Floating Buttons -->
+    <div class="floating-buttons">
+        <div class="floating-btn" onclick="openWhatsApp()"><i data-lucide="message-circle"></i></div>
+        <div class="floating-btn" onclick="openWebsiteInquiry()"><i data-lucide="globe"></i></div>
     </div>
 
-    <!-- ============================================
-         STICKY CART BAR
-    ============================================ -->
-    <div class="sticky-cart">
-        <div class="sticky-cart-info">
-            <div class="sticky-cart-total">$<span id="stickyTotal">0.00</span></div>
-            <div class="sticky-cart-items"><span id="stickyItems">0</span> <span data-en="items" data-es="artículos">items</span> • <span id="stickyPoints">0</span> <span data-en="pts" data-es="pts">pts</span></div>
-        </div>
-        <button class="checkout-btn" onclick="openModal('cartModal')" data-en="View Cart" data-es="Ver Carrito">View Cart</button>
-    </div>
-
-    <!-- ============================================
-         CART MODAL
-    ============================================ -->
-    <div id="cartModal" class="modal">
+    <!-- Modals -->
+    <!-- Login Modal -->
+    <div class="modal" id="loginModal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 data-en="🛒 Your Cart" data-es="🛒 Tu Carrito">🛒 Your Cart</h2>
-                <button class="close-modal" onclick="closeModal('cartModal')">×</button>
+                <h2 data-translate="login.title">Login</h2>
+                <button class="close-btn" onclick="closeModal('loginModal')"><i data-lucide="x"></i></button>
             </div>
-            <div id="cartItems" class="cart-items"></div>
-            <div class="cart-summary">
-                <div class="cart-summary-row">
-                    <span data-en="Subtotal:" data-es="Subtotal:">Subtotal:</span>
-                    <span>$<span id="cartSubtotal">0.00</span></span>
-                </div>
-                <div class="cart-summary-row">
-                    <span data-en="Delivery:" data-es="Entrega:">Delivery:</span>
-                    <span>$<span id="deliveryFee">5.00</span></span>
-                </div>
-                <div class="cart-summary-row">
-                    <span data-en="Loyalty Points Earned:" data-es="Puntos Ganados:">Loyalty Points Earned:</span>
-                    <span id="cartPoints">0</span>
-                </div>
-                <div class="cart-summary-row cart-summary-total">
-                    <span data-en="Total:" data-es="Total:">Total:</span>
-                    <span>$<span id="cartTotal">0.00</span></span>
-                </div>
-            </div>
-            <button class="btn btn-primary" style="width: 100%; margin-top: 1rem;" onclick="proceedToCheckout()" data-en="Proceed to Checkout" data-es="Proceder al Pago">
-                Proceed to Checkout
-            </button>
-        </div>
-    </div>
-
-    <!-- ============================================
-         CHECKOUT MODAL
-    ============================================ -->
-    <div id="checkoutModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 data-en="📦 Checkout" data-es="📦 Finalizar Compra">📦 Checkout</h2>
-                <button class="close-modal" onclick="closeModal('checkoutModal')">×</button>
-            </div>
-            <form onsubmit="placeOrder(event)">
+            <form onsubmit="login(event)">
                 <div class="form-group">
-                    <label data-en="Full Name" data-es="Nombre Completo">Full Name</label>
-                    <input type="text" id="checkoutName" required>
+                    <label data-translate="login.email">Email</label>
+                    <input type="email" id="loginEmail" required>
                 </div>
                 <div class="form-group">
-                    <label data-en="Phone Number" data-es="Número de Teléfono">Phone Number</label>
-                    <input type="tel" id="checkoutPhone" required>
+                    <label data-translate="login.password">Password</label>
+                    <input type="password" id="loginPassword" required>
                 </div>
-                <div class="form-group">
-                    <label data-en="Delivery Address" data-es="Dirección de Entrega">Delivery Address</label>
-                    <input type="text" id="checkoutAddress" required>
-                </div>
-                <div class="form-group">
-                    <label data-en="Postal Code" data-es="Código Postal">Postal Code</label>
-                    <input type="text" id="checkoutPostal" required>
-                </div>
-                <div class="form-group">
-                    <label data-en="Delivery Instructions" data-es="Instrucciones de Entrega">Delivery Instructions</label>
-                    <textarea id="checkoutInstructions" rows="3"></textarea>
-                </div>
-                <div class="form-group">
-                    <label data-en="Delivery Method" data-es="Método de Entrega">Delivery Method</label>
-                    <select id="deliveryMethod">
-                        <option value="delivery" data-en="Delivery" data-es="Entrega">Delivery</option>
-                        <option value="pickup" data-en="Pickup" data-es="Recoger">Pickup</option>
-                    </select>
-                </div>
-                <button type="submit" class="btn btn-primary" style="width: 100%;" data-en="Place Order" data-es="Realizar Pedido">
-                    Place Order
-                </button>
+                <button type="submit" class="btn-primary" data-translate="login.submit">Login</button>
+                <button type="button" class="btn-secondary" onclick="openModal('registerModal')" data-translate="login.register">Create Account</button>
             </form>
         </div>
     </div>
 
-    <!-- ============================================
-         DELIVERY TRACKING MODAL
-    ============================================ -->
-    <div id="trackingModal" class="modal">
-        <div class="modal-content" style="max-width: 800px;">
-            <div class="modal-header">
-                <h2 data-en="🚚 Track Your Order" data-es="🚚 Rastrear Tu Pedido">🚚 Track Your Order</h2>
-                <button class="close-modal" onclick="closeModal('trackingModal')">×</button>
-            </div>
-
-            <!-- ETA Display -->
-            <div class="delivery-eta">
-                <span data-en="ETA: " data-es="Tiempo Estimado: ">ETA: </span>
-                <span id="deliveryETA">25</span>
-                <span data-en=" min" data-es=" min"> min</span>
-            </div>
-
-            <!-- Status Pipeline -->
-            <div class="status-pipeline">
-                <div class="status-step completed" id="status1">
-                    <div class="status-icon">✓</div>
-                    <div data-en="Received" data-es="Recibido">Received</div>
-                </div>
-                <div class="status-step active" id="status2">
-                    <div class="status-icon">📦</div>
-                    <div data-en="Preparing" data-es="Preparando">Preparing</div>
-                </div>
-                <div class="status-step" id="status3">
-                    <div class="status-icon">📦</div>
-                    <div data-en="Packaging" data-es="Empacando">Packaging</div>
-                </div>
-                <div class="status-step" id="status4">
-                    <div class="status-icon">🚗</div>
-                    <div data-en="On The Way" data-es="En Camino">On The Way</div>
-                </div>
-                <div class="status-step" id="status5">
-                    <div class="status-icon">📍</div>
-                    <div data-en="Arriving" data-es="Llegando">Arriving</div>
-                </div>
-                <div class="status-step" id="status6">
-                    <div class="status-icon">🎉</div>
-                    <div data-en="Delivered" data-es="Entregado">Delivered</div>
-                </div>
-            </div>
-
-            <!-- Delivery Map -->
-            <div class="delivery-map" id="deliveryMap">
-                <div class="map-marker store-marker" title="Store">🏪</div>
-                <div class="map-marker customer-marker" title="You">🏠</div>
-                <div class="map-marker courier-marker" id="courierMarker" style="left: 20%; top: 20%;">
-                    <span class="mascot">🍃</span>
-                </div>
-            </div>
-
-            <!-- Chat System -->
-            <h3 data-en="💬 Chat with Driver" data-es="💬 Chatear con Conductor">💬 Chat with Driver</h3>
-            <div class="chat-container">
-                <div class="chat-messages" id="chatMessages">
-                    <div class="chat-message system">
-                        <div class="chat-bubble" data-en="Your driver is on the way!" data-es="¡Tu conductor está en camino!">
-                            Your driver is on the way!
-                        </div>
-                    </div>
-                </div>
-                <div class="chat-input-container">
-                    <input type="text" class="chat-input" id="chatInput" placeholder="Type a message..." data-en-placeholder="Type a message..." data-es-placeholder="Escribe un mensaje...">
-                    <button class="chat-send-btn" onclick="sendChatMessage()" data-en="Send" data-es="Enviar">Send</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- ============================================
-         ACCOUNT MODAL
-    ============================================ -->
-    <div id="accountModal" class="modal">
+    <!-- Register Modal -->
+    <div class="modal" id="registerModal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 data-en="👤 My Account" data-es="👤 Mi Cuenta">👤 My Account</h2>
-                <button class="close-modal" onclick="closeModal('accountModal')">×</button>
+                <h2 data-translate="register.title">Create Account</h2>
+                <button class="close-btn" onclick="closeModal('registerModal')"><i data-lucide="x"></i></button>
             </div>
-
-            <div id="accountLogin">
-                <h3 data-en="Login / Register" data-es="Iniciar Sesión / Registrarse">Login / Register</h3>
+            <form onsubmit="register(event)">
                 <div class="form-group">
-                    <label data-en="Email" data-es="Email">Email</label>
-                    <input type="email" id="loginEmail">
+                    <label data-translate="register.name">Name</label>
+                    <input type="text" id="registerName" required>
                 </div>
                 <div class="form-group">
-                    <label data-en="Password" data-es="Contraseña">Password</label>
-                    <input type="password" id="loginPassword">
+                    <label data-translate="register.email">Email</label>
+                    <input type="email" id="registerEmail" required>
                 </div>
-                <button class="btn btn-primary" onclick="login()" data-en="Login" data-es="Iniciar Sesión">Login</button>
-                <button class="btn btn-secondary" onclick="showRegister()" data-en="Create Account" data-es="Crear Cuenta">Create Account</button>
-            </div>
-
-            <div id="accountDashboard" style="display: none;">
-                <!-- Loyalty Card -->
-                <div class="loyalty-card">
-                    <div class="loyalty-points"><span id="userPoints">0</span></div>
-                    <div class="loyalty-label" data-en="Loyalty Points" data-es="Puntos de Lealtad">Loyalty Points</div>
+                <div class="form-group">
+                    <label data-translate="register.phone">Phone</label>
+                    <input type="tel" id="registerPhone" required>
                 </div>
-
-                <h3 data-en="Account Info" data-es="Información de Cuenta">Account Info</h3>
-                <p><strong data-en="Name:" data-es="Nombre:">Name:</strong> <span id="userName"></span></p>
-                <p><strong data-en="Email:" data-es="Email:">Email:</strong> <span id="userEmail"></span></p>
-                <p><strong data-en="Phone:" data-es="Teléfono:">Phone:</strong> <span id="userPhone"></span></p>
-
-                <h3 data-en="Order History" data-es="Historial de Pedidos">Order History</h3>
-                <div id="orderHistory"></div>
-
-                <button class="btn btn-danger" onclick="logout()" data-en="Logout" data-es="Cerrar Sesión">Logout</button>
-            </div>
+                <div class="form-group">
+                    <label data-translate="register.address">Address</label>
+                    <input type="text" id="registerAddress" required>
+                </div>
+                <div class="form-group">
+                    <label data-translate="register.zip">Zip Code</label>
+                    <input type="text" id="registerZip" required>
+                </div>
+                <div class="form-group">
+                    <label data-translate="register.password">Password</label>
+                    <input type="password" id="registerPassword" required>
+                </div>
+                <button type="submit" class="btn-primary" data-translate="register.submit">Register</button>
+            </form>
         </div>
     </div>
 
-    <!-- ============================================
-         ADMIN MODAL
-    ============================================ -->
-    <div id="adminModal" class="modal">
-        <div class="modal-content" style="max-width: 1000px;">
+    <!-- Cart Modal -->
+    <div class="modal" id="cartModal">
+        <div class="modal-content">
             <div class="modal-header">
-                <h2>⚙️ Admin Dashboard</h2>
-                <button class="close-modal" onclick="closeModal('adminModal')">×</button>
+                <h2 data-translate="cart.title">Your Cart</h2>
+                <button class="close-btn" onclick="closeModal('cartModal')"><i data-lucide="x"></i></button>
             </div>
-
-            <div class="admin-grid">
-                <!-- Inventory Management -->
-                <div class="admin-card">
-                    <h3>📦 Add Product</h3>
-                    <div class="form-group">
-                        <input type="text" id="adminProductName" placeholder="Product Name">
-                    </div>
-                    <div class="form-group">
-                        <select id="adminProductCategory">
-                            <option value="flower">Flower</option>
-                            <option value="prerolls">Pre-Rolls</option>
-                            <option value="vapes">Vapes</option>
-                            <option value="edibles">Edibles</option>
-                            <option value="drinks">Drinks</option>
-                            <option value="concentrates">Concentrates</option>
-                            <option value="cbd">CBD</option>
-                            <option value="accessories">Accessories</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <input type="number" id="adminProductPrice" placeholder="Price" step="0.01">
-                    </div>
-                    <div class="form-group">
-                        <input type="text" id="adminProductTHC" placeholder="THC % / CBD %">
-                    </div>
-                    <div class="form-group">
-                        <select id="adminProductStrain">
-                            <option value="Sativa">Sativa</option>
-                            <option value="Indica">Indica</option>
-                            <option value="Hybrid">Hybrid</option>
-                            <option value="N/A">N/A</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <input type="number" id="adminProductStock" placeholder="Stock" value="100">
-                    </div>
-                    <button class="btn btn-primary" onclick="addProduct()">Add Product</button>
+            <div id="cartItems"></div>
+            <div class="cart-summary">
+                <div class="summary-row">
+                    <span data-translate="cart.subtotal">Subtotal</span>
+                    <span id="cartSubtotal">$0.00</span>
                 </div>
-
-                <!-- Happy Hour -->
-                <div class="admin-card">
-                    <h3>🎉 Happy Hour</h3>
-                    <button class="btn btn-primary" onclick="toggleHappyHour()">Toggle Happy Hour</button>
-                    <div class="form-group">
-                        <label>Duration (seconds)</label>
-                        <input type="number" id="happyHourDuration" value="60">
-                    </div>
-                    <div class="form-group">
-                        <label>Discount %</label>
-                        <input type="number" id="happyHourDiscount" value="20">
-                    </div>
+                <div class="summary-row">
+                    <span data-translate="cart.points">Points Earned</span>
+                    <span id="cartPoints">0</span>
                 </div>
-
-                <!-- Delivery Control -->
-                <div class="admin-card">
-                    <h3>🚚 Delivery Control</h3>
-                    <button class="btn btn-primary" onclick="simulateDelivery()">Simulate Delivery</button>
-                    <div class="form-group">
-                        <label>Delivery Speed (seconds per step)</label>
-                        <input type="number" id="deliverySpeed" value="5">
-                    </div>
+                <div class="summary-row total">
+                    <span data-translate="cart.total">Total</span>
+                    <span id="cartTotal">$0.00</span>
                 </div>
-
-                <!-- Chat Injection -->
-                <div class="admin-card">
-                    <h3>💬 Send Driver Message</h3>
-                    <div class="form-group">
-                        <textarea id="adminChatMessage" rows="3" placeholder="Type message..."></textarea>
-                    </div>
-                    <button class="btn btn-primary" onclick="injectChatMessage()">Send Message</button>
-                </div>
-
-                <!-- Loyalty Settings -->
-                <div class="admin-card">
-                    <h3>⭐ Loyalty Settings</h3>
-                    <div class="form-group">
-                        <label>Points per $1</label>
-                        <input type="number" id="pointsPerDollar" value="1">
-                    </div>
-                    <button class="btn btn-primary" onclick="updateLoyaltySettings()">Update Settings</button>
-                </div>
-
-                <!-- Munchies Commission -->
-                <div class="admin-card">
-                    <h3>🍭 Munchies Stats</h3>
-                    <p><strong>Total Sales:</strong> $<span id="munchiesRevenue">0.00</span></p>
-                    <p><strong>Commission Earned:</strong> $<span id="munchiesCommission">0.00</span></p>
-                </div>
+                <button class="btn-primary" onclick="proceedToCheckout()" data-translate="cart.checkout">Proceed to Checkout</button>
             </div>
-
-            <h3 style="margin-top: 2rem;">Current Inventory</h3>
-            <div id="adminInventory" style="max-height: 400px; overflow-y: auto;"></div>
         </div>
     </div>
 
-    <!-- ============================================
-         WHATSAPP FLOAT
-    ============================================ -->
-    <a href="https://wa.me/1234567890?text=Hi!%20I%20want%20a%20website%20like%20this" target="_blank" class="whatsapp-float">
-        <span style="font-size: 1.5rem;">💬</span>
-        <span data-en="Reach me if you want a website like this" data-es="Contáctame si quieres un sitio como este">
-            Reach me if you want a website like this
-        </span>
-    </a>
+    <!-- Checkout Modal -->
+    <div class="modal" id="checkoutModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 data-translate="checkout.title">Checkout</h2>
+                <button class="close-btn" onclick="closeModal('checkoutModal')"><i data-lucide="x"></i></button>
+            </div>
+            <form onsubmit="placeOrder(event)">
+                <div class="form-group">
+                    <label data-translate="checkout.address">Delivery Address</label>
+                    <input type="text" id="checkoutAddress" required>
+                </div>
+                <div class="form-group">
+                    <label data-translate="checkout.phone">Phone Number</label>
+                    <input type="tel" id="checkoutPhone" required>
+                </div>
+                <div class="form-group">
+                    <label data-translate="checkout.notes">Delivery Notes</label>
+                    <textarea id="checkoutNotes" rows="3"></textarea>
+                </div>
+                <div class="cart-summary">
+                    <div class="summary-row total">
+                        <span data-translate="checkout.total">Total Amount</span>
+                        <span id="checkoutTotal">$0.00</span>
+                    </div>
+                </div>
+                <button type="submit" class="btn-primary" data-translate="checkout.place">Place Order</button>
+            </form>
+        </div>
+    </div>
 
-    <!-- ============================================
-         JAVASCRIPT ENGINE
-    ============================================ -->
+    <!-- Admin Login Modal -->
+    <div class="modal" id="adminLoginModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 data-translate="admin.login">Admin Login</h2>
+                <button class="close-btn" onclick="closeModal('adminLoginModal')"><i data-lucide="x"></i></button>
+            </div>
+            <form onsubmit="adminLogin(event)">
+                <div class="form-group">
+                    <label data-translate="admin.password">Admin Password</label>
+                    <input type="password" id="adminPassword" required>
+                </div>
+                <button type="submit" class="btn-primary" data-translate="admin.enter">Enter Admin Panel</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/lucide@latest"></script>
     <script>
-        // ============================================
-        // GLOBAL STATE MANAGEMENT
-        // ============================================
-        let currentLanguage = 'en';
-        let cart = [];
-        let currentUser = null;
-        let products = [];
-        let munchies = [];
-        let orders = [];
-        let loyaltyRate = 1; // points per dollar
-        let happyHourActive = false;
-        let happyHourDiscount = 20;
-        let deliveryInProgress = false;
+        // Initialize Lucide Icons
+        lucide.createIcons();
 
-        // ============================================
-        // AGE VERIFICATION
-        // ============================================
-        function checkAgeVerification() {
-            const verified = localStorage.getItem('ageVerified');
-            if (verified === 'true') {
-                document.getElementById('ageGate').classList.add('hidden');
+        // Global State
+        const state = {
+            currentUser: null,
+            isAdmin: false,
+            cart: [],
+            products: [],
+            munchies: [],
+            orders: [],
+            language: 'en',
+            happyHourActive: false,
+            happyHourDiscount: 20,
+            deliveryStatus: 0,
+            branding: {
+                storeName: 'Boutique Cannabis',
+                slogan: "Let's Get High",
+                phone: '+1 (555) 420-7890',
+                email: 'info@boutiquecannabis.com',
+                address: '123 Green Street, CA 90210',
+                whatsapp: '+15554207890',
+                instagram: 'https://instagram.com',
+                tiktok: 'https://tiktok.com'
+            }
+        };
+
+        // Translations
+        const translations = {
+            en: {
+                'nav.home': 'Home',
+                'nav.shop': 'Shop',
+                'nav.deals': 'Deals',
+                'nav.happyHour': 'Happy Hour',
+                'nav.rewards': 'Rewards',
+                'nav.track': 'Track Order',
+                'nav.munchies': 'All My Munchies',
+                'nav.contact': 'Contact',
+                'nav.login': 'Login',
+                'nav.admin': 'Admin',
+                'hero.subtitle': 'Boutique Cannabis',
+                'hero.title': "Let's Get High",
+                'shop.title': 'Premium Selection',
+                'munchies.title': 'All My Munchies',
+                'munchies.subtitle': 'Exotic Snacks from Around the World',
+                'rewards.title': 'Your Rewards',
+                'rewards.points': 'Points',
+                'tracking.title': 'Track Your Order',
+                'contact.title': 'Get In Touch',
+                'footer.about': 'About Us',
+                'footer.contact': 'Contact',
+                'footer.legal': 'Legal',
+                'footer.social': 'Follow Us',
+                'footer.warning': '⚠️ Cannabis products are for adults 21+ only. Must provide valid ID. Not for sale to minors. Use responsibly.',
+                'footer.compliance': 'Licensed cannabis retailer. Fully compliant with local and state regulations.'
+            },
+            es: {
+                'nav.home': 'Inicio',
+                'nav.shop': 'Tienda',
+                'nav.deals': 'Ofertas',
+                'nav.happyHour': 'Happy Hour',
+                'nav.rewards': 'Recompensas',
+                'nav.track': 'Rastrear Pedido',
+                'nav.munchies': 'Mis Snacks',
+                'nav.contact': 'Contacto',
+                'nav.login': 'Iniciar Sesión',
+                'nav.admin': 'Admin',
+                'hero.subtitle': 'Cannabis Boutique',
+                'hero.title': 'Vamos a Elevarnos',
+                'shop.title': 'Selección Premium',
+                'munchies.title': 'Todos Mis Snacks',
+                'munchies.subtitle': 'Snacks Exóticos de Todo el Mundo',
+                'rewards.title': 'Tus Recompensas',
+                'rewards.points': 'Puntos',
+                'tracking.title': 'Rastrea Tu Pedido',
+                'contact.title': 'Contáctanos',
+                'footer.about': 'Sobre Nosotros',
+                'footer.contact': 'Contacto',
+                'footer.legal': 'Legal',
+                'footer.social': 'Síguenos',
+                'footer.warning': '⚠️ Los productos de cannabis son solo para adultos mayores de 21 años. Se requiere identificación válida. Usar responsablemente.',
+                'footer.compliance': 'Dispensario de cannabis con licencia. Totalmente conforme con las regulaciones locales y estatales.'
+            },
+            fr: {
+                'nav.home': 'Accueil',
+                'nav.shop': 'Boutique',
+                'nav.deals': 'Offres',
+                'nav.happyHour': 'Happy Hour',
+                'nav.rewards': 'Récompenses',
+                'nav.track': 'Suivre Commande',
+                'nav.munchies': 'Mes Snacks',
+                'nav.contact': 'Contact',
+                'nav.login': 'Connexion',
+                'nav.admin': 'Admin',
+                'hero.subtitle': 'Cannabis Boutique',
+                'hero.title': 'Élevons-nous',
+                'shop.title': 'Sélection Premium',
+                'munchies.title': 'Tous Mes Snacks',
+                'munchies.subtitle': 'Snacks Exotiques du Monde Entier',
+                'rewards.title': 'Vos Récompenses',
+                'rewards.points': 'Points',
+                'tracking.title': 'Suivre Votre Commande',
+                'contact.title': 'Contactez-nous',
+                'footer.about': 'À Propos',
+                'footer.contact': 'Contact',
+                'footer.legal': 'Légal',
+                'footer.social': 'Suivez-nous',
+                'footer.warning': '⚠️ Les produits de cannabis sont réservés aux adultes de 21 ans et plus. Une pièce d\'identité valide est requise. Utiliser de manière responsable.',
+                'footer.compliance': 'Dispensaire de cannabis sous licence. Entièrement conforme aux réglementations locales et nationales.'
+            },
+            hi: {
+                'nav.home': 'होम',
+                'nav.shop': 'दुकान',
+                'nav.deals': 'सौदे',
+                'nav.happyHour': 'हैप्पी आवर',
+                'nav.rewards': 'पुरस्कार',
+                'nav.track': 'ऑर्डर ट्रैक करें',
+                'nav.munchies': 'मेरे स्नैक्स',
+                'nav.contact': 'संपर्क',
+                'nav.login': 'लॉगिन',
+                'nav.admin': 'एडमिन',
+                'hero.subtitle': 'बुटीक कैनबिस',
+                'hero.title': 'चलो ऊंचा उठें',
+                'shop.title': 'प्रीमियम चयन',
+                'munchies.title': 'मेरे सभी स्नैक्स',
+                'munchies.subtitle': 'दुनिया भर से विदेशी स्नैक्स',
+                'rewards.title': 'आपके पुरस्कार',
+                'rewards.points': 'अंक',
+                'tracking.title': 'अपना ऑर्डर ट्रैक करें',
+                'contact.title': 'संपर्क में रहें',
+                'footer.about': 'हमारे बारे में',
+                'footer.contact': 'संपर्क',
+                'footer.legal': 'कानूनी',
+                'footer.social': 'हमें फॉलो करें',
+                'footer.warning': '⚠️ कैनबिस उत्पाद केवल 21+ वयस्कों के लिए हैं। वैध आईडी प्रदान करनी होगी। जिम्मेदारी से उपयोग करें।',
+                'footer.compliance': 'लाइसेंस प्राप्त कैनबिस रिटेलर। स्थानीय और राज्य नियमों के साथ पूरी तरह अनुपालन।'
+            }
+        };
+
+        // Sample Products Data
+        const sampleProducts = [
+            {
+                id: 1,
+                name: 'Purple Haze',
+                category: 'Flower',
+                type: 'Sativa',
+                thc: 22,
+                cbd: 1,
+                price: 45.00,
+                points: 45,
+                image: 'https://images.unsplash.com/photo-1583912267550-d974276a8c9e?w=400',
+                stock: 50
+            },
+            {
+                id: 2,
+                name: 'OG Kush',
+                category: 'Flower',
+                type: 'Hybrid',
+                thc: 24,
+                cbd: 0.5,
+                price: 50.00,
+                points: 50,
+                image: 'https://images.unsplash.com/photo-1612905926258-5b0afc5e8b11?w=400',
+                stock: 45
+            },
+            {
+                id: 3,
+                name: 'Northern Lights',
+                category: 'Flower',
+                type: 'Indica',
+                thc: 18,
+                cbd: 0.3,
+                price: 40.00,
+                points: 40,
+                image: 'https://images.unsplash.com/photo-1608661978021-1c5089d69e84?w=400',
+                stock: 60
+            },
+            {
+                id: 4,
+                name: 'Pre-Roll Pack',
+                category: 'Pre-Rolls',
+                type: 'Hybrid',
+                thc: 20,
+                cbd: 0,
+                price: 35.00,
+                points: 35,
+                image: 'https://images.unsplash.com/photo-1568495248636-6432b97bd949?w=400',
+                stock: 100
+            },
+            {
+                id: 5,
+                name: 'Live Resin',
+                category: 'Concentrates',
+                type: 'Hybrid',
+                thc: 85,
+                cbd: 2,
+                price: 60.00,
+                points: 60,
+                image: 'https://images.unsplash.com/photo-1614183120644-8d82f5a6e3be?w=400',
+                stock: 30
+            },
+            {
+                id: 6,
+                name: 'Vape Cartridge',
+                category: 'Vapes',
+                type: 'Sativa',
+                thc: 78,
+                cbd: 1,
+                price: 45.00,
+                points: 45,
+                image: 'https://images.unsplash.com/photo-1614183120644-8d82f5a6e3be?w=400',
+                stock: 75
+            },
+            {
+                id: 7,
+                name: 'Gummy Bears',
+                category: 'Edibles',
+                type: 'Hybrid',
+                thc: 10,
+                cbd: 0,
+                price: 25.00,
+                points: 25,
+                image: 'https://images.unsplash.com/photo-1582058091505-f87a2e55a40f?w=400',
+                stock: 120
+            },
+            {
+                id: 8,
+                name: 'THC Chocolate',
+                category: 'Edibles',
+                type: 'Indica',
+                thc: 15,
+                cbd: 0,
+                price: 30.00,
+                points: 30,
+                image: 'https://images.unsplash.com/photo-1511381939415-e44015466834?w=400',
+                stock: 90
+            },
+            {
+                id: 9,
+                name: 'Premium Grinder',
+                category: 'Accessories',
+                type: '',
+                thc: 0,
+                cbd: 0,
+                price: 35.00,
+                points: 35,
+                image: 'https://images.unsplash.com/photo-1580870069867-74c57ee1bb07?w=400',
+                stock: 50
+            },
+            {
+                id: 10,
+                name: 'Glass Pipe',
+                category: 'Accessories',
+                type: '',
+                thc: 0,
+                cbd: 0,
+                price: 40.00,
+                points: 40,
+                image: 'https://images.unsplash.com/photo-1580870069867-74c57ee1bb07?w=400',
+                stock: 35
+            },
+            {
+                id: 11,
+                name: 'Brand Hoodie',
+                category: 'Apparel',
+                type: '',
+                thc: 0,
+                cbd: 0,
+                price: 55.00,
+                points: 55,
+                image: 'https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=400',
+                stock: 40
+            },
+            {
+                id: 12,
+                name: 'Snapback Hat',
+                category: 'Apparel',
+                type: '',
+                thc: 0,
+                cbd: 0,
+                price: 30.00,
+                points: 30,
+                image: 'https://images.unsplash.com/photo-1588850561407-ed78c282e89b?w=400',
+                stock: 60
+            }
+        ];
+
+        const sampleMunchies = [
+            {
+                id: 101,
+                name: 'Japanese KitKat Matcha',
+                category: 'Munchies',
+                origin: 'Japan',
+                price: 8.00,
+                points: 8,
+                image: 'https://images.unsplash.com/photo-1606312619070-d48b4cdc7e0c?w=400',
+                stock: 100
+            },
+            {
+                id: 102,
+                name: 'Mexican Takis Fuego',
+                category: 'Munchies',
+                origin: 'Mexico',
+                price: 6.00,
+                points: 6,
+                image: 'https://images.unsplash.com/photo-1613919113640-25732ec1c16f?w=400',
+                stock: 150
+            },
+            {
+                id: 103,
+                name: 'Korean Honey Butter Chips',
+                category: 'Munchies',
+                origin: 'South Korea',
+                price: 7.00,
+                points: 7,
+                image: 'https://images.unsplash.com/photo-1600952841320-db92ec4047ca?w=400',
+                stock: 120
+            },
+            {
+                id: 104,
+                name: 'British Cadbury Flake',
+                category: 'Munchies',
+                origin: 'UK',
+                price: 5.00,
+                points: 5,
+                image: 'https://images.unsplash.com/photo-1606312619070-d48b4cdc7e0c?w=400',
+                stock: 80
+            },
+            {
+                id: 105,
+                name: 'Thai Lay\'s Nori Seaweed',
+                category: 'Munchies',
+                origin: 'Thailand',
+                price: 6.50,
+                points: 6,
+                image: 'https://images.unsplash.com/photo-1600952841320-db92ec4047ca?w=400',
+                stock: 90
+            },
+            {
+                id: 106,
+                name: 'Australian Tim Tams',
+                category: 'Munchies',
+                origin: 'Australia',
+                price: 9.00,
+                points: 9,
+                image: 'https://images.unsplash.com/photo-1499636136210-6f4ee915583e?w=400',
+                stock: 70
+            },
+            {
+                id: 107,
+                name: 'German Haribo Gummies',
+                category: 'Munchies',
+                origin: 'Germany',
+                price: 5.50,
+                points: 5,
+                image: 'https://images.unsplash.com/photo-1582058091505-f87a2e55a40f?w=400',
+                stock: 200
+            },
+            {
+                id: 108,
+                name: 'Brazilian Brigadeiro',
+                category: 'Munchies',
+                origin: 'Brazil',
+                price: 10.00,
+                points: 10,
+                image: 'https://images.unsplash.com/photo-1511381939415-e44015466834?w=400',
+                stock: 50
+            }
+        ];
+
+        // Categories
+        const categories = [
+            { name: 'Sativa', icon: 'leaf' },
+            { name: 'Hybrid', icon: 'leaf' },
+            { name: 'Indica', icon: 'leaf' },
+            { name: 'Flowers', icon: 'flower' },
+            { name: 'Concentrates', icon: 'droplet' },
+            { name: 'Edibles', icon: 'candy' },
+            { name: 'Drinks & Teas', icon: 'coffee' },
+            { name: 'THC Snacks', icon: 'cookie' },
+            { name: 'Accessories', icon: 'package' },
+            { name: 'Hoodies & Apparel', icon: 'shirt' },
+            { name: 'Vapes', icon: 'wind' },
+            { name: 'Infusions', icon: 'flask' },
+            { name: 'Grinders', icon: 'cog' },
+            { name: 'Wellness', icon: 'heart' }
+        ];
+
+        // Initialize
+        function init() {
+            loadFromLocalStorage();
+            renderCategoryPills();
+            renderProducts();
+            renderMunchies();
+            updateUI();
+            initAvatar();
+           
+            // Check if admin password exists, if not set default
+            if (!localStorage.getItem('adminPassword')) {
+                localStorage.setItem('adminPassword', 'admin420');
             }
         }
 
-        function acceptAge() {
-            localStorage.setItem('ageVerified', 'true');
-            document.getElementById('ageGate').classList.add('hidden');
+        // Load state from localStorage
+        function loadFromLocalStorage() {
+            const savedState = localStorage.getItem('appState');
+            if (savedState) {
+                const parsed = JSON.parse(savedState);
+                Object.assign(state, parsed);
+            }
+           
+            // Load products
+            const savedProducts = localStorage.getItem('products');
+            if (savedProducts) {
+                state.products = JSON.parse(savedProducts);
+            } else {
+                state.products = [...sampleProducts];
+                saveToLocalStorage();
+            }
+           
+            // Load munchies
+            const savedMunchies = localStorage.getItem('munchies');
+            if (savedMunchies) {
+                state.munchies = JSON.parse(savedMunchies);
+            } else {
+                state.munchies = [...sampleMunchies];
+                saveToLocalStorage();
+            }
         }
 
-        function declineAge() {
-            alert(translate('Sorry, you must be 19+ to access this site.', 'Lo sentimos, debes tener 19+ para acceder a este sitio.'));
-            window.location.href = 'https://www.google.com';
+        // Save state to localStorage
+        function saveToLocalStorage() {
+            localStorage.setItem('appState', JSON.stringify(state));
+            localStorage.setItem('products', JSON.stringify(state.products));
+            localStorage.setItem('munchies', JSON.stringify(state.munchies));
         }
 
-        // ============================================
-        // LANGUAGE SYSTEM
-        // ============================================
-        function setLanguage(lang) {
-            currentLanguage = lang;
-            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-            translatePage();
-            localStorage.setItem('language', lang);
+        // Render category pills
+        function renderCategoryPills() {
+            const container = document.getElementById('categoryPills');
+            container.innerHTML = categories.map(cat => `
+                <div class="pill" onclick="filterByCategory('${cat.name}')">
+                    <i data-lucide="${cat.icon}"></i>
+                    <span>${cat.name}</span>
+                </div>
+            `).join('');
+            lucide.createIcons();
         }
 
-        function translate(en, es) {
-            return currentLanguage === 'en' ? en : es;
+        // Render products
+        function renderProducts(filter = null) {
+            const grid = document.getElementById('productGrid');
+            let products = state.products;
+           
+            if (filter) {
+                products = products.filter(p =>
+                    p.category.toLowerCase().includes(filter.toLowerCase()) ||
+                    p.type.toLowerCase().includes(filter.toLowerCase())
+                );
+            }
+           
+            grid.innerHTML = products.map(product => `
+                <div class="product-card" onclick="viewProduct(${product.id})">
+                    <img src="${product.image}" alt="${product.name}" class="product-image">
+                    <div class="product-info">
+                        <div class="product-category">${product.category}</div>
+                        <h3 class="product-name">${product.name}</h3>
+                        ${product.type ? `<div class="product-specs">
+                            <span>${product.type}</span>
+                            ${product.thc > 0 ? `<span>THC ${product.thc}%</span>` : ''}
+                            ${product.cbd > 0 ? `<span>CBD ${product.cbd}%</span>` : ''}
+                        </div>` : ''}
+                        <div class="product-price">
+                            <span class="price">$${getPrice(product.price).toFixed(2)}</span>
+                            <span class="points">${product.points} pts</span>
+                        </div>
+                        <button class="add-to-cart-btn" onclick="addToCart(event, ${product.id})">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+            `).join('');
         }
 
-        function translatePage() {
-            document.querySelectorAll('[data-en]').forEach(el => {
-                if (el.hasAttribute('data-en-placeholder')) {
-                    el.placeholder = currentLanguage === 'en' ? el.getAttribute('data-en-placeholder') : el.getAttribute('data-es-placeholder');
-                } else {
-                    el.textContent = currentLanguage === 'en' ? el.getAttribute('data-en') : el.getAttribute('data-es');
+        // Render munchies
+        function renderMunchies() {
+            const grid = document.getElementById('munchiesGrid');
+            grid.innerHTML = state.munchies.map(item => `
+                <div class="product-card">
+                    <img src="${item.image}" alt="${item.name}" class="product-image">
+                    <div class="product-info">
+                        <div class="product-category">${item.origin}</div>
+                        <h3 class="product-name">${item.name}</h3>
+                        <div class="product-price">
+                            <span class="price">$${item.price.toFixed(2)}</span>
+                            <span class="points">${item.points} pts</span>
+                        </div>
+                        <button class="add-to-cart-btn" onclick="addToCart(event, ${item.id}, true)">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Get price with Happy Hour discount
+        function getPrice(basePrice) {
+            if (state.happyHourActive) {
+                return basePrice * (1 - state.happyHourDiscount / 100);
+            }
+            return basePrice;
+        }
+
+        // Filter by category
+        function filterByCategory(category) {
+            renderProducts(category);
+            showSection('shop');
+           
+            // Update active pill
+            document.querySelectorAll('.pill').forEach(pill => {
+                pill.classList.remove('active');
+                if (pill.textContent.includes(category)) {
+                    pill.classList.add('active');
                 }
             });
         }
 
-        // ============================================
-        // HERO SUBTITLE ROTATION
-        // ============================================
-        const subtitles = {
-            en: ['Sativa', 'Hybrid', 'Indica', 'Flowers', 'Infusions', 'THC Snacks', 'Gummies', 'Beverages', 'Teas', 'Pre-rolls', 'Vapes', 'Concentrates', 'Accessories'],
-            es: ['Sativa', 'Híbrido', 'Indica', 'Flores', 'Infusiones', 'Snacks THC', 'Gomitas', 'Bebidas', 'Tés', 'Pre-armados', 'Vaporizadores', 'Concentrados', 'Accesorios']
-        };
-
-        let subtitleIndex = 0;
-        function rotateSubtitle() {
-            const list = subtitles[currentLanguage];
-            document.getElementById('heroSubtitle').textContent = list[subtitleIndex];
-            subtitleIndex = (subtitleIndex + 1) % list.length;
-        }
-        setInterval(rotateSubtitle, 2000);
-
-        // ============================================
-        // INITIALIZE DEFAULT PRODUCTS
-        // ============================================
-        function initializeProducts() {
-            products = [
-                { id: 1, name: 'Purple Haze', category: 'flower', price: 45.00, thc: '22% THC', strain: 'Sativa', effects: ['Energetic', 'Creative', 'Uplifting'], stock: 50, image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"%3E%3Crect fill="%238b5cf6" width="200" height="200"/%3E%3Ctext x="100" y="100" font-size="60" text-anchor="middle" fill="white"%3E🌿%3C/text%3E%3C/svg%3E' },
-                { id: 2, name: 'OG Kush', category: 'flower', price: 50.00, thc: '24% THC', strain: 'Hybrid', effects: ['Relaxed', 'Happy', 'Euphoric'], stock: 30, image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"%3E%3Crect fill="%2310b981" width="200" height="200"/%3E%3Ctext x="100" y="100" font-size="60" text-anchor="middle" fill="white"%3E🌿%3C/text%3E%3C/svg%3E' },
-                { id: 3, name: 'Granddaddy Purple', category: 'flower', price: 48.00, thc: '20% THC', strain: 'Indica', effects: ['Sleepy', 'Relaxed', 'Hungry'], stock: 40, image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"%3E%3Crect fill="%236b21a8" width="200" height="200"/%3E%3Ctext x="100" y="100" font-size="60" text-anchor="middle" fill="white"%3E🌿%3C/text%3E%3C/svg%3E' },
-                { id: 4, name: 'Blueberry Bliss Pre-Roll', category: 'prerolls', price: 12.00, thc: '18% THC', strain: 'Indica', effects: ['Relaxed', 'Happy'], stock: 100, image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"%3E%3Crect fill="%233b82f6" width="200" height="200"/%3E%3Ctext x="100" y="100" font-size="60" text-anchor="middle" fill="white"%3E🚬%3C/text%3E%3C/svg%3E' },
-                { id: 5, name: 'Sour Diesel Vape', category: 'vapes', price: 55.00, thc: '85% THC', strain: 'Sativa', effects: ['Energetic', 'Focused'], stock: 25, image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"%3E%3Crect fill="%23f59e0b" width="200" height="200"/%3E%3Ctext x="100" y="100" font-size="60" text-anchor="middle" fill="white"%3E💨%3C/text%3E%3C/svg%3E' },
-                { id: 6, name: 'Gummy Bears 10pk', category: 'edibles', price: 20.00, thc: '10mg/piece', strain: 'Hybrid', effects: ['Happy', 'Relaxed'], stock: 60, image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"%3E%3Crect fill="%23ef4444" width="200" height="200"/%3E%3Ctext x="100" y="100" font-size="60" text-anchor="middle" fill="white"%3E🍬%3C/text%3E%3C/svg%3E' },
-                { id: 7, name: 'THC Infused Lemonade', category: 'drinks', price: 15.00, thc: '10mg THC', strain: 'Sativa', effects: ['Uplifting', 'Creative'], stock: 50, image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"%3E%3Crect fill="%23fbbf24" width="200" height="200"/%3E%3Ctext x="100" y="100" font-size="60" text-anchor="middle" fill="white"%3E🍋%3C/text%3E%3C/svg%3E' },
-                { id: 8, name: 'Live Resin Concentrate', category: 'concentrates', price: 65.00, thc: '92% THC', strain: 'Hybrid', effects: ['Potent', 'Long-lasting'], stock: 15, image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"%3E%3Crect fill="%2306b6d4" width="200" height="200"/%3E%3Ctext x="100" y="100" font-size="60" text-anchor="middle" fill="white"%3E💎%3C/text%3E%3C/svg%3E' },
-                { id: 9, name: 'CBD Wellness Oil', category: 'cbd', price: 40.00, thc: '1000mg CBD', strain: 'N/A', effects: ['Calm', 'Pain Relief'], stock: 35, image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"%3E%3Crect fill="%2310b981" width="200" height="200"/%3E%3Ctext x="100" y="100" font-size="60" text-anchor="middle" fill="white"%3E🧴%3C/text%3E%3C/svg%3E' },
-                { id: 10, name: 'Glass Bong - Dragon Design', category: 'accessories', price: 75.00, thc: 'N/A', strain: 'N/A', effects: [], stock: 10, image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"%3E%3Crect fill="%236366f1" width="200" height="200"/%3E%3Ctext x="100" y="100" font-size="60" text-anchor="middle" fill="white"%3E🔮%3C/text%3E%3C/svg%3E' }
-            ];
-
-            munchies = [
-                { id: 101, name: 'Japanese Kit Kat - Matcha', origin: 'Japan', price: 8.50, description: 'Green tea flavored chocolate wafers', commission: 0.30, stock: 50, image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"%3E%3Crect fill="%2310b981" width="200" height="200"/%3E%3Ctext x="100" y="100" font-size="60" text-anchor="middle" fill="white"%3E🍫%3C/text%3E%3C/svg%3E' },
-                { id: 102, name: 'Korean Honey Butter Chips', origin: 'South Korea', price: 6.00, description: 'Sweet and savory potato chips', commission: 0.25, stock: 80, image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"%3E%3Crect fill="%23f59e0b" width="200" height="200"/%3E%3Ctext x="100" y="100" font-size="60" text-anchor="middle" fill="white"%3E🥔%3C/text%3E%3C/svg%3E' },
-                { id: 103, name: 'Mexican Takis Fuego', origin: 'Mexico', price: 5.50, description: 'Spicy rolled tortilla chips', commission: 0.20, stock: 100, image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"%3E%3Crect fill="%23ef4444" width="200" height="200"/%3E%3Ctext x="100" y="100" font-size="60" text-anchor="middle" fill="white"%3E🌶️%3C/text%3E%3C/svg%3E' },
-                { id: 104, name: 'British Cadbury Flake', origin: 'UK', price: 7.00, description: 'Crumbly milk chocolate bar', commission: 0.28, stock: 60, image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"%3E%3Crect fill="%238b5cf6" width="200" height="200"/%3E%3Ctext x="100" y="100" font-size="60" text-anchor="middle" fill="white"%3E🍫%3C/text%3E%3C/svg%3E' },
-                { id: 105, name: 'Thai Coconut Rolls', origin: 'Thailand', price: 6.50, description: 'Crispy coconut wafer rolls', commission: 0.22, stock: 70, image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"%3E%3Crect fill="%2306b6d4" width="200" height="200"/%3E%3Ctext x="100" y="100" font-size="60" text-anchor="middle" fill="white"%3E🥥%3C/text%3E%3C/svg%3E' },
-                { id: 106, name: 'German Haribo Gummy Bears', origin: 'Germany', price: 4.50, description: 'Original gummy bears', commission: 0.18, stock: 120, image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"%3E%3Crect fill="%23fbbf24" width="200" height="200"/%3E%3Ctext x="100" y="100" font-size="60" text-anchor="middle" fill="white"%3E🐻%3C/text%3E%3C/svg%3E' }
-            ];
-
-            saveData();
-            renderProducts();
-            renderMunchies();
-        }
-
-        // ============================================
-        // RENDER PRODUCTS
-        // ============================================
-        function renderProducts(filter = 'all') {
-            const grid = document.getElementById('productGrid');
-            let filtered = filter === 'all' ? products : products.filter(p => p.category === filter);
+        // Add to cart
+        function addToCart(event, productId, isMunchies = false) {
+            event.stopPropagation();
            
-            grid.innerHTML = filtered.map(product => {
-                const price = happyHourActive ? (product.price * (1 - happyHourDiscount / 100)).toFixed(2) : product.price.toFixed(2);
-                const points = Math.floor(parseFloat(price) * loyaltyRate);
-                const outOfStock = product.stock <= 0;
-               
-                return `
-                    <div class="product-card ${outOfStock ? 'out-of-stock' : ''}" onclick="addToCart(${product.id}, false)">
-                        ${outOfStock ? '<div class="stock-badge">OUT OF STOCK</div>' : ''}
-                        <img src="${product.image}" alt="${product.name}" class="product-image">
-                        <div class="product-info">
-                            <div class="product-name">${product.name}</div>
-                            <span class="product-strain">${product.strain}</span>
-                            <div class="product-thc">${product.thc}</div>
-                            <div class="product-effects">
-                                ${product.effects.map(e => `<span class="effect-tag">${e}</span>`).join('')}
-                            </div>
-                            <div class="product-footer">
-                                <div>
-                                    <div class="product-price">$${price}</div>
-                                    <div class="product-points">+${points} pts</div>
-                                </div>
-                            </div>
-                            <button class="add-to-cart-btn" ${outOfStock ? 'disabled' : ''}>
-                                ${translate('Add to Cart', 'Agregar al Carrito')}
-                            </button>
-                        </div>
-                    </div>
-                `;
-            }).join('');
-        }
-
-        function renderMunchies() {
-            const grid = document.getElementById('munchiesGrid');
-            grid.innerHTML = munchies.map(item => {
-                const points = Math.floor(item.price * loyaltyRate);
-                const outOfStock = item.stock <= 0;
-               
-                return `
-                    <div class="product-card ${outOfStock ? 'out-of-stock' : ''}" onclick="addToCart(${item.id}, true)">
-                        ${outOfStock ? '<div class="stock-badge">OUT OF STOCK</div>' : ''}
-                        <img src="${item.image}" alt="${item.name}" class="product-image">
-                        <div class="product-info">
-                            <div class="product-name">${item.name}</div>
-                            <span class="product-strain">${item.origin}</span>
-                            <div class="product-thc">${item.description}</div>
-                            <div class="product-footer">
-                                <div>
-                                    <div class="product-price">$${item.price.toFixed(2)}</div>
-                                    <div class="product-points">+${points} pts</div>
-                                </div>
-                            </div>
-                            <button class="add-to-cart-btn" ${outOfStock ? 'disabled' : ''}>
-                                ${translate('Add to Cart', 'Agregar')}
-                            </button>
-                        </div>
-                    </div>
-                `;
-            }).join('');
-        }
-
-        // ============================================
-        // CART MANAGEMENT
-        // ============================================
-        function addToCart(id, isMunchie) {
-            const item = isMunchie ? munchies.find(m => m.id === id) : products.find(p => p.id === id);
-            if (!item || item.stock <= 0) return;
+            const products = isMunchies ? state.munchies : state.products;
+            const product = products.find(p => p.id === productId);
            
-            const existing = cart.find(c => c.id === id && c.isMunchie === isMunchie);
+            if (!product) return;
+           
+            const existing = state.cart.find(item => item.id === productId);
             if (existing) {
-                if (existing.quantity < item.stock) {
-                    existing.quantity++;
-                }
+                existing.quantity++;
             } else {
-                cart.push({ ...item, quantity: 1, isMunchie });
+                state.cart.push({
+                    ...product,
+                    quantity: 1,
+                    isMunchies
+                });
             }
            
-            updateCart();
-            saveData();
-        }
-
-        function removeFromCart(id, isMunchie) {
-            cart = cart.filter(item => !(item.id === id && item.isMunchie === isMunchie));
-            updateCart();
-            saveData();
-        }
-
-        function updateQuantity(id, isMunchie, delta) {
-            const item = cart.find(c => c.id === id && c.isMunchie === isMunchie);
-            if (!item) return;
+            updateCartCount();
+            saveToLocalStorage();
            
-            const product = isMunchie ? munchies.find(m => m.id === id) : products.find(p => p.id === id);
-            item.quantity = Math.max(1, Math.min(item.quantity + delta, product.stock));
+            // Show feedback
+            showAvatarMessage('Added to cart!');
+        }
+
+        // Update cart count
+        function updateCartCount() {
+            const count = state.cart.reduce((sum, item) => sum + item.quantity, 0);
+            document.getElementById('cartCount').textContent = count;
+        }
+
+        // Open cart
+        function openCart() {
+            renderCart();
+            openModal('cartModal');
+        }
+
+        // Render cart
+        function renderCart() {
+            const container = document.getElementById('cartItems');
            
-            updateCart();
-            saveData();
-        }
-
-        function updateCart() {
-            const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
-            const subtotal = cart.reduce((sum, item) => {
-                const price = happyHourActive && !item.isMunchie ? item.price * (1 - happyHourDiscount / 100) : item.price;
-                return sum + (price * item.quantity);
-            }, 0);
-            const deliveryFee = subtotal > 0 ? 5.00 : 0;
-            const total = subtotal + deliveryFee;
-            const points = Math.floor(subtotal * loyaltyRate);
-
-            document.getElementById('cartCount').textContent = cartCount;
-            document.getElementById('stickyTotal').textContent = total.toFixed(2);
-            document.getElementById('stickyItems').textContent = cartCount;
-            document.getElementById('stickyPoints').textContent = points;
-
-            // Render cart items
-            const cartItemsDiv = document.getElementById('cartItems');
-            if (cart.length === 0) {
-                cartItemsDiv.innerHTML = `<p style="text-align: center; color: var(--text-secondary);">${translate('Your cart is empty', 'Tu carrito está vacío')}</p>`;
-            } else {
-                cartItemsDiv.innerHTML = cart.map(item => {
-                    const price = happyHourActive && !item.isMunchie ? item.price * (1 - happyHourDiscount / 100) : item.price;
-                    return `
-                        <div class="cart-item">
-                            <div class="cart-item-info">
-                                <h4>${item.name}</h4>
-                                <div class="cart-item-price">$${(price * item.quantity).toFixed(2)}</div>
-                            </div>
-                            <div class="cart-item-controls">
-                                <button class="qty-btn" onclick="updateQuantity(${item.id}, ${item.isMunchie}, -1)">-</button>
-                                <span class="qty-display">${item.quantity}</span>
-                                <button class="qty-btn" onclick="updateQuantity(${item.id}, ${item.isMunchie}, 1)">+</button>
-                                <button class="remove-btn" onclick="removeFromCart(${item.id}, ${item.isMunchie})">×</button>
-                            </div>
-                        </div>
-                    `;
-                }).join('');
-            }
-
-            document.getElementById('cartSubtotal').textContent = subtotal.toFixed(2);
-            document.getElementById('deliveryFee').textContent = deliveryFee.toFixed(2);
-            document.getElementById('cartTotal').textContent = total.toFixed(2);
-            document.getElementById('cartPoints').textContent = points;
-        }
-
-        // ============================================
-        // CHECKOUT PROCESS
-        // ============================================
-        function proceedToCheckout() {
-            if (cart.length === 0) {
-                alert(translate('Your cart is empty!', '¡Tu carrito está vacío!'));
+            if (state.cart.length === 0) {
+                container.innerHTML = '<p style="text-align: center; padding: 2rem; color: var(--text-secondary);">Your cart is empty</p>';
+                document.getElementById('cartSubtotal').textContent = '$0.00';
+                document.getElementById('cartPoints').textContent = '0';
+                document.getElementById('cartTotal').textContent = '$0.00';
                 return;
             }
+           
+            container.innerHTML = state.cart.map((item, index) => `
+                <div class="cart-item">
+                    <img src="${item.image}" alt="${item.name}" class="cart-item-image">
+                    <div class="cart-item-info">
+                        <h4>${item.name}</h4>
+                        <p style="color: var(--text-secondary);">${item.category}</p>
+                        <p style="color: var(--primary-green); font-weight: 700;">$${getPrice(item.price).toFixed(2)}</p>
+                        <div class="cart-item-controls">
+                            <button class="quantity-btn" onclick="updateQuantity(${index}, -1)">-</button>
+                            <span style="padding: 0 1rem;">${item.quantity}</span>
+                            <button class="quantity-btn" onclick="updateQuantity(${index}, 1)">+</button>
+                            <button class="quantity-btn" onclick="removeFromCart(${index})" style="margin-left: 1rem; color: #ff3366;">
+                                <i data-lucide="trash-2"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+           
+            const subtotal = state.cart.reduce((sum, item) => sum + getPrice(item.price) * item.quantity, 0);
+            const points = state.cart.reduce((sum, item) => sum + item.points * item.quantity, 0);
+           
+            document.getElementById('cartSubtotal').textContent = `$${subtotal.toFixed(2)}`;
+            document.getElementById('cartPoints').textContent = points;
+            document.getElementById('cartTotal').textContent = `$${subtotal.toFixed(2)}`;
+           
+            lucide.createIcons();
+        }
+
+        // Update quantity
+        function updateQuantity(index, change) {
+            state.cart[index].quantity += change;
+            if (state.cart[index].quantity <= 0) {
+                state.cart.splice(index, 1);
+            }
+            updateCartCount();
+            renderCart();
+            saveToLocalStorage();
+        }
+
+        // Remove from cart
+        function removeFromCart(index) {
+            state.cart.splice(index, 1);
+            updateCartCount();
+            renderCart();
+            saveToLocalStorage();
+        }
+
+        // Proceed to checkout
+        function proceedToCheckout() {
+            if (!state.currentUser) {
+                closeModal('cartModal');
+                openModal('loginModal');
+                showAvatarMessage('Please login to checkout!');
+                return;
+            }
+           
             closeModal('cartModal');
+           
+            // Pre-fill user info
+            document.getElementById('checkoutAddress').value = state.currentUser.address || '';
+            document.getElementById('checkoutPhone').value = state.currentUser.phone || '';
+           
+            const total = state.cart.reduce((sum, item) => sum + getPrice(item.price) * item.quantity, 0);
+            document.getElementById('checkoutTotal').textContent = `$${total.toFixed(2)}`;
+           
             openModal('checkoutModal');
         }
 
+        // Place order
         function placeOrder(event) {
             event.preventDefault();
            
             const order = {
                 id: Date.now(),
-                items: [...cart],
-                total: parseFloat(document.getElementById('cartTotal').textContent),
-                points: parseInt(document.getElementById('cartPoints').textContent),
-                customer: {
-                    name: document.getElementById('checkoutName').value,
-                    phone: document.getElementById('checkoutPhone').value,
-                    address: document.getElementById('checkoutAddress').value,
-                    postal: document.getElementById('checkoutPostal').value,
-                    instructions: document.getElementById('checkoutInstructions').value
-                },
-                method: document.getElementById('deliveryMethod').value,
-                status: 'received',
+                user: state.currentUser.email,
+                items: [...state.cart],
+                total: state.cart.reduce((sum, item) => sum + getPrice(item.price) * item.quantity, 0),
+                points: state.cart.reduce((sum, item) => sum + item.points * item.quantity, 0),
+                address: document.getElementById('checkoutAddress').value,
+                phone: document.getElementById('checkoutPhone').value,
+                notes: document.getElementById('checkoutNotes').value,
+                status: 0,
                 timestamp: new Date().toISOString()
             };
-
-            // Update stock
-            cart.forEach(item => {
-                const product = item.isMunchie ? munchies.find(m => m.id === item.id) : products.find(p => p.id === item.id);
-                if (product) product.stock -= item.quantity;
-            });
-
-            // Add points to user
-            if (currentUser) {
-                currentUser.points = (currentUser.points || 0) + order.points;
-                updateUserDisplay();
-            }
-
-            orders.push(order);
-            cart = [];
-            updateCart();
-            saveData();
-            renderProducts();
-            renderMunchies();
-
-            closeModal('checkoutModal');
-            openModal('trackingModal');
-            startDeliverySimulation();
-        }
-
-        // ============================================
-        // DELIVERY SIMULATION
-        // ============================================
-        let deliveryStep = 0;
-        let deliveryInterval = null;
-
-        function startDeliverySimulation() {
-            deliveryStep = 1;
-            deliveryInProgress = true;
-            updateDeliveryStatus();
-
-            const speed = parseInt(document.getElementById('deliverySpeed')?.value || 5) * 1000;
-            deliveryInterval = setInterval(() => {
-                if (deliveryStep < 6) {
-                    deliveryStep++;
-                    updateDeliveryStatus();
-                } else {
-                    clearInterval(deliveryInterval);
-                    deliveryInProgress = false;
-                    setTimeout(() => {
-                        addChatMessage('system', translate('Order delivered! Enjoy! 🎉', '¡Pedido entregado! ¡Disfruta! 🎉'));
-                    }, 1000);
-                }
-            }, speed);
-        }
-
-        function updateDeliveryStatus() {
-            // Update status pipeline
-            for (let i = 1; i <= 6; i++) {
-                const step = document.getElementById(`status${i}`);
-                step.classList.remove('active', 'completed');
-                if (i < deliveryStep) {
-                    step.classList.add('completed');
-                } else if (i === deliveryStep) {
-                    step.classList.add('active');
-                }
-            }
-
-            // Update ETA
-            const eta = Math.max(0, 25 - (deliveryStep * 4));
-            document.getElementById('deliveryETA').textContent = eta;
-
-            // Move courier marker
-            const courier = document.getElementById('courierMarker');
-            const progress = deliveryStep / 6;
-            const startX = 20;
-            const startY = 20;
-            const endX = 80;
-            const endY = 70;
            
-            courier.style.left = `${startX + (endX - startX) * progress}%`;
-            courier.style.top = `${startY + (endY - startY) * progress}%`;
-
-            // Add status messages
-            const messages = {
-                1: { en: 'Order received! Preparing your items...', es: '¡Pedido recibido! Preparando tus artículos...' },
-                2: { en: 'Packing your order with care...', es: 'Empacando tu pedido con cuidado...' },
-                3: { en: 'Quality check complete!', es: '¡Verificación de calidad completa!' },
-                4: { en: 'Driver is on the way! 🚗', es: '¡El conductor está en camino! 🚗' },
-                5: { en: 'Almost there! Just 2 minutes away!', es: '¡Casi llegamos! ¡A solo 2 minutos!' },
-                6: { en: 'Driver has arrived! 🎉', es: '¡El conductor ha llegado! 🎉' }
-            };
-
-            if (messages[deliveryStep]) {
-                addChatMessage('system', translate(messages[deliveryStep].en, messages[deliveryStep].es));
-            }
+            state.orders.push(order);
+           
+            // Award points
+            if (!state.currentUser.points) state.currentUser.points = 0;
+            state.currentUser.points += order.points;
+           
+            // Clear cart
+            state.cart = [];
+            updateCartCount();
+           
+            saveToLocalStorage();
+            closeModal('checkoutModal');
+           
+            // Show tracking
+            showSection('tracking');
+            startDeliveryTracking(order);
+           
+            showAvatarMessage('Order placed! Track it below.');
         }
 
-        function simulateDelivery() {
-            if (deliveryInProgress) {
-                alert('Delivery already in progress');
-                return;
-            }
-            openModal('trackingModal');
-            startDeliverySimulation();
+        // Start delivery tracking
+        function startDeliveryTracking(order) {
+            state.deliveryStatus = 0;
+            renderTrackingStatus();
+           
+            // Simulate delivery progress
+            const interval = setInterval(() => {
+                state.deliveryStatus++;
+                renderTrackingStatus();
+                updateMapMarker();
+               
+                if (state.deliveryStatus >= 5) {
+                    clearInterval(interval);
+                    showAvatarMessage('Your order has been delivered! Enjoy!');
+                }
+            }, 10000); // Update every 10 seconds
         }
 
-        // ============================================
-        // CHAT SYSTEM
-        // ============================================
-        function addChatMessage(type, message) {
-            const messagesDiv = document.getElementById('chatMessages');
-            const messageEl = document.createElement('div');
-            messageEl.className = `chat-message ${type}`;
-            messageEl.innerHTML = `<div class="chat-bubble">${message}</div>`;
-            messagesDiv.appendChild(messageEl);
-            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        // Render tracking status
+        function renderTrackingStatus() {
+            const statuses = [
+                { icon: 'check-circle', text: 'Order Received' },
+                { icon: 'package', text: 'Preparing Your Order' },
+                { icon: 'box', text: 'Packing' },
+                { icon: 'truck', text: 'Out for Delivery' },
+                { icon: 'home', text: 'Arriving Now' },
+                { icon: 'check-circle-2', text: 'Delivered' }
+            ];
+           
+            const container = document.getElementById('trackingStatus');
+            container.innerHTML = statuses.map((status, index) => `
+                <div class="status-item ${index <= state.deliveryStatus ? 'active' : ''}">
+                    <div class="status-icon">
+                        <i data-lucide="${status.icon}"></i>
+                    </div>
+                    <div>
+                        <strong>${status.text}</strong>
+                        ${index === state.deliveryStatus ? '<p style="color: var(--primary-green);">In Progress</p>' : ''}
+                    </div>
+                </div>
+            `).join('');
+           
+            lucide.createIcons();
         }
 
+        // Update map marker
+        function updateMapMarker() {
+            const marker = document.getElementById('deliveryMarker');
+            const progress = (state.deliveryStatus / 5) * 100;
+            marker.style.left = `${10 + progress * 0.8}%`;
+            marker.style.top = `${50 + Math.sin(progress * 0.1) * 20}%`;
+        }
+
+        // Send chat message
         function sendChatMessage() {
             const input = document.getElementById('chatInput');
             const message = input.value.trim();
-            if (!message) return;
-
-            addChatMessage('user', message);
-            input.value = '';
-
-            // Simulate driver response
-            setTimeout(() => {
-                const responses = {
-                    en: ['Got it, thanks!', 'On my way!', 'Will be there soon!', 'Thanks for the heads up!'],
-                    es: ['¡Entendido, gracias!', '¡En camino!', '¡Llegaré pronto!', '¡Gracias por avisar!']
-                };
-                const response = responses[currentLanguage][Math.floor(Math.random() * responses[currentLanguage].length)];
-                addChatMessage('driver', response);
-            }, 2000);
-        }
-
-        function injectChatMessage() {
-            const message = document.getElementById('adminChatMessage').value.trim();
+           
             if (!message) return;
            
-            addChatMessage('driver', message);
-            document.getElementById('adminChatMessage').value = '';
-            alert('Message sent!');
+            const messagesContainer = document.getElementById('chatMessages');
+            messagesContainer.innerHTML += `
+                <div class="chat-message user">${message}</div>
+            `;
+           
+            input.value = '';
+           
+            // Simulate driver response
+            setTimeout(() => {
+                const responses = [
+                    'On my way!',
+                    'Be there in 5 minutes!',
+                    'Traffic is light, arriving soon!',
+                    'Thanks for your patience!'
+                ];
+                const response = responses[Math.floor(Math.random() * responses.length)];
+                messagesContainer.innerHTML += `
+                    <div class="chat-message driver">${response}</div>
+                `;
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            }, 1000);
+           
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
         }
 
-        // ============================================
-        // ACCOUNT SYSTEM
-        // ============================================
-        function login() {
+        // Login
+        function login(event) {
+            event.preventDefault();
+           
             const email = document.getElementById('loginEmail').value;
             const password = document.getElementById('loginPassword').value;
            
-            // Simple demo login
-            currentUser = {
-                name: 'Demo User',
-                email: email,
-                phone: '555-0123',
-                points: 250
+            // Check if it's admin login
+            if (email === 'admin' && password === localStorage.getItem('adminPassword')) {
+                state.isAdmin = true;
+                document.getElementById('adminLink').classList.remove('hidden');
+                closeModal('loginModal');
+                showSection('admin');
+                showAvatarMessage('Welcome back, admin!');
+                updateUI();
+                return;
+            }
+           
+            // Regular user login
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
+            const user = users.find(u => u.email === email && u.password === password);
+           
+            if (user) {
+                state.currentUser = user;
+                closeModal('loginModal');
+                showAvatarMessage(`Welcome back, ${user.name}!`);
+                updateUI();
+            } else {
+                alert('Invalid credentials');
+            }
+        }
+
+        // Register
+        function register(event) {
+            event.preventDefault();
+           
+            const user = {
+                name: document.getElementById('registerName').value,
+                email: document.getElementById('registerEmail').value,
+                phone: document.getElementById('registerPhone').value,
+                address: document.getElementById('registerAddress').value,
+                zip: document.getElementById('registerZip').value,
+                password: document.getElementById('registerPassword').value,
+                points: 0,
+                tier: 'Bronze'
             };
            
-            updateUserDisplay();
-            document.getElementById('accountLogin').style.display = 'none';
-            document.getElementById('accountDashboard').style.display = 'block';
-            saveData();
-        }
-
-        function logout() {
-            currentUser = null;
-            document.getElementById('accountLogin').style.display = 'block';
-            document.getElementById('accountDashboard').style.display = 'none';
-            saveData();
-        }
-
-        function showRegister() {
-            alert(translate('Registration system would be implemented here', 'Sistema de registro se implementaría aquí'));
-        }
-
-        function updateUserDisplay() {
-            if (!currentUser) return;
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
+            users.push(user);
+            localStorage.setItem('users', JSON.stringify(users));
            
-            document.getElementById('userName').textContent = currentUser.name;
-            document.getElementById('userEmail').textContent = currentUser.email;
-            document.getElementById('userPhone').textContent = currentUser.phone;
-            document.getElementById('userPoints').textContent = currentUser.points || 0;
-
-            // Show order history
-            const userOrders = orders.filter(o => o.customer.email === currentUser.email);
-            const historyDiv = document.getElementById('orderHistory');
-            if (userOrders.length === 0) {
-                historyDiv.innerHTML = `<p>${translate('No orders yet', 'No hay pedidos aún')}</p>`;
-            } else {
-                historyDiv.innerHTML = userOrders.map(order => `
-                    <div class="cart-item">
-                        <div>
-                            <strong>${translate('Order #', 'Pedido #')}${order.id}</strong>
-                            <div>${new Date(order.timestamp).toLocaleDateString()}</div>
-                            <div>$${order.total.toFixed(2)}</div>
-                        </div>
-                        <div>
-                            <button class="btn btn-secondary" onclick="reorder(${order.id})">
-                                ${translate('Reorder', 'Reordenar')}
-                            </button>
-                        </div>
-                    </div>
-                `).join('');
-            }
+            state.currentUser = user;
+            closeModal('registerModal');
+            showAvatarMessage(`Welcome, ${user.name}!`);
+            updateUI();
         }
 
-        function reorder(orderId) {
-            const order = orders.find(o => o.id === orderId);
-            if (!order) return;
-           
-            cart = order.items.map(item => ({ ...item, quantity: item.quantity }));
-            updateCart();
-            closeModal('accountModal');
-            openModal('cartModal');
-        }
-
-        // ============================================
-        // HAPPY HOUR
-        // ============================================
-        let happyHourTimer = null;
-
-        function toggleHappyHour() {
-            if (happyHourActive) {
-                stopHappyHour();
-            } else {
-                startHappyHour();
-            }
-        }
-
-        function startHappyHour() {
-            happyHourActive = true;
-            happyHourDiscount = parseInt(document.getElementById('happyHourDiscount')?.value || 20);
-            const duration = parseInt(document.getElementById('happyHourDuration')?.value || 60);
-           
-            document.getElementById('happyHourBanner').classList.add('active');
-            renderProducts();
-           
-            let timeLeft = duration;
-            document.getElementById('happyHourTimer').textContent = timeLeft;
-           
-            happyHourTimer = setInterval(() => {
-                timeLeft--;
-                document.getElementById('happyHourTimer').textContent = timeLeft;
+        // Update UI based on auth state
+        function updateUI() {
+            if (state.currentUser) {
+                document.getElementById('loginLink').classList.add('hidden');
+                document.getElementById('userMenu').classList.remove('hidden');
+                document.getElementById('userName').textContent = state.currentUser.name;
+                document.getElementById('userPoints').textContent = state.currentUser.points || 0;
                
-                if (timeLeft <= 0) {
-                    stopHappyHour();
-                }
-            }, 1000);
-        }
-
-        function stopHappyHour() {
-            happyHourActive = false;
-            document.getElementById('happyHourBanner').classList.remove('active');
-            if (happyHourTimer) clearInterval(happyHourTimer);
-            renderProducts();
-        }
-
-        // ============================================
-        // ADMIN FUNCTIONS
-        // ============================================
-        function showAdminLogin() {
-            const password = prompt('Enter admin password:');
-            if (password === 'admin123') {
-                openModal('adminModal');
-                renderAdminInventory();
-                updateMunchiesStats();
-            } else if (password !== null) {
-                alert('Incorrect password');
+                // Update tier
+                const points = state.currentUser.points || 0;
+                let tier = 'Bronze';
+                if (points >= 1000) tier = 'Gold';
+                else if (points >= 500) tier = 'Silver';
+                document.getElementById('userTier').textContent = `${tier} Member`;
+            } else {
+                document.getElementById('loginLink').classList.remove('hidden');
+                document.getElementById('userMenu').classList.add('hidden');
+            }
+           
+            if (state.isAdmin) {
+                document.getElementById('adminLink').classList.remove('hidden');
             }
         }
 
-        function addProduct() {
-            const product = {
-                id: Date.now(),
-                name: document.getElementById('adminProductName').value,
-                category: document.getElementById('adminProductCategory').value,
-                price: parseFloat(document.getElementById('adminProductPrice').value),
-                thc: document.getElementById('adminProductTHC').value,
-                strain: document.getElementById('adminProductStrain').value,
-                stock: parseInt(document.getElementById('adminProductStock').value),
-                effects: ['New'],
-                image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"%3E%3Crect fill="%2310b981" width="200" height="200"/%3E%3Ctext x="100" y="100" font-size="60" text-anchor="middle" fill="white"%3E🌿%3C/text%3E%3C/svg%3E'
-            };
-
-            products.push(product);
-            saveData();
-            renderProducts();
-            renderAdminInventory();
+        // Show section
+        function showSection(sectionId) {
+            document.querySelectorAll('.section, .hero').forEach(section => {
+                section.classList.add('hidden');
+            });
            
-            // Clear form
-            document.getElementById('adminProductName').value = '';
-            document.getElementById('adminProductPrice').value = '';
-            document.getElementById('adminProductTHC').value = '';
-            document.getElementById('adminProductStock').value = '100';
-           
-            alert('Product added!');
-        }
-
-        function renderAdminInventory() {
-            const div = document.getElementById('adminInventory');
-            div.innerHTML = products.map(p => `
-                <div class="cart-item">
-                    <div>
-                        <strong>${p.name}</strong>
-                        <div>${p.category} - $${p.price.toFixed(2)}</div>
-                        <div>Stock: ${p.stock}</div>
-                    </div>
-                    <button class="btn btn-danger" onclick="deleteProduct(${p.id})">Delete</button>
-                </div>
-            `).join('');
-        }
-
-        function deleteProduct(id) {
-            if (confirm('Delete this product?')) {
-                products = products.filter(p => p.id !== id);
-                saveData();
-                renderProducts();
-                renderAdminInventory();
+            const section = document.getElementById(sectionId);
+            if (section) {
+                section.classList.remove('hidden');
             }
         }
 
-        function updateLoyaltySettings() {
-            loyaltyRate = parseFloat(document.getElementById('pointsPerDollar').value);
-            saveData();
-            alert('Loyalty settings updated!');
-        }
-
-        function updateMunchiesStats() {
-            const munchiesOrders = orders.flatMap(o => o.items.filter(i => i.isMunchie));
-            const revenue = munchiesOrders.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            const commission = munchiesOrders.reduce((sum, item) => sum + (item.price * item.quantity * item.commission), 0);
-           
-            document.getElementById('munchiesRevenue').textContent = revenue.toFixed(2);
-            document.getElementById('munchiesCommission').textContent = commission.toFixed(2);
-        }
-
-        // ============================================
-        // MODAL MANAGEMENT
-        // ============================================
+        // Modal functions
         function openModal(modalId) {
             document.getElementById(modalId).classList.add('active');
-            if (modalId === 'accountModal' && currentUser) {
-                updateUserDisplay();
-            }
         }
 
         function closeModal(modalId) {
             document.getElementById(modalId).classList.remove('active');
         }
 
-        // ============================================
-        // SECTION MANAGEMENT
-        // ============================================
-        function showSection(section) {
-            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-            if (section === 'shop') {
-                document.getElementById('shopSection').classList.add('active');
-            } else if (section === 'munchies') {
-                document.getElementById('munchiesSection').classList.add('active');
-            }
-        }
-
-        function filterCategory(category) {
-            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-            event.target.classList.add('active');
-            renderProducts(category);
-        }
-
-        // ============================================
-        // DATA PERSISTENCE
-        // ============================================
-        function saveData() {
-            localStorage.setItem('cannabisData', JSON.stringify({
-                products,
-                munchies,
-                orders,
-                cart,
-                currentUser,
-                loyaltyRate
-            }));
-        }
-
-        function loadData() {
-            const saved = localStorage.getItem('cannabisData');
-            if (saved) {
-                const data = JSON.parse(saved);
-                products = data.products || [];
-                munchies = data.munchies || [];
-                orders = data.orders || [];
-                cart = data.cart || [];
-                currentUser = data.currentUser || null;
-                loyaltyRate = data.loyaltyRate || 1;
+        // Happy Hour
+        function activateHappyHour() {
+            const discount = parseInt(document.getElementById('happyHourDiscount').value);
+            const duration = parseInt(document.getElementById('happyHourDuration').value);
+           
+            state.happyHourActive = true;
+            state.happyHourDiscount = discount;
+           
+            const banner = document.getElementById('happyHourBanner');
+            banner.classList.add('active');
+           
+            let timeLeft = duration;
+            document.getElementById('happyHourTimer').textContent = `${timeLeft}s`;
+           
+            const interval = setInterval(() => {
+                timeLeft--;
+                document.getElementById('happyHourTimer').textContent = `${timeLeft}s`;
                
-                if (currentUser) {
-                    document.getElementById('accountLogin').style.display = 'none';
-                    document.getElementById('accountDashboard').style.display = 'block';
+                if (timeLeft <= 0) {
+                    clearInterval(interval);
+                    state.happyHourActive = false;
+                    banner.classList.remove('active');
+                    renderProducts();
+                    showAvatarMessage('Happy Hour ended! See you next time!');
                 }
-            }
+            }, 1000);
+           
+            renderProducts();
+            showAvatarMessage(`🔥 HAPPY HOUR ACTIVE! ${discount}% OFF! 🔥`);
         }
 
-        // ============================================
-        // INITIALIZATION
-        // ============================================
-        window.addEventListener('DOMContentLoaded', () => {
-            checkAgeVerification();
-            loadData();
+        // Admin functions
+        function updateBranding() {
+            const storeName = document.getElementById('adminStoreName').value;
+            if (storeName) {
+                state.branding.storeName = storeName;
+                document.getElementById('storeName').textContent = storeName;
+            }
+            saveToLocalStorage();
+        }
+
+        function addProduct() {
+            const product = {
+                id: Date.now(),
+                name: document.getElementById('newProductName').value,
+                category: document.getElementById('newProductCategory').value,
+                price: parseFloat(document.getElementById('newProductPrice').value),
+                image: document.getElementById('newProductImage').value || 'https://images.unsplash.com/photo-1583912267550-d974276a8c9e?w=400',
+                type: 'Hybrid',
+                thc: 20,
+                cbd: 1,
+                points: Math.floor(parseFloat(document.getElementById('newProductPrice').value)),
+                stock: 100
+            };
            
-            if (products.length === 0) {
-                initializeProducts();
-            } else {
-                renderProducts();
+            if (product.category === 'Munchies') {
+                state.munchies.push(product);
                 renderMunchies();
+            } else {
+                state.products.push(product);
+                renderProducts();
             }
            
-            updateCart();
+            saveToLocalStorage();
+            showAvatarMessage('Product added successfully!');
            
-            // Load saved language
-            const savedLang = localStorage.getItem('language');
-            if (savedLang) {
-                currentLanguage = savedLang;
-                document.querySelectorAll('.lang-btn').forEach(btn => {
-                    btn.classList.toggle('active', btn.textContent === savedLang.toUpperCase());
-                });
-                translatePage();
+            // Clear form
+            document.getElementById('newProductName').value = '';
+            document.getElementById('newProductPrice').value = '';
+            document.getElementById('newProductImage').value = '';
+        }
+
+        function simulateDelivery() {
+            const mockOrder = {
+                id: Date.now(),
+                user: 'demo@example.com',
+                items: [],
+                total: 50,
+                points: 50,
+                address: '123 Test St',
+                phone: '555-0000',
+                status: 0,
+                timestamp: new Date().toISOString()
+            };
+           
+            state.orders.push(mockOrder);
+            showSection('tracking');
+            startDeliveryTracking(mockOrder);
+        }
+
+        // Avatar assistant
+        function initAvatar() {
+            const messages = [
+                'Hey there! Need help finding something?',
+                'Check out our deals!',
+                'Don\'t forget your rewards points!',
+                'New products just dropped!'
+            ];
+           
+            setInterval(() => {
+                if (Math.random() > 0.7) {
+                    const message = messages[Math.floor(Math.random() * messages.length)];
+                    showAvatarMessage(message);
+                }
+            }, 30000);
+        }
+
+        function toggleAvatar() {
+            const bubble = document.getElementById('avatarBubble');
+            bubble.classList.toggle('active');
+        }
+
+        function showAvatarMessage(message) {
+            const bubble = document.getElementById('avatarBubble');
+            bubble.textContent = message;
+            bubble.classList.add('active');
+           
+            setTimeout(() => {
+                bubble.classList.remove('active');
+            }, 5000);
+        }
+
+        // Social functions
+        function openWhatsApp() {
+            window.open(`https://wa.me/${state.branding.whatsapp}`, '_blank');
+        }
+
+        function openWebsiteInquiry() {
+            window.open(`https://wa.me/${state.branding.whatsapp}?text=Hi! I'm interested in getting a website like this for my business.`, '_blank');
+        }
+
+        // Language
+        function changeLanguage(lang) {
+            state.language = lang;
+           
+            document.querySelectorAll('[data-translate]').forEach(element => {
+                const key = element.getAttribute('data-translate');
+                if (translations[lang] && translations[lang][key]) {
+                    element.textContent = translations[lang][key];
+                }
+            });
+           
+            saveToLocalStorage();
+        }
+
+        // Contact form
+        function sendContactMessage(event) {
+            event.preventDefault();
+            showAvatarMessage('Thanks for reaching out! We\'ll get back to you soon!');
+            event.target.reset();
+        }
+
+        // Initialize on load
+        window.addEventListener('DOMContentLoaded', init);
+       
+        // Handle modal close on outside click
+        window.addEventListener('click', (e) => {
+            if (e.target.classList.contains('modal')) {
+                e.target.classList.remove('active');
             }
-
-            // Enable Enter key for chat
-            document.getElementById('chatInput').addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') sendChatMessage();
-            });
-
-            // Close modals on background click
-            document.querySelectorAll('.modal').forEach(modal => {
-                modal.addEventListener('click', (e) => {
-                    if (e.target === modal) {
-                        modal.classList.remove('active');
-                    }
-                });
-            });
         });
     </script>
-
 </body>
-</htm
+</html>
