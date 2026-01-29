@@ -1,2206 +1,283 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cannabis Delivery Platform</title>
-    <style>
-        /* ============================================
-           WHITE-LABEL THEME SYSTEM
-           Change these variables to rebrand instantly
-        ============================================ */
-        :root {
-            --primary-color: #10b981;
-            --primary-dark: #059669;
-            --secondary-color: #8b5cf6;
-            --accent-color: #f59e0b;
-            --background: #0f172a;
-            --surface: #1e293b;
-            --surface-light: #334155;
-            --text-primary: #f1f5f9;
-            --text-secondary: #94a3b8;
-            --danger: #ef4444;
-            --success: #10b981;
-            --warning: #f59e0b;
-           
-            --font-primary: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            --font-display: 'Impact', 'Arial Black', sans-serif;
-           
-            --radius: 12px;
-            --radius-sm: 8px;
-            --shadow: 0 10px 30px rgba(0,0,0,0.3);
-            --shadow-lg: 0 20px 50px rgba(0,0,0,0.5);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: var(--font-primary);
-            background: var(--background);
-            color: var(--text-primary);
-            overflow-x: hidden;
-        }
-
-        /* ============================================
-           AGE VERIFICATION MODAL
-        ============================================ */
-        #ageGate {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.95);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 10000;
-            backdrop-filter: blur(10px);
-        }
-
-        #ageGate.hidden {
-            display: none;
-        }
-
-        .age-gate-content {
-            background: var(--surface);
-            padding: 3rem;
-            border-radius: var(--radius);
-            text-align: center;
-            max-width: 500px;
-            box-shadow: var(--shadow-lg);
-            border: 2px solid var(--primary-color);
-        }
-
-        .age-gate-content h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            color: var(--primary-color);
-        }
-
-        .age-gate-content p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-            color: var(--text-secondary);
-        }
-
-        .age-gate-buttons {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-        }
-
-        .age-gate-buttons button {
-            padding: 1rem 2rem;
-            font-size: 1.1rem;
-            border: none;
-            border-radius: var(--radius-sm);
-            cursor: pointer;
-            font-weight: bold;
-            transition: all 0.3s;
-        }
-
-        .age-accept {
-            background: var(--primary-color);
-            color: white;
-        }
-
-        .age-accept:hover {
-            background: var(--primary-dark);
-            transform: scale(1.05);
-        }
-
-        .age-decline {
-            background: var(--danger);
-            color: white;
-        }
-
-        .age-decline:hover {
-            background: #dc2626;
-            transform: scale(1.05);
-        }
-
-        /* ============================================
-           NAVIGATION
-        ============================================ */
-        nav {
-            background: var(--surface);
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: var(--shadow);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: var(--primary-color);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .logo img {
-            height: 40px;
-            width: auto;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 1.5rem;
-            align-items: center;
-        }
-
-        .nav-links button, .nav-links a {
-            background: none;
-            border: none;
-            color: var(--text-primary);
-            cursor: pointer;
-            font-size: 1rem;
-            transition: color 0.3s;
-            text-decoration: none;
-        }
-
-        .nav-links button:hover, .nav-links a:hover {
-            color: var(--primary-color);
-        }
-
-        .cart-badge {
-            position: relative;
-        }
-
-        .cart-badge span {
-            position: absolute;
-            top: -8px;
-            right: -8px;
-            background: var(--danger);
-            color: white;
-            border-radius: 50%;
-            width: 20px;
-            height: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.7rem;
-            font-weight: bold;
-        }
-
-        .para-curioso-btn {
-            background: var(--secondary-color) !important;
-            color: white !important;
-            padding: 0.5rem 1rem;
-            border-radius: var(--radius-sm);
-            font-weight: bold;
-        }
-
-        .para-curioso-btn:hover {
-            background: #7c3aed !important;
-        }
-
-        /* ============================================
-           HERO SECTION
-        ============================================ */
-        .hero {
-            background: linear-gradient(135deg, var(--primary-dark), var(--secondary-color));
-            padding: 4rem 2rem;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M50 20 Q30 40 50 60 Q70 40 50 20 M50 60 L50 80" stroke="white" fill="none" opacity="0.1" stroke-width="2"/></svg>') repeat;
-            opacity: 0.1;
-        }
-
-        .hero h1 {
-            font-family: var(--font-display);
-            font-size: 4rem;
-            margin-bottom: 1rem;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .hero-subtitle {
-            font-size: 2rem;
-            color: var(--accent-color);
-            font-weight: bold;
-            min-height: 50px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .happy-hour-banner {
-            background: var(--warning);
-            color: var(--background);
-            padding: 1rem;
-            text-align: center;
-            font-weight: bold;
-            font-size: 1.2rem;
-            display: none;
-            animation: pulse 1s infinite;
-        }
-
-        .happy-hour-banner.active {
-            display: block;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.8; }
-        }
-
-        /* ============================================
-           MAIN CONTENT
-        ============================================ */
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-
-        .tabs {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
-        }
-
-        .tab {
-            padding: 0.75rem 1.5rem;
-            background: var(--surface);
-            border: 2px solid transparent;
-            border-radius: var(--radius-sm);
-            cursor: pointer;
-            transition: all 0.3s;
-            font-weight: 600;
-        }
-
-        .tab:hover {
-            border-color: var(--primary-color);
-        }
-
-        .tab.active {
-            background: var(--primary-color);
-            border-color: var(--primary-color);
-        }
-
-        .section {
-            display: none;
-        }
-
-        .section.active {
-            display: block;
-        }
-
-        /* ============================================
-           PRODUCT GRID
-        ============================================ */
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 5rem;
-        }
-
-        .product-card {
-            background: var(--surface);
-            border-radius: var(--radius);
-            overflow: hidden;
-            transition: all 0.3s;
-            cursor: pointer;
-            position: relative;
-        }
-
-        .product-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .product-image {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            background: var(--surface-light);
-        }
-
-        .product-info {
-            padding: 1rem;
-        }
-
-        .product-name {
-            font-size: 1.1rem;
-            font-weight: bold;
-            margin-bottom: 0.5rem;
-        }
-
-        .product-strain {
-            display: inline-block;
-            padding: 0.25rem 0.5rem;
-            background: var(--primary-color);
-            border-radius: 4px;
-            font-size: 0.8rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .product-thc {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .product-effects {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.25rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .effect-tag {
-            background: var(--surface-light);
-            padding: 0.2rem 0.5rem;
-            border-radius: 4px;
-            font-size: 0.75rem;
-        }
-
-        .product-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 1rem;
-        }
-
-        .product-price {
-            font-size: 1.3rem;
-            font-weight: bold;
-            color: var(--primary-color);
-        }
-
-        .product-points {
-            font-size: 0.8rem;
-            color: var(--accent-color);
-        }
-
-        .add-to-cart-btn {
-            width: 100%;
-            padding: 0.75rem;
-            background: var(--primary-color);
-            border: none;
-            border-radius: var(--radius-sm);
-            color: white;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s;
-            margin-top: 0.5rem;
-        }
-
-        .add-to-cart-btn:hover {
-            background: var(--primary-dark);
-        }
-
-        .out-of-stock {
-            opacity: 0.5;
-            pointer-events: none;
-        }
-
-        .stock-badge {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: var(--danger);
-            color: white;
-            padding: 0.25rem 0.5rem;
-            border-radius: 4px;
-            font-size: 0.75rem;
-            font-weight: bold;
-        }
-
-        /* ============================================
-           STICKY CART BAR (MOBILE)
-        ============================================ */
-        .sticky-cart {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: var(--surface);
-            padding: 1rem;
-            box-shadow: 0 -5px 20px rgba(0,0,0,0.3);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 999;
-        }
-
-        .sticky-cart-info {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .sticky-cart-total {
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: var(--primary-color);
-        }
-
-        .sticky-cart-items {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-        }
-
-        .checkout-btn {
-            padding: 0.75rem 2rem;
-            background: var(--primary-color);
-            border: none;
-            border-radius: var(--radius-sm);
-            color: white;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .checkout-btn:hover {
-            background: var(--primary-dark);
-            transform: scale(1.05);
-        }
-
-        /* ============================================
-           MODAL SYSTEM
-        ============================================ */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.8);
-            z-index: 2000;
-            overflow-y: auto;
-            padding: 2rem;
-        }
-
-        .modal.active {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .modal-content {
-            background: var(--surface);
-            border-radius: var(--radius);
-            padding: 2rem;
-            max-width: 600px;
-            width: 100%;
-            max-height: 90vh;
-            overflow-y: auto;
-            position: relative;
-        }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-        }
-
-        .modal-header h2 {
-            font-size: 1.8rem;
-        }
-
-        .close-modal {
-            background: none;
-            border: none;
-            font-size: 2rem;
-            color: var(--text-secondary);
-            cursor: pointer;
-            transition: color 0.3s;
-        }
-
-        .close-modal:hover {
-            color: var(--danger);
-        }
-
-        /* ============================================
-           FORMS
-        ============================================ */
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-            color: var(--text-secondary);
-        }
-
-        .form-group input,
-        .form-group textarea,
-        .form-group select {
-            width: 100%;
-            padding: 0.75rem;
-            background: var(--surface-light);
-            border: 2px solid transparent;
-            border-radius: var(--radius-sm);
-            color: var(--text-primary);
-            font-size: 1rem;
-            transition: border-color 0.3s;
-        }
-
-        .form-group input:focus,
-        .form-group textarea:focus,
-        .form-group select:focus {
-            outline: none;
-            border-color: var(--primary-color);
-        }
-
-        .btn {
-            padding: 0.75rem 1.5rem;
-            border: none;
-            border-radius: var(--radius-sm);
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-size: 1rem;
-        }
-
-        .btn-primary {
-            background: var(--primary-color);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background: var(--primary-dark);
-        }
-
-        .btn-danger {
-            background: var(--danger);
-            color: white;
-        }
-
-        .btn-secondary {
-            background: var(--surface-light);
-            color: var(--text-primary);
-        }
-
-        /* ============================================
-           CART DISPLAY
-        ============================================ */
-        .cart-items {
-            margin-bottom: 2rem;
-        }
-
-        .cart-item {
-            background: var(--surface-light);
-            padding: 1rem;
-            border-radius: var(--radius-sm);
-            margin-bottom: 1rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .cart-item-info h4 {
-            margin-bottom: 0.5rem;
-        }
-
-        .cart-item-price {
-            font-weight: bold;
-            color: var(--primary-color);
-        }
-
-        .cart-item-controls {
-            display: flex;
-            gap: 0.5rem;
-            align-items: center;
-        }
-
-        .qty-btn {
-            width: 30px;
-            height: 30px;
-            background: var(--primary-color);
-            border: none;
-            border-radius: 4px;
-            color: white;
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        .qty-display {
-            min-width: 30px;
-            text-align: center;
-            font-weight: bold;
-        }
-
-        .remove-btn {
-            background: var(--danger);
-            color: white;
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
-            cursor: pointer;
-            margin-left: 1rem;
-        }
-
-        .cart-summary {
-            background: var(--surface-light);
-            padding: 1.5rem;
-            border-radius: var(--radius-sm);
-            margin-top: 2rem;
-        }
-
-        .cart-summary-row {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 1rem;
-            font-size: 1.1rem;
-        }
-
-        .cart-summary-total {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: var(--primary-color);
-            border-top: 2px solid var(--surface);
-            padding-top: 1rem;
-            margin-top: 1rem;
-        }
-
-        /* ============================================
-           DELIVERY TRACKING
-        ============================================ */
-        .delivery-map {
-            width: 100%;
-            height: 400px;
-            background: var(--surface-light);
-            border-radius: var(--radius);
-            position: relative;
-            overflow: hidden;
-            margin-bottom: 2rem;
-        }
-
-        .map-marker {
-            position: absolute;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            transition: all 0.5s;
-        }
-
-        .store-marker {
-            background: var(--primary-color);
-            top: 20%;
-            left: 20%;
-        }
-
-        .customer-marker {
-            background: var(--accent-color);
-            top: 70%;
-            left: 80%;
-        }
-
-        .courier-marker {
-            background: var(--secondary-color);
-            animation: bounce 1s infinite;
-            z-index: 10;
-        }
-
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        .delivery-route {
-            position: absolute;
-            border: 3px dashed var(--primary-color);
-            opacity: 0.5;
-        }
-
-        .status-pipeline {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 2rem;
-            position: relative;
-        }
-
-        .status-step {
-            flex: 1;
-            text-align: center;
-            position: relative;
-        }
-
-        .status-step::before {
-            content: '';
-            position: absolute;
-            top: 20px;
-            left: 50%;
-            width: 100%;
-            height: 4px;
-            background: var(--surface-light);
-            z-index: -1;
-        }
-
-        .status-step:first-child::before {
-            left: 50%;
-            width: 50%;
-        }
-
-        .status-step:last-child::before {
-            width: 50%;
-        }
-
-        .status-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: var(--surface-light);
-            margin: 0 auto 0.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            transition: all 0.3s;
-        }
-
-        .status-step.completed .status-icon {
-            background: var(--primary-color);
-        }
-
-        .status-step.active .status-icon {
-            background: var(--accent-color);
-            animation: pulse 1s infinite;
-        }
-
-        .delivery-eta {
-            text-align: center;
-            font-size: 2rem;
-            font-weight: bold;
-            color: var(--primary-color);
-            margin: 2rem 0;
-        }
-
-        /* ============================================
-           CHAT SYSTEM
-        ============================================ */
-        .chat-container {
-            background: var(--surface-light);
-            border-radius: var(--radius);
-            height: 400px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .chat-messages {
-            flex: 1;
-            overflow-y: auto;
-            padding: 1rem;
-        }
-
-        .chat-message {
-            margin-bottom: 1rem;
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        .chat-message.user {
-            flex-direction: row-reverse;
-        }
-
-        .chat-bubble {
-            max-width: 70%;
-            padding: 0.75rem;
-            border-radius: var(--radius-sm);
-            background: var(--surface);
-        }
-
-        .chat-message.user .chat-bubble {
-            background: var(--primary-color);
-        }
-
-        .chat-message.driver .chat-bubble {
-            background: var(--secondary-color);
-        }
-
-        .chat-message.system .chat-bubble {
-            background: var(--accent-color);
-            max-width: 100%;
-            text-align: center;
-        }
-
-        .chat-input-container {
-            padding: 1rem;
-            border-top: 2px solid var(--surface);
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        .chat-input {
-            flex: 1;
-            padding: 0.75rem;
-            background: var(--surface);
-            border: none;
-            border-radius: var(--radius-sm);
-            color: var(--text-primary);
-        }
-
-        .chat-send-btn {
-            padding: 0.75rem 1.5rem;
-            background: var(--primary-color);
-            border: none;
-            border-radius: var(--radius-sm);
-            color: white;
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        /* ============================================
-           LOYALTY DISPLAY
-        ============================================ */
-        .loyalty-card {
-            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
-            padding: 2rem;
-            border-radius: var(--radius);
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        .loyalty-points {
-            font-size: 3rem;
-            font-weight: bold;
-            margin-bottom: 0.5rem;
-        }
-
-        .loyalty-label {
-            font-size: 1.2rem;
-            opacity: 0.9;
-        }
-
-        /* ============================================
-           ADMIN PANEL
-        ============================================ */
-        .admin-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .admin-card {
-            background: var(--surface);
-            padding: 1.5rem;
-            border-radius: var(--radius);
-            border: 2px solid var(--surface-light);
-        }
-
-        .admin-card h3 {
-            margin-bottom: 1rem;
-            color: var(--primary-color);
-        }
-
-        /* ============================================
-           WHATSAPP FLOAT
-        ============================================ */
-        .whatsapp-float {
-            position: fixed;
-            bottom: 80px;
-            right: 20px;
-            background: #25D366;
-            color: white;
-            padding: 1rem 1.5rem;
-            border-radius: 50px;
-            box-shadow: var(--shadow-lg);
-            cursor: pointer;
-            z-index: 998;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-weight: bold;
-            transition: all 0.3s;
-        }
-
-        .whatsapp-float:hover {
-            transform: scale(1.05);
-            box-shadow: 0 15px 40px rgba(37, 211, 102, 0.4);
-        }
-
-        /* ============================================
-           LANGUAGE TOGGLE
-        ============================================ */
-        .lang-toggle {
-            display: flex;
-            gap: 0.5rem;
-            background: var(--surface-light);
-            padding: 0.25rem;
-            border-radius: var(--radius-sm);
-        }
-
-        .lang-btn {
-            padding: 0.5rem 1rem;
-            background: transparent;
-            border: none;
-            color: var(--text-secondary);
-            cursor: pointer;
-            border-radius: 4px;
-            transition: all 0.3s;
-        }
-
-        .lang-btn.active {
-            background: var(--primary-color);
-            color: white;
-        }
-
-        /* ============================================
-           RESPONSIVE
-        ============================================ */
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .hero-subtitle {
-                font-size: 1.5rem;
-            }
-
-            .product-grid {
-                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            }
-
-            nav {
-                flex-direction: column;
-                gap: 1rem;
-            }
-
-            .nav-links {
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-
-            .modal-content {
-                padding: 1rem;
-            }
-
-            .tabs {
-                overflow-x: auto;
-                flex-wrap: nowrap;
-            }
-        }
-
-        /* ============================================
-           ANIMATIONS
-        ============================================ */
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .animate-in {
-            animation: slideIn 0.5s ease-out;
-        }
-
-        /* ============================================
-           LOADING STATES
-        ============================================ */
-        .loading {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid rgba(255,255,255,.3);
-            border-radius: 50%;
-            border-top-color: #fff;
-            animation: spin 1s ease-in-out infinite;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        /* ============================================
-           MASCOT
-        ============================================ */
-        .mascot {
-            width: 40px;
-            height: 40px;
-            display: inline-block;
-            font-size: 2rem;
-            animation: wiggle 2s infinite;
-        }
-
-        @keyframes wiggle {
-            0%, 100% { transform: rotate(-5deg); }
-            50% { transform: rotate(5deg); }
-        }
-    </style>
+<meta charset="UTF-8">
+<title>Enterprise Cannabis Platform</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter;background:#0b0f14;color:#fff}
+button{cursor:pointer;border:none;border-radius:10px;padding:.6rem 1rem;background:#2fd08f;font-weight:700}
+input,select{background:#101622;border:1px solid #333;color:#fff;padding:.5rem;border-radius:8px}
+nav{position:sticky;top:0;z-index:1000;background:#0e131b;padding:1rem 2rem;display:flex;justify-content:space-between}
+section{padding:2rem}
+.card{background:#141b26;border-radius:18px;padding:1.2rem;margin-bottom:1rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.5rem}
+footer{background:#0e131b;padding:3rem;margin-top:4rem}
+a{color:#2fd08f;text-decoration:none}
+.hidden{display:none}
+</style>
 </head>
+
 <body>
 
-    <!-- ============================================
-         AGE VERIFICATION GATE
-    ============================================ -->
-    <div id="ageGate">
-        <div class="age-gate-content">
-            <div class="mascot">🍃</div>
-            <h1 data-en="Age Verification" data-es="Verificación de Edad">Age Verification</h1>
-            <p data-en="You must be 19+ years old to enter this site" data-es="Debes tener 19+ años para entrar a este sitio">
-                You must be 19+ years old to enter this site
-            </p>
-            <div class="age-gate-buttons">
-                <button class="age-accept" onclick="acceptAge()" data-en="I'm 19+" data-es="Tengo 19+">I'm 19+</button>
-                <button class="age-decline" onclick="declineAge()" data-en="I'm Under 19" data-es="Soy Menor de 19">I'm Under 19</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- ============================================
-         NAVIGATION
-    ============================================ -->
-    <nav>
-        <div class="logo">
-            <div class="mascot">🍃</div>
-            <span data-en="GreenLeaf Delivery" data-es="Entrega GreenLeaf">GreenLeaf Delivery</span>
-        </div>
-        <div class="nav-links">
-            <div class="lang-toggle">
-                <button class="lang-btn active" onclick="setLanguage('en')">EN</button>
-                <button class="lang-btn" onclick="setLanguage('es')">ES</button>
-            </div>
-            <button onclick="showSection('shop')" data-en="Shop" data-es="Tienda">Shop</button>
-            <button onclick="showSection('munchies')" data-en="All My Munchies" data-es="Todos Mis Antojos">All My Munchies</button>
-            <button onclick="openModal('accountModal')" data-en="Account" data-es="Cuenta">Account</button>
-            <button class="cart-badge" onclick="openModal('cartModal')">
-                🛒
-                <span id="cartCount">0</span>
-            </button>
-            <a href="https://horizonventura.com" target="_blank" class="para-curioso-btn" data-en="Para Curioso" data-es="Para Curioso">Para Curioso</a>
-            <button onclick="showAdminLogin()" style="opacity: 0.3;">⚙️</button>
-        </div>
-    </nav>
-
-    <!-- ============================================
-         HAPPY HOUR BANNER
-    ============================================ -->
-    <div id="happyHourBanner" class="happy-hour-banner">
-        <div class="mascot">🍃</div>
-        <span data-en="🎉 HAPPY HOUR ACTIVE! Special prices for " data-es="🎉 HAPPY HOUR ACTIVO! Precios especiales por ">
-            🎉 HAPPY HOUR ACTIVE! Special prices for
-        </span>
-        <span id="happyHourTimer">60</span>
-        <span data-en=" seconds!" data-es=" segundos!"> seconds!</span>
-    </div>
-
-    <!-- ============================================
-         HERO SECTION
-    ============================================ -->
-    <div class="hero">
-        <h1 data-en="LET'S GET HIGH" data-es="VAMOS A ELEVARNOS">LET'S GET HIGH</h1>
-        <div class="hero-subtitle" id="heroSubtitle">Sativa</div>
-    </div>
-
-    <!-- ============================================
-         MAIN CONTENT
-    ============================================ -->
-    <div class="container">
-        <!-- TABS -->
-        <div class="tabs">
-            <button class="tab active" onclick="filterCategory('all')" data-en="All Products" data-es="Todos los Productos">All Products</button>
-            <button class="tab" onclick="filterCategory('flower')" data-en="Flower" data-es="Flores">Flower</button>
-            <button class="tab" onclick="filterCategory('prerolls')" data-en="Pre-Rolls" data-es="Pre-Armados">Pre-Rolls</button>
-            <button class="tab" onclick="filterCategory('vapes')" data-en="Vapes" data-es="Vaporizadores">Vapes</button>
-            <button class="tab" onclick="filterCategory('edibles')" data-en="Edibles" data-es="Comestibles">Edibles</button>
-            <button class="tab" onclick="filterCategory('drinks')" data-en="Drinks" data-es="Bebidas">Drinks</button>
-            <button class="tab" onclick="filterCategory('concentrates')" data-en="Concentrates" data-es="Concentrados">Concentrates</button>
-            <button class="tab" onclick="filterCategory('cbd')" data-en="CBD" data-es="CBD">CBD</button>
-            <button class="tab" onclick="filterCategory('accessories')" data-en="Accessories" data-es="Accesorios">Accessories</button>
-        </div>
-
-        <!-- SHOP SECTION -->
-        <div id="shopSection" class="section active">
-            <div id="productGrid" class="product-grid"></div>
-        </div>
-
-        <!-- MUNCHIES SECTION -->
-        <div id="munchiesSection" class="section">
-            <h2 data-en="🍭 All My Munchies - Exotic Snacks & Treats" data-es="🍭 Todos Mis Antojos - Snacks Exóticos">
-                🍭 All My Munchies - Exotic Snacks & Treats
-            </h2>
-            <div id="munchiesGrid" class="product-grid"></div>
-        </div>
-    </div>
-
-    <!-- ============================================
-         STICKY CART BAR
-    ============================================ -->
-    <div class="sticky-cart">
-        <div class="sticky-cart-info">
-            <div class="sticky-cart-total">$<span id="stickyTotal">0.00</span></div>
-            <div class="sticky-cart-items"><span id="stickyItems">0</span> <span data-en="items" data-es="artículos">items</span> • <span id="stickyPoints">0</span> <span data-en="pts" data-es="pts">pts</span></div>
-        </div>
-        <button class="checkout-btn" onclick="openModal('cartModal')" data-en="View Cart" data-es="Ver Carrito">View Cart</button>
-    </div>
-
-    <!-- ============================================
-         CART MODAL
-    ============================================ -->
-    <div id="cartModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 data-en="🛒 Your Cart" data-es="🛒 Tu Carrito">🛒 Your Cart</h2>
-                <button class="close-modal" onclick="closeModal('cartModal')">×</button>
-            </div>
-            <div id="cartItems" class="cart-items"></div>
-            <div class="cart-summary">
-                <div class="cart-summary-row">
-                    <span data-en="Subtotal:" data-es="Subtotal:">Subtotal:</span>
-                    <span>$<span id="cartSubtotal">0.00</span></span>
-                </div>
-                <div class="cart-summary-row">
-                    <span data-en="Delivery:" data-es="Entrega:">Delivery:</span>
-                    <span>$<span id="deliveryFee">5.00</span></span>
-                </div>
-                <div class="cart-summary-row">
-                    <span data-en="Loyalty Points Earned:" data-es="Puntos Ganados:">Loyalty Points Earned:</span>
-                    <span id="cartPoints">0</span>
-                </div>
-                <div class="cart-summary-row cart-summary-total">
-                    <span data-en="Total:" data-es="Total:">Total:</span>
-                    <span>$<span id="cartTotal">0.00</span></span>
-                </div>
-            </div>
-            <button class="btn btn-primary" style="width: 100%; margin-top: 1rem;" onclick="proceedToCheckout()" data-en="Proceed to Checkout" data-es="Proceder al Pago">
-                Proceed to Checkout
-            </button>
-        </div>
-    </div>
-
-    <!-- ============================================
-         CHECKOUT MODAL
-    ============================================ -->
-    <div id="checkoutModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 data-en="📦 Checkout" data-es="📦 Finalizar Compra">📦 Checkout</h2>
-                <button class="close-modal" onclick="closeModal('checkoutModal')">×</button>
-            </div>
-            <form onsubmit="placeOrder(event)">
-                <div class="form-group">
-                    <label data-en="Full Name" data-es="Nombre Completo">Full Name</label>
-                    <input type="text" id="checkoutName" required>
-                </div>
-                <div class="form-group">
-                    <label data-en="Phone Number" data-es="Número de Teléfono">Phone Number</label>
-                    <input type="tel" id="checkoutPhone" required>
-                </div>
-                <div class="form-group">
-                    <label data-en="Delivery Address" data-es="Dirección de Entrega">Delivery Address</label>
-                    <input type="text" id="checkoutAddress" required>
-                </div>
-                <div class="form-group">
-                    <label data-en="Postal Code" data-es="Código Postal">Postal Code</label>
-                    <input type="text" id="checkoutPostal" required>
-                </div>
-                <div class="form-group">
-                    <label data-en="Delivery Instructions" data-es="Instrucciones de Entrega">Delivery Instructions</label>
-                    <textarea id="checkoutInstructions" rows="3"></textarea>
-                </div>
-                <div class="form-group">
-                    <label data-en="Delivery Method" data-es="Método de Entrega">Delivery Method</label>
-                    <select id="deliveryMethod">
-                        <option value="delivery" data-en="Delivery" data-es="Entrega">Delivery</option>
-                        <option value="pickup" data-en="Pickup" data-es="Recoger">Pickup</option>
-                    </select>
-                </div>
-                <button type="submit" class="btn btn-primary" style="width: 100%;" data-en="Place Order" data-es="Realizar Pedido">
-                    Place Order
-                </button>
-            </form>
-        </div>
-    </div>
-
-    <!-- ============================================
-         DELIVERY TRACKING MODAL
-    ============================================ -->
-    <div id="trackingModal" class="modal">
-        <div class="modal-content" style="max-width: 800px;">
-            <div class="modal-header">
-                <h2 data-en="🚚 Track Your Order" data-es="🚚 Rastrear Tu Pedido">🚚 Track Your Order</h2>
-                <button class="close-modal" onclick="closeModal('trackingModal')">×</button>
-            </div>
-
-            <!-- ETA Display -->
-            <div class="delivery-eta">
-                <span data-en="ETA: " data-es="Tiempo Estimado: ">ETA: </span>
-                <span id="deliveryETA">25</span>
-                <span data-en=" min" data-es=" min"> min</span>
-            </div>
-
-            <!-- Status Pipeline -->
-            <div class="status-pipeline">
-                <div class="status-step completed" id="status1">
-                    <div class="status-icon">✓</div>
-                    <div data-en="Received" data-es="Recibido">Received</div>
-                </div>
-                <div class="status-step active" id="status2">
-                    <div class="status-icon">📦</div>
-                    <div data-en="Preparing" data-es="Preparando">Preparing</div>
-                </div>
-                <div class="status-step" id="status3">
-                    <div class="status-icon">📦</div>
-                    <div data-en="Packaging" data-es="Empacando">Packaging</div>
-                </div>
-                <div class="status-step" id="status4">
-                    <div class="status-icon">🚗</div>
-                    <div data-en="On The Way" data-es="En Camino">On The Way</div>
-                </div>
-                <div class="status-step" id="status5">
-                    <div class="status-icon">📍</div>
-                    <div data-en="Arriving" data-es="Llegando">Arriving</div>
-                </div>
-                <div class="status-step" id="status6">
-                    <div class="status-icon">🎉</div>
-                    <div data-en="Delivered" data-es="Entregado">Delivered</div>
-                </div>
-            </div>
-
-            <!-- Delivery Map -->
-            <div class="delivery-map" id="deliveryMap">
-                <div class="map-marker store-marker" title="Store">🏪</div>
-                <div class="map-marker customer-marker" title="You">🏠</div>
-                <div class="map-marker courier-marker" id="courierMarker" style="left: 20%; top: 20%;">
-                    <span class="mascot">🍃</span>
-                </div>
-            </div>
-
-            <!-- Chat System -->
-            <h3 data-en="💬 Chat with Driver" data-es="💬 Chatear con Conductor">💬 Chat with Driver</h3>
-            <div class="chat-container">
-                <div class="chat-messages" id="chatMessages">
-                    <div class="chat-message system">
-                        <div class="chat-bubble" data-en="Your driver is on the way!" data-es="¡Tu conductor está en camino!">
-                            Your driver is on the way!
-                        </div>
-                    </div>
-                </div>
-                <div class="chat-input-container">
-                    <input type="text" class="chat-input" id="chatInput" placeholder="Type a message..." data-en-placeholder="Type a message..." data-es-placeholder="Escribe un mensaje...">
-                    <button class="chat-send-btn" onclick="sendChatMessage()" data-en="Send" data-es="Enviar">Send</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- ============================================
-         ACCOUNT MODAL
-    ============================================ -->
-    <div id="accountModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 data-en="👤 My Account" data-es="👤 Mi Cuenta">👤 My Account</h2>
-                <button class="close-modal" onclick="closeModal('accountModal')">×</button>
-            </div>
-
-            <div id="accountLogin">
-                <h3 data-en="Login / Register" data-es="Iniciar Sesión / Registrarse">Login / Register</h3>
-                <div class="form-group">
-                    <label data-en="Email" data-es="Email">Email</label>
-                    <input type="email" id="loginEmail">
-                </div>
-                <div class="form-group">
-                    <label data-en="Password" data-es="Contraseña">Password</label>
-                    <input type="password" id="loginPassword">
-                </div>
-                <button class="btn btn-primary" onclick="login()" data-en="Login" data-es="Iniciar Sesión">Login</button>
-                <button class="btn btn-secondary" onclick="showRegister()" data-en="Create Account" data-es="Crear Cuenta">Create Account</button>
-            </div>
-
-            <div id="accountDashboard" style="display: none;">
-                <!-- Loyalty Card -->
-                <div class="loyalty-card">
-                    <div class="loyalty-points"><span id="userPoints">0</span></div>
-                    <div class="loyalty-label" data-en="Loyalty Points" data-es="Puntos de Lealtad">Loyalty Points</div>
-                </div>
-
-                <h3 data-en="Account Info" data-es="Información de Cuenta">Account Info</h3>
-                <p><strong data-en="Name:" data-es="Nombre:">Name:</strong> <span id="userName"></span></p>
-                <p><strong data-en="Email:" data-es="Email:">Email:</strong> <span id="userEmail"></span></p>
-                <p><strong data-en="Phone:" data-es="Teléfono:">Phone:</strong> <span id="userPhone"></span></p>
-
-                <h3 data-en="Order History" data-es="Historial de Pedidos">Order History</h3>
-                <div id="orderHistory"></div>
-
-                <button class="btn btn-danger" onclick="logout()" data-en="Logout" data-es="Cerrar Sesión">Logout</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- ============================================
-         ADMIN MODAL
-    ============================================ -->
-    <div id="adminModal" class="modal">
-        <div class="modal-content" style="max-width: 1000px;">
-            <div class="modal-header">
-                <h2>⚙️ Admin Dashboard</h2>
-                <button class="close-modal" onclick="closeModal('adminModal')">×</button>
-            </div>
-
-            <div class="admin-grid">
-                <!-- Inventory Management -->
-                <div class="admin-card">
-                    <h3>📦 Add Product</h3>
-                    <div class="form-group">
-                        <input type="text" id="adminProductName" placeholder="Product Name">
-                    </div>
-                    <div class="form-group">
-                        <select id="adminProductCategory">
-                            <option value="flower">Flower</option>
-                            <option value="prerolls">Pre-Rolls</option>
-                            <option value="vapes">Vapes</option>
-                            <option value="edibles">Edibles</option>
-                            <option value="drinks">Drinks</option>
-                            <option value="concentrates">Concentrates</option>
-                            <option value="cbd">CBD</option>
-                            <option value="accessories">Accessories</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <input type="number" id="adminProductPrice" placeholder="Price" step="0.01">
-                    </div>
-                    <div class="form-group">
-                        <input type="text" id="adminProductTHC" placeholder="THC % / CBD %">
-                    </div>
-                    <div class="form-group">
-                        <select id="adminProductStrain">
-                            <option value="Sativa">Sativa</option>
-                            <option value="Indica">Indica</option>
-                            <option value="Hybrid">Hybrid</option>
-                            <option value="N/A">N/A</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <input type="number" id="adminProductStock" placeholder="Stock" value="100">
-                    </div>
-                    <button class="btn btn-primary" onclick="addProduct()">Add Product</button>
-                </div>
-
-                <!-- Happy Hour -->
-                <div class="admin-card">
-                    <h3>🎉 Happy Hour</h3>
-                    <button class="btn btn-primary" onclick="toggleHappyHour()">Toggle Happy Hour</button>
-                    <div class="form-group">
-                        <label>Duration (seconds)</label>
-                        <input type="number" id="happyHourDuration" value="60">
-                    </div>
-                    <div class="form-group">
-                        <label>Discount %</label>
-                        <input type="number" id="happyHourDiscount" value="20">
-                    </div>
-                </div>
-
-                <!-- Delivery Control -->
-                <div class="admin-card">
-                    <h3>🚚 Delivery Control</h3>
-                    <button class="btn btn-primary" onclick="simulateDelivery()">Simulate Delivery</button>
-                    <div class="form-group">
-                        <label>Delivery Speed (seconds per step)</label>
-                        <input type="number" id="deliverySpeed" value="5">
-                    </div>
-                </div>
-
-                <!-- Chat Injection -->
-                <div class="admin-card">
-                    <h3>💬 Send Driver Message</h3>
-                    <div class="form-group">
-                        <textarea id="adminChatMessage" rows="3" placeholder="Type message..."></textarea>
-                    </div>
-                    <button class="btn btn-primary" onclick="injectChatMessage()">Send Message</button>
-                </div>
-
-                <!-- Loyalty Settings -->
-                <div class="admin-card">
-                    <h3>⭐ Loyalty Settings</h3>
-                    <div class="form-group">
-                        <label>Points per $1</label>
-                        <input type="number" id="pointsPerDollar" value="1">
-                    </div>
-                    <button class="btn btn-primary" onclick="updateLoyaltySettings()">Update Settings</button>
-                </div>
-
-                <!-- Munchies Commission -->
-                <div class="admin-card">
-                    <h3>🍭 Munchies Stats</h3>
-                    <p><strong>Total Sales:</strong> $<span id="munchiesRevenue">0.00</span></p>
-                    <p><strong>Commission Earned:</strong> $<span id="munchiesCommission">0.00</span></p>
-                </div>
-            </div>
-
-            <h3 style="margin-top: 2rem;">Current Inventory</h3>
-            <div id="adminInventory" style="max-height: 400px; overflow-y: auto;"></div>
-        </div>
-    </div>
-
-    <!-- ============================================
-         WHATSAPP FLOAT
-    ============================================ -->
-    <a href="https://wa.me/1234567890?text=Hi!%20I%20want%20a%20website%20like%20this" target="_blank" class="whatsapp-float">
-        <span style="font-size: 1.5rem;">💬</span>
-        <span data-en="Reach me if you want a website like this" data-es="Contáctame si quieres un sitio como este">
-            Reach me if you want a website like this
-        </span>
-    </a>
-
-    <!-- ============================================
-         JAVASCRIPT ENGINE
-    ============================================ -->
-    <script>
-        // ============================================
-        // GLOBAL STATE MANAGEMENT
-        // ============================================
-        let currentLanguage = 'en';
-        let cart = [];
-        let currentUser = null;
-        let products = [];
-        let munchies = [];
-        let orders = [];
-        let loyaltyRate = 1; // points per dollar
-        let happyHourActive = false;
-        let happyHourDiscount = 20;
-        let deliveryInProgress = false;
-
-        // ============================================
-        // AGE VERIFICATION
-        // ============================================
-        function checkAgeVerification() {
-            const verified = localStorage.getItem('ageVerified');
-            if (verified === 'true') {
-                document.getElementById('ageGate').classList.add('hidden');
-            }
-        }
-
-        function acceptAge() {
-            localStorage.setItem('ageVerified', 'true');
-            document.getElementById('ageGate').classList.add('hidden');
-        }
-
-        function declineAge() {
-            alert(translate('Sorry, you must be 19+ to access this site.', 'Lo sentimos, debes tener 19+ para acceder a este sitio.'));
-            window.location.href = 'https://www.google.com';
-        }
-
-        // ============================================
-        // LANGUAGE SYSTEM
-        // ============================================
-        function setLanguage(lang) {
-            currentLanguage = lang;
-            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-            translatePage();
-            localStorage.setItem('language', lang);
-        }
-
-        function translate(en, es) {
-            return currentLanguage === 'en' ? en : es;
-        }
-
-        function translatePage() {
-            document.querySelectorAll('[data-en]').forEach(el => {
-                if (el.hasAttribute('data-en-placeholder')) {
-                    el.placeholder = currentLanguage === 'en' ? el.getAttribute('data-en-placeholder') : el.getAttribute('data-es-placeholder');
-                } else {
-                    el.textContent = currentLanguage === 'en' ? el.getAttribute('data-en') : el.getAttribute('data-es');
-                }
-            });
-        }
-
-        // ============================================
-        // HERO SUBTITLE ROTATION
-        // ============================================
-        const subtitles = {
-            en: ['Sativa', 'Hybrid', 'Indica', 'Flowers', 'Infusions', 'THC Snacks', 'Gummies', 'Beverages', 'Teas', 'Pre-rolls', 'Vapes', 'Concentrates', 'Accessories'],
-            es: ['Sativa', 'Híbrido', 'Indica', 'Flores', 'Infusiones', 'Snacks THC', 'Gomitas', 'Bebidas', 'Tés', 'Pre-armados', 'Vaporizadores', 'Concentrados', 'Accesorios']
-        };
-
-        let subtitleIndex = 0;
-        function rotateSubtitle() {
-            const list = subtitles[currentLanguage];
-            document.getElementById('heroSubtitle').textContent = list[subtitleIndex];
-            subtitleIndex = (subtitleIndex + 1) % list.length;
-        }
-        setInterval(rotateSubtitle, 2000);
-
-        // ============================================
-        // INITIALIZE DEFAULT PRODUCTS
-        // ============================================
-        function initializeProducts() {
-            products = [
-                { id: 1, name: 'Purple Haze', category: 'flower', price: 45.00, thc: '22% THC', strain: 'Sativa', effects: ['Energetic', 'Creative', 'Uplifting'], stock: 50, image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"%3E%3Crect fill="%238b5cf6" width="200" height="200"/%3E%3Ctext x="100" y="100" font-size="60" text-anchor="middle" fill="white"%3E🌿%3C/text%3E%3C/svg%3E' },
-                { id: 2, name: 'OG Kush', category: 'flower', price: 50.00, thc: '24% THC', strain: 'Hybrid', effects: ['Relaxed', 'Happy', 'Euphoric'], stock: 30, image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"%3E%3Crect fill="%2310b981" width="200" height="200"/%3E%3Ctext x="100" y="100" font-size="60" text-anchor="middle" fill="white"%3E🌿%3C/text%3E%3C/svg%3E' },
-                { id: 3, name: 'Granddaddy Purple', category: 'flower', price: 48.00, thc: '20% THC', strain: 'Indica', effects: ['Sleepy', 'Relaxed', 'Hungry'], stock: 40, image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"%3E%3Crect fill="%236b21a8" width="200" height="200"/%3E%3Ctext x="100" y="100" font-size="60" text-anchor="middle" fill="white"%3E🌿%3C/text%3E%3C/svg%3E' },
-                { id: 4, name: 'Blueberry Bliss Pre-Roll', category: 'prerolls', price: 12.00, thc: '18% THC', strain: 'Indica', effects: ['Relaxed', 'Happy'], stock: 100, image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"%3E%3Crect fill="%233b82f6" width="200" height="200"/%3E%3Ctext x="100" y="100" font-size="60" text-anchor="middle" fill="white"%3E🚬%3C/text%3E%3C/svg%3E' },
-                { id: 5, name: 'Sour Diesel Vape', category: 'vapes', price: 55.00, thc: '85% THC', strain: 'Sativa', effects: ['Energetic', 'Focused'], stock: 25, image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"%3E%3Crect fill="%23f59e0b" width="200" height="200"/%3E%3Ctext x="100" y="100" font-size="60" text-anchor="middle" fill="white"%3E💨%3C/text%3E%3C/svg%3E' },
-                { id: 6, name: 'Gummy Bears 10pk', category: 'edibles', price: 20.00, thc: '10mg/piece', strain: 'Hybrid', effects: ['Happy', 'Relaxed'], stock: 60, image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"%3E%3Crect fill="%23ef4444" width="200" height="200"/%3E%3Ctext x="100" y="100" font-size="60" text-anchor="middle" fill="white"%3E🍬%3C/text%3E%3C/svg%3E' },
-                { id: 7, name: 'THC Infused Lemonade', category: 'drinks', price: 15.00, thc: '10mg THC', strain: 'Sativa', effects: ['Uplifting', 'Creative'], stock: 50, image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"%3E%3Crect fill="%23fbbf24" width="200" height="200"/%3E%3Ctext x="100" y="100" font-size="60" text-anchor="middle" fill="white"%3E🍋%3C/text%3E%3C/svg%3E' },
-                { id: 8, name: 'Live Resin Concentrate', category: 'concentrates', price: 65.00, thc: '92% THC', strain: 'Hybrid', effects: ['Potent', 'Long-lasting'], stock: 15, image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"%3E%3Crect fill="%2306b6d4" width="200" height="200"/%3E%3Ctext x="100" y="100" font-size="60" text-anchor="middle" fill="white"%3E💎%3C/text%3E%3C/svg%3E' },
-                { id: 9, name: 'CBD Wellness Oil', category: 'cbd', price: 40.00, thc: '1000mg CBD', strain: 'N/A', effects: ['Calm', 'Pain Relief'], stock: 35, image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"%3E%3Crect fill="%2310b981" width="200" height="200"/%3E%3Ctext x="100" y="100" font-size="60" text-anchor="middle" fill="white"%3E🧴%3C/text%3E%3C/svg%3E' },
-                { id: 10, name: 'Glass Bong - Dragon Design', category: 'accessories', price: 75.00, thc: 'N/A', strain: 'N/A', effects: [], stock: 10, image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"%3E%3Crect fill="%236366f1" width="200" height="200"/%3E%3Ctext x="100" y="100" font-size="60" text-anchor="middle" fill="white"%3E🔮%3C/text%3E%3C/svg%3E' }
-            ];
-
-            munchies = [
-                { id: 101, name: 'Japanese Kit Kat - Matcha', origin: 'Japan', price: 8.50, description: 'Green tea flavored chocolate wafers', commission: 0.30, stock: 50, image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"%3E%3Crect fill="%2310b981" width="200" height="200"/%3E%3Ctext x="100" y="100" font-size="60" text-anchor="middle" fill="white"%3E🍫%3C/text%3E%3C/svg%3E' },
-                { id: 102, name: 'Korean Honey Butter Chips', origin: 'South Korea', price: 6.00, description: 'Sweet and savory potato chips', commission: 0.25, stock: 80, image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"%3E%3Crect fill="%23f59e0b" width="200" height="200"/%3E%3Ctext x="100" y="100" font-size="60" text-anchor="middle" fill="white"%3E🥔%3C/text%3E%3C/svg%3E' },
-                { id: 103, name: 'Mexican Takis Fuego', origin: 'Mexico', price: 5.50, description: 'Spicy rolled tortilla chips', commission: 0.20, stock: 100, image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"%3E%3Crect fill="%23ef4444" width="200" height="200"/%3E%3Ctext x="100" y="100" font-size="60" text-anchor="middle" fill="white"%3E🌶️%3C/text%3E%3C/svg%3E' },
-                { id: 104, name: 'British Cadbury Flake', origin: 'UK', price: 7.00, description: 'Crumbly milk chocolate bar', commission: 0.28, stock: 60, image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"%3E%3Crect fill="%238b5cf6" width="200" height="200"/%3E%3Ctext x="100" y="100" font-size="60" text-anchor="middle" fill="white"%3E🍫%3C/text%3E%3C/svg%3E' },
-                { id: 105, name: 'Thai Coconut Rolls', origin: 'Thailand', price: 6.50, description: 'Crispy coconut wafer rolls', commission: 0.22, stock: 70, image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"%3E%3Crect fill="%2306b6d4" width="200" height="200"/%3E%3Ctext x="100" y="100" font-size="60" text-anchor="middle" fill="white"%3E🥥%3C/text%3E%3C/svg%3E' },
-                { id: 106, name: 'German Haribo Gummy Bears', origin: 'Germany', price: 4.50, description: 'Original gummy bears', commission: 0.18, stock: 120, image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"%3E%3Crect fill="%23fbbf24" width="200" height="200"/%3E%3Ctext x="100" y="100" font-size="60" text-anchor="middle" fill="white"%3E🐻%3C/text%3E%3C/svg%3E' }
-            ];
-
-            saveData();
-            renderProducts();
-            renderMunchies();
-        }
-
-        // ============================================
-        // RENDER PRODUCTS
-        // ============================================
-        function renderProducts(filter = 'all') {
-            const grid = document.getElementById('productGrid');
-            let filtered = filter === 'all' ? products : products.filter(p => p.category === filter);
-           
-            grid.innerHTML = filtered.map(product => {
-                const price = happyHourActive ? (product.price * (1 - happyHourDiscount / 100)).toFixed(2) : product.price.toFixed(2);
-                const points = Math.floor(parseFloat(price) * loyaltyRate);
-                const outOfStock = product.stock <= 0;
-               
-                return `
-                    <div class="product-card ${outOfStock ? 'out-of-stock' : ''}" onclick="addToCart(${product.id}, false)">
-                        ${outOfStock ? '<div class="stock-badge">OUT OF STOCK</div>' : ''}
-                        <img src="${product.image}" alt="${product.name}" class="product-image">
-                        <div class="product-info">
-                            <div class="product-name">${product.name}</div>
-                            <span class="product-strain">${product.strain}</span>
-                            <div class="product-thc">${product.thc}</div>
-                            <div class="product-effects">
-                                ${product.effects.map(e => `<span class="effect-tag">${e}</span>`).join('')}
-                            </div>
-                            <div class="product-footer">
-                                <div>
-                                    <div class="product-price">$${price}</div>
-                                    <div class="product-points">+${points} pts</div>
-                                </div>
-                            </div>
-                            <button class="add-to-cart-btn" ${outOfStock ? 'disabled' : ''}>
-                                ${translate('Add to Cart', 'Agregar al Carrito')}
-                            </button>
-                        </div>
-                    </div>
-                `;
-            }).join('');
-        }
-
-        function renderMunchies() {
-            const grid = document.getElementById('munchiesGrid');
-            grid.innerHTML = munchies.map(item => {
-                const points = Math.floor(item.price * loyaltyRate);
-                const outOfStock = item.stock <= 0;
-               
-                return `
-                    <div class="product-card ${outOfStock ? 'out-of-stock' : ''}" onclick="addToCart(${item.id}, true)">
-                        ${outOfStock ? '<div class="stock-badge">OUT OF STOCK</div>' : ''}
-                        <img src="${item.image}" alt="${item.name}" class="product-image">
-                        <div class="product-info">
-                            <div class="product-name">${item.name}</div>
-                            <span class="product-strain">${item.origin}</span>
-                            <div class="product-thc">${item.description}</div>
-                            <div class="product-footer">
-                                <div>
-                                    <div class="product-price">$${item.price.toFixed(2)}</div>
-                                    <div class="product-points">+${points} pts</div>
-                                </div>
-                            </div>
-                            <button class="add-to-cart-btn" ${outOfStock ? 'disabled' : ''}>
-                                ${translate('Add to Cart', 'Agregar')}
-                            </button>
-                        </div>
-                    </div>
-                `;
-            }).join('');
-        }
-
-        // ============================================
-        // CART MANAGEMENT
-        // ============================================
-        function addToCart(id, isMunchie) {
-            const item = isMunchie ? munchies.find(m => m.id === id) : products.find(p => p.id === id);
-            if (!item || item.stock <= 0) return;
-           
-            const existing = cart.find(c => c.id === id && c.isMunchie === isMunchie);
-            if (existing) {
-                if (existing.quantity < item.stock) {
-                    existing.quantity++;
-                }
-            } else {
-                cart.push({ ...item, quantity: 1, isMunchie });
-            }
-           
-            updateCart();
-            saveData();
-        }
-
-        function removeFromCart(id, isMunchie) {
-            cart = cart.filter(item => !(item.id === id && item.isMunchie === isMunchie));
-            updateCart();
-            saveData();
-        }
-
-        function updateQuantity(id, isMunchie, delta) {
-            const item = cart.find(c => c.id === id && c.isMunchie === isMunchie);
-            if (!item) return;
-           
-            const product = isMunchie ? munchies.find(m => m.id === id) : products.find(p => p.id === id);
-            item.quantity = Math.max(1, Math.min(item.quantity + delta, product.stock));
-           
-            updateCart();
-            saveData();
-        }
-
-        function updateCart() {
-            const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
-            const subtotal = cart.reduce((sum, item) => {
-                const price = happyHourActive && !item.isMunchie ? item.price * (1 - happyHourDiscount / 100) : item.price;
-                return sum + (price * item.quantity);
-            }, 0);
-            const deliveryFee = subtotal > 0 ? 5.00 : 0;
-            const total = subtotal + deliveryFee;
-            const points = Math.floor(subtotal * loyaltyRate);
-
-            document.getElementById('cartCount').textContent = cartCount;
-            document.getElementById('stickyTotal').textContent = total.toFixed(2);
-            document.getElementById('stickyItems').textContent = cartCount;
-            document.getElementById('stickyPoints').textContent = points;
-
-            // Render cart items
-            const cartItemsDiv = document.getElementById('cartItems');
-            if (cart.length === 0) {
-                cartItemsDiv.innerHTML = `<p style="text-align: center; color: var(--text-secondary);">${translate('Your cart is empty', 'Tu carrito está vacío')}</p>`;
-            } else {
-                cartItemsDiv.innerHTML = cart.map(item => {
-                    const price = happyHourActive && !item.isMunchie ? item.price * (1 - happyHourDiscount / 100) : item.price;
-                    return `
-                        <div class="cart-item">
-                            <div class="cart-item-info">
-                                <h4>${item.name}</h4>
-                                <div class="cart-item-price">$${(price * item.quantity).toFixed(2)}</div>
-                            </div>
-                            <div class="cart-item-controls">
-                                <button class="qty-btn" onclick="updateQuantity(${item.id}, ${item.isMunchie}, -1)">-</button>
-                                <span class="qty-display">${item.quantity}</span>
-                                <button class="qty-btn" onclick="updateQuantity(${item.id}, ${item.isMunchie}, 1)">+</button>
-                                <button class="remove-btn" onclick="removeFromCart(${item.id}, ${item.isMunchie})">×</button>
-                            </div>
-                        </div>
-                    `;
-                }).join('');
-            }
-
-            document.getElementById('cartSubtotal').textContent = subtotal.toFixed(2);
-            document.getElementById('deliveryFee').textContent = deliveryFee.toFixed(2);
-            document.getElementById('cartTotal').textContent = total.toFixed(2);
-            document.getElementById('cartPoints').textContent = points;
-        }
-
-        // ============================================
-        // CHECKOUT PROCESS
-        // ============================================
-        function proceedToCheckout() {
-            if (cart.length === 0) {
-                alert(translate('Your cart is empty!', '¡Tu carrito está vacío!'));
-                return;
-            }
-            closeModal('cartModal');
-            openModal('checkoutModal');
-        }
-
-        function placeOrder(event) {
-            event.preventDefault();
-           
-            const order = {
-                id: Date.now(),
-                items: [...cart],
-                total: parseFloat(document.getElementById('cartTotal').textContent),
-                points: parseInt(document.getElementById('cartPoints').textContent),
-                customer: {
-                    name: document.getElementById('checkoutName').value,
-                    phone: document.getElementById('checkoutPhone').value,
-                    address: document.getElementById('checkoutAddress').value,
-                    postal: document.getElementById('checkoutPostal').value,
-                    instructions: document.getElementById('checkoutInstructions').value
-                },
-                method: document.getElementById('deliveryMethod').value,
-                status: 'received',
-                timestamp: new Date().toISOString()
-            };
-
-            // Update stock
-            cart.forEach(item => {
-                const product = item.isMunchie ? munchies.find(m => m.id === item.id) : products.find(p => p.id === item.id);
-                if (product) product.stock -= item.quantity;
-            });
-
-            // Add points to user
-            if (currentUser) {
-                currentUser.points = (currentUser.points || 0) + order.points;
-                updateUserDisplay();
-            }
-
-            orders.push(order);
-            cart = [];
-            updateCart();
-            saveData();
-            renderProducts();
-            renderMunchies();
-
-            closeModal('checkoutModal');
-            openModal('trackingModal');
-            startDeliverySimulation();
-        }
-
-        // ============================================
-        // DELIVERY SIMULATION
-        // ============================================
-        let deliveryStep = 0;
-        let deliveryInterval = null;
-
-        function startDeliverySimulation() {
-            deliveryStep = 1;
-            deliveryInProgress = true;
-            updateDeliveryStatus();
-
-            const speed = parseInt(document.getElementById('deliverySpeed')?.value || 5) * 1000;
-            deliveryInterval = setInterval(() => {
-                if (deliveryStep < 6) {
-                    deliveryStep++;
-                    updateDeliveryStatus();
-                } else {
-                    clearInterval(deliveryInterval);
-                    deliveryInProgress = false;
-                    setTimeout(() => {
-                        addChatMessage('system', translate('Order delivered! Enjoy! 🎉', '¡Pedido entregado! ¡Disfruta! 🎉'));
-                    }, 1000);
-                }
-            }, speed);
-        }
-
-        function updateDeliveryStatus() {
-            // Update status pipeline
-            for (let i = 1; i <= 6; i++) {
-                const step = document.getElementById(`status${i}`);
-                step.classList.remove('active', 'completed');
-                if (i < deliveryStep) {
-                    step.classList.add('completed');
-                } else if (i === deliveryStep) {
-                    step.classList.add('active');
-                }
-            }
-
-            // Update ETA
-            const eta = Math.max(0, 25 - (deliveryStep * 4));
-            document.getElementById('deliveryETA').textContent = eta;
-
-            // Move courier marker
-            const courier = document.getElementById('courierMarker');
-            const progress = deliveryStep / 6;
-            const startX = 20;
-            const startY = 20;
-            const endX = 80;
-            const endY = 70;
-           
-            courier.style.left = `${startX + (endX - startX) * progress}%`;
-            courier.style.top = `${startY + (endY - startY) * progress}%`;
-
-            // Add status messages
-            const messages = {
-                1: { en: 'Order received! Preparing your items...', es: '¡Pedido recibido! Preparando tus artículos...' },
-                2: { en: 'Packing your order with care...', es: 'Empacando tu pedido con cuidado...' },
-                3: { en: 'Quality check complete!', es: '¡Verificación de calidad completa!' },
-                4: { en: 'Driver is on the way! 🚗', es: '¡El conductor está en camino! 🚗' },
-                5: { en: 'Almost there! Just 2 minutes away!', es: '¡Casi llegamos! ¡A solo 2 minutos!' },
-                6: { en: 'Driver has arrived! 🎉', es: '¡El conductor ha llegado! 🎉' }
-            };
-
-            if (messages[deliveryStep]) {
-                addChatMessage('system', translate(messages[deliveryStep].en, messages[deliveryStep].es));
-            }
-        }
-
-        function simulateDelivery() {
-            if (deliveryInProgress) {
-                alert('Delivery already in progress');
-                return;
-            }
-            openModal('trackingModal');
-            startDeliverySimulation();
-        }
-
-        // ============================================
-        // CHAT SYSTEM
-        // ============================================
-        function addChatMessage(type, message) {
-            const messagesDiv = document.getElementById('chatMessages');
-            const messageEl = document.createElement('div');
-            messageEl.className = `chat-message ${type}`;
-            messageEl.innerHTML = `<div class="chat-bubble">${message}</div>`;
-            messagesDiv.appendChild(messageEl);
-            messagesDiv.scrollTop = messagesDiv.scrollHeight;
-        }
-
-        function sendChatMessage() {
-            const input = document.getElementById('chatInput');
-            const message = input.value.trim();
-            if (!message) return;
-
-            addChatMessage('user', message);
-            input.value = '';
-
-            // Simulate driver response
-            setTimeout(() => {
-                const responses = {
-                    en: ['Got it, thanks!', 'On my way!', 'Will be there soon!', 'Thanks for the heads up!'],
-                    es: ['¡Entendido, gracias!', '¡En camino!', '¡Llegaré pronto!', '¡Gracias por avisar!']
-                };
-                const response = responses[currentLanguage][Math.floor(Math.random() * responses[currentLanguage].length)];
-                addChatMessage('driver', response);
-            }, 2000);
-        }
-
-        function injectChatMessage() {
-            const message = document.getElementById('adminChatMessage').value.trim();
-            if (!message) return;
-           
-            addChatMessage('driver', message);
-            document.getElementById('adminChatMessage').value = '';
-            alert('Message sent!');
-        }
-
-        // ============================================
-        // ACCOUNT SYSTEM
-        // ============================================
-        function login() {
-            const email = document.getElementById('loginEmail').value;
-            const password = document.getElementById('loginPassword').value;
-           
-            // Simple demo login
-            currentUser = {
-                name: 'Demo User',
-                email: email,
-                phone: '555-0123',
-                points: 250
-            };
-           
-            updateUserDisplay();
-            document.getElementById('accountLogin').style.display = 'none';
-            document.getElementById('accountDashboard').style.display = 'block';
-            saveData();
-        }
-
-        function logout() {
-            currentUser = null;
-            document.getElementById('accountLogin').style.display = 'block';
-            document.getElementById('accountDashboard').style.display = 'none';
-            saveData();
-        }
-
-        function showRegister() {
-            alert(translate('Registration system would be implemented here', 'Sistema de registro se implementaría aquí'));
-        }
-
-        function updateUserDisplay() {
-            if (!currentUser) return;
-           
-            document.getElementById('userName').textContent = currentUser.name;
-            document.getElementById('userEmail').textContent = currentUser.email;
-            document.getElementById('userPhone').textContent = currentUser.phone;
-            document.getElementById('userPoints').textContent = currentUser.points || 0;
-
-            // Show order history
-            const userOrders = orders.filter(o => o.customer.email === currentUser.email);
-            const historyDiv = document.getElementById('orderHistory');
-            if (userOrders.length === 0) {
-                historyDiv.innerHTML = `<p>${translate('No orders yet', 'No hay pedidos aún')}</p>`;
-            } else {
-                historyDiv.innerHTML = userOrders.map(order => `
-                    <div class="cart-item">
-                        <div>
-                            <strong>${translate('Order #', 'Pedido #')}${order.id}</strong>
-                            <div>${new Date(order.timestamp).toLocaleDateString()}</div>
-                            <div>$${order.total.toFixed(2)}</div>
-                        </div>
-                        <div>
-                            <button class="btn btn-secondary" onclick="reorder(${order.id})">
-                                ${translate('Reorder', 'Reordenar')}
-                            </button>
-                        </div>
-                    </div>
-                `).join('');
-            }
-        }
-
-        function reorder(orderId) {
-            const order = orders.find(o => o.id === orderId);
-            if (!order) return;
-           
-            cart = order.items.map(item => ({ ...item, quantity: item.quantity }));
-            updateCart();
-            closeModal('accountModal');
-            openModal('cartModal');
-        }
-
-        // ============================================
-        // HAPPY HOUR
-        // ============================================
-        let happyHourTimer = null;
-
-        function toggleHappyHour() {
-            if (happyHourActive) {
-                stopHappyHour();
-            } else {
-                startHappyHour();
-            }
-        }
-
-        function startHappyHour() {
-            happyHourActive = true;
-            happyHourDiscount = parseInt(document.getElementById('happyHourDiscount')?.value || 20);
-            const duration = parseInt(document.getElementById('happyHourDuration')?.value || 60);
-           
-            document.getElementById('happyHourBanner').classList.add('active');
-            renderProducts();
-           
-            let timeLeft = duration;
-            document.getElementById('happyHourTimer').textContent = timeLeft;
-           
-            happyHourTimer = setInterval(() => {
-                timeLeft--;
-                document.getElementById('happyHourTimer').textContent = timeLeft;
-               
-                if (timeLeft <= 0) {
-                    stopHappyHour();
-                }
-            }, 1000);
-        }
-
-        function stopHappyHour() {
-            happyHourActive = false;
-            document.getElementById('happyHourBanner').classList.remove('active');
-            if (happyHourTimer) clearInterval(happyHourTimer);
-            renderProducts();
-        }
-
-        // ============================================
-        // ADMIN FUNCTIONS
-        // ============================================
-        function showAdminLogin() {
-            const password = prompt('Enter admin password:');
-            if (password === 'admin123') {
-                openModal('adminModal');
-                renderAdminInventory();
-                updateMunchiesStats();
-            } else if (password !== null) {
-                alert('Incorrect password');
-            }
-        }
-
-        function addProduct() {
-            const product = {
-                id: Date.now(),
-                name: document.getElementById('adminProductName').value,
-                category: document.getElementById('adminProductCategory').value,
-                price: parseFloat(document.getElementById('adminProductPrice').value),
-                thc: document.getElementById('adminProductTHC').value,
-                strain: document.getElementById('adminProductStrain').value,
-                stock: parseInt(document.getElementById('adminProductStock').value),
-                effects: ['New'],
-                image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"%3E%3Crect fill="%2310b981" width="200" height="200"/%3E%3Ctext x="100" y="100" font-size="60" text-anchor="middle" fill="white"%3E🌿%3C/text%3E%3C/svg%3E'
-            };
-
-            products.push(product);
-            saveData();
-            renderProducts();
-            renderAdminInventory();
-           
-            // Clear form
-            document.getElementById('adminProductName').value = '';
-            document.getElementById('adminProductPrice').value = '';
-            document.getElementById('adminProductTHC').value = '';
-            document.getElementById('adminProductStock').value = '100';
-           
-            alert('Product added!');
-        }
-
-        function renderAdminInventory() {
-            const div = document.getElementById('adminInventory');
-            div.innerHTML = products.map(p => `
-                <div class="cart-item">
-                    <div>
-                        <strong>${p.name}</strong>
-                        <div>${p.category} - $${p.price.toFixed(2)}</div>
-                        <div>Stock: ${p.stock}</div>
-                    </div>
-                    <button class="btn btn-danger" onclick="deleteProduct(${p.id})">Delete</button>
-                </div>
-            `).join('');
-        }
-
-        function deleteProduct(id) {
-            if (confirm('Delete this product?')) {
-                products = products.filter(p => p.id !== id);
-                saveData();
-                renderProducts();
-                renderAdminInventory();
-            }
-        }
-
-        function updateLoyaltySettings() {
-            loyaltyRate = parseFloat(document.getElementById('pointsPerDollar').value);
-            saveData();
-            alert('Loyalty settings updated!');
-        }
-
-        function updateMunchiesStats() {
-            const munchiesOrders = orders.flatMap(o => o.items.filter(i => i.isMunchie));
-            const revenue = munchiesOrders.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            const commission = munchiesOrders.reduce((sum, item) => sum + (item.price * item.quantity * item.commission), 0);
-           
-            document.getElementById('munchiesRevenue').textContent = revenue.toFixed(2);
-            document.getElementById('munchiesCommission').textContent = commission.toFixed(2);
-        }
-
-        // ============================================
-        // MODAL MANAGEMENT
-        // ============================================
-        function openModal(modalId) {
-            document.getElementById(modalId).classList.add('active');
-            if (modalId === 'accountModal' && currentUser) {
-                updateUserDisplay();
-            }
-        }
-
-        function closeModal(modalId) {
-            document.getElementById(modalId).classList.remove('active');
-        }
-
-        // ============================================
-        // SECTION MANAGEMENT
-        // ============================================
-        function showSection(section) {
-            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-            if (section === 'shop') {
-                document.getElementById('shopSection').classList.add('active');
-            } else if (section === 'munchies') {
-                document.getElementById('munchiesSection').classList.add('active');
-            }
-        }
-
-        function filterCategory(category) {
-            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-            event.target.classList.add('active');
-            renderProducts(category);
-        }
-
-        // ============================================
-        // DATA PERSISTENCE
-        // ============================================
-        function saveData() {
-            localStorage.setItem('cannabisData', JSON.stringify({
-                products,
-                munchies,
-                orders,
-                cart,
-                currentUser,
-                loyaltyRate
-            }));
-        }
-
-        function loadData() {
-            const saved = localStorage.getItem('cannabisData');
-            if (saved) {
-                const data = JSON.parse(saved);
-                products = data.products || [];
-                munchies = data.munchies || [];
-                orders = data.orders || [];
-                cart = data.cart || [];
-                currentUser = data.currentUser || null;
-                loyaltyRate = data.loyaltyRate || 1;
-               
-                if (currentUser) {
-                    document.getElementById('accountLogin').style.display = 'none';
-                    document.getElementById('accountDashboard').style.display = 'block';
-                }
-            }
-        }
-
-        // ============================================
-        // INITIALIZATION
-        // ============================================
-        window.addEventListener('DOMContentLoaded', () => {
-            checkAgeVerification();
-            loadData();
-           
-            if (products.length === 0) {
-                initializeProducts();
-            } else {
-                renderProducts();
-                renderMunchies();
-            }
-           
-            updateCart();
-           
-            // Load saved language
-            const savedLang = localStorage.getItem('language');
-            if (savedLang) {
-                currentLanguage = savedLang;
-                document.querySelectorAll('.lang-btn').forEach(btn => {
-                    btn.classList.toggle('active', btn.textContent === savedLang.toUpperCase());
-                });
-                translatePage();
-            }
-
-            // Enable Enter key for chat
-            document.getElementById('chatInput').addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') sendChatMessage();
-            });
-
-            // Close modals on background click
-            document.querySelectorAll('.modal').forEach(modal => {
-                modal.addEventListener('click', (e) => {
-                    if (e.target === modal) {
-                        modal.classList.remove('active');
-                    }
-                });
-            });
-        });
-    </script>
+<nav>
+  <b>Premium Cannabis Platform</b>
+  <div id="nav"></div>
+</nav>
+
+<section id="app"></section>
+
+<!-- ====================== MUNCHIES BUTTON ====================== -->
+<div id="munchiesBtn"
+style="position:fixed;bottom:90px;right:20px;padding:14px 22px;
+background:linear-gradient(135deg,#ffb347,#ff7b00);
+border-radius:40px;font-weight:800;color:#000;
+box-shadow:0 0 25px rgba(255,120,0,.9);
+z-index:999;cursor:pointer"
+onclick="openMunchies()">
+All My Munchies
+</div>
+
+<!-- ====================== AVATAR ====================== -->
+<div id="avatar"
+style="position:fixed;bottom:20px;right:20px;z-index:9999">
+<button onclick="toggleAvatar()">Budtender</button>
+<div id="avatarPanel" class="card hidden" style="width:300px;height:420px;display:flex;flex-direction:column">
+<b>Budtender Assistant</b>
+<select id="alang">
+<option value="en">English</option>
+<option value="fr">Français</option>
+<option value="es">Español</option>
+<option value="hi">हिंदी</option>
+</select>
+<div id="achat" style="flex:1;overflow:auto;margin:10px 0"></div>
+<input id="ainput" placeholder="Ask about THC, deals, points">
+<button onclick="ask()">Send</button>
+</div>
+</div>
+
+<footer>
+<div class="grid">
+<div>
+<h4>Store</h4>
+<p><a href="tel:+14165551234">+1 416-555-1234</a></p>
+<p><a href="mailto:info@dispensary.com">info@dispensary.com</a></p>
+<p>123 Cannabis Ave, Toronto</p>
+<p>10:00 – 23:00</p>
+</div>
+
+<div>
+<h4>Legal</h4>
+<a onclick="legal('terms')">Terms</a><br>
+<a onclick="legal('privacy')">Privacy</a><br>
+<a onclick="legal('delivery')">Delivery Policy</a><br>
+<a onclick="legal('loyalty')">Loyalty Terms</a><br>
+<a onclick="legal('disclaimer')">Cannabis Disclaimer</a>
+</div>
+
+<div>
+<h4>Social</h4>
+<a href="https://instagram.com" target="_blank">Instagram</a><br>
+<a href="https://facebook.com" target="_blank">Facebook</a><br>
+<a href="https://tiktok.com" target="_blank">TikTok</a><br>
+<a href="https://twitter.com" target="_blank">X</a>
+</div>
+</div>
+</footer>
+
+<script>
+/* ====================== STORAGE ====================== */
+const LS=(k,v)=>v!==undefined?localStorage.setItem(k,JSON.stringify(v)):JSON.parse(localStorage.getItem(k));
+
+let users=LS("users")||[];
+let session=LS("session");
+let chats=LS("chats")||[];
+
+/* ====================== PRODUCTS ====================== */
+const products=[
+{id:"p1",name:"OG Kush",type:"Indica",thc:22,price:32},
+{id:"p2",name:"Blue Dream",type:"Hybrid",thc:19,price:30},
+{id:"p3",name:"Sour Diesel",type:"Sativa",thc:24,price:34}
+];
+
+/* ====================== SNACKS ====================== */
+const snacks=[
+{id:"s1",name:"Chips",price:5,points:5},
+{id:"s2",name:"Chocolate",price:6,points:6},
+{id:"s3",name:"Combo Box",price:35,points:50}
+];
+
+/* ====================== NAV ====================== */
+function renderNav(){
+nav.innerHTML=session
+? `${session.email} | Points ${session.points}
+<button onclick="logout()">Logout</button>`
+: `<button onclick="loginView()">Login</button>
+<button onclick="registerView()">Register</button>`;
+}
+
+/* ====================== AUTH ====================== */
+function registerView(){
+app.innerHTML=`
+<h2>Create Account</h2>
+<input id="email" placeholder="Email"><br>
+<input id="pass" type="password" placeholder="Password"><br>
+<button onclick="register()">Register</button>`;
+}
+
+function register(){
+const u={id:crypto.randomUUID(),email:email.value,pass:pass.value,points:0,orders:[]};
+users.push(u);
+LS("users",users);
+session=u;
+LS("session",u);
+render();
+}
+
+function loginView(){
+app.innerHTML=`
+<h2>Login</h2>
+<input id="email"><br>
+<input id="pass" type="password"><br>
+<button onclick="login()">Login</button>`;
+}
+
+function login(){
+const u=users.find(x=>x.email===email.value&&x.pass===pass.value);
+if(!u)return alert("Invalid");
+session=u;
+LS("session",u);
+render();
+}
+
+function logout(){session=null;LS("session",null);render();}
+
+/* ====================== SHOP ====================== */
+function shop(){
+app.innerHTML=`
+<h2>Cannabis Menu</h2>
+<div class="grid">
+${products.map(p=>`
+<div class="card">
+<h3>${p.name}</h3>
+<p>${p.type}</p>
+<p>THC ${p.thc}%</p>
+<p>$${p.price}</p>
+<button onclick="buy('${p.id}',${p.price})">Add</button>
+</div>`).join("")}
+</div>`;
+}
+
+/* ====================== PURCHASE ====================== */
+function buy(id,price){
+session.points+=price;
+session.orders.push({id:"ORD"+Date.now(),total:price,status:"Delivered"});
+LS("session",session);
+render();
+}
+
+/* ====================== DASHBOARD ====================== */
+function dashboard(){
+app.innerHTML=`
+<h2>Account</h2>
+<div class="card">
+<p>Email: ${session.email}</p>
+<p>Points: ${session.points}</p>
+</div>
+
+<div class="card">
+<h3>Orders</h3>
+${session.orders.map(o=>`<p>${o.id} – $${o.total}</p>`).join("")}
+</div>
+
+<button onclick="shop()">Shop Cannabis</button>`;
+}
+
+/* ====================== CHAT ====================== */
+function chat(){
+app.innerHTML=`
+<h2>Chat</h2>
+<div class="card" id="chatBox" style="height:300px;overflow:auto"></div>
+<input id="msg">
+<button onclick="send()">Send</button>`;
+}
+
+function send(){
+chats.push({user:session.email,text:msg.value});
+LS("chats",chats);
+msg.value="";
+renderChat();
+}
+
+function renderChat(){
+const box=document.getElementById("chatBox");
+if(!box)return;
+box.innerHTML=chats.map(c=>`<p><b>${c.user}:</b> ${c.text}</p>`).join("");
+}
+
+/* ====================== MUNCHIES ====================== */
+function openMunchies(){
+app.innerHTML=`
+<h2>All My Munchies</h2>
+<div class="grid">
+${snacks.map(s=>`
+<div class="card">
+<h3>${s.name}</h3>
+<p>$${s.price}</p>
+<p>Earn ${s.points} points</p>
+<button onclick="buySnack(${s.points})">Add</button>
+</div>`).join("")}
+</div>
+<button onclick="render()">Back</button>`;
+}
+
+function buySnack(p){
+session.points+=p;
+LS("session",session);
+render();
+}
+
+/* ====================== LEGAL ====================== */
+function legal(t){
+const pages={
+terms:"Terms of Service",
+privacy:"Privacy Policy",
+delivery:"Delivery requires valid ID.",
+loyalty:"Points have no cash value.",
+disclaimer:"For adults 19+ only."
+};
+app.innerHTML=`<button onclick="render()">Back</button><div class="card">${pages[t]}</div>`;
+}
+
+/* ====================== AVATAR ====================== */
+function toggleAvatar(){
+avatarPanel.classList.toggle("hidden");
+}
+
+function ask(){
+const q=ainput.value.toLowerCase();
+achat.innerHTML+=`<p><b>You:</b> ${q}</p>`;
+let r="I can explain THC, CBD, points, deals, delivery.";
+if(q.includes("thc")) r="THC causes psychoactive effects.";
+if(q.includes("cbd")) r="CBD is non-intoxicating.";
+if(q.includes("points")) r=`You have ${session?.points||0} points.`;
+achat.innerHTML+=`<p><b>Budtender:</b> ${r}</p>`;
+ainput.value="";
+achat.scrollTop=achat.scrollHeight;
+}
+
+/* ====================== RENDER ====================== */
+function render(){
+renderNav();
+if(!session) shop();
+else dashboard();
+}
+
+render();
+</script>
 
 </body>
 </html>
